@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,7 +10,8 @@ import java.util.Set;
 /**
  * Created by jt on 6/13/17.
  */
-@Data
+@Getter
+@Setter
 @Entity
 public class Recipe {
 
