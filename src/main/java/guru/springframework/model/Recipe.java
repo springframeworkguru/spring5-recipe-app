@@ -1,9 +1,7 @@
 package guru.springframework.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.GeneratorType;
-
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -22,9 +20,15 @@ public class Recipe {
     //todo add
     //private Difficulty difficulty;
 
+    //Large Objects!
+    @Lob
+    private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Note note;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
 
 
     public Long getId() {
