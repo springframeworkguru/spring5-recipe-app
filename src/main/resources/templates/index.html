@@ -3,44 +3,46 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Recipe Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
-<h1>My Recipes!</h1>
+<div class="container-fluid" style="margin: 20px auto">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
 
-<table>
-    <tr>
-        <th>Description </th>
-        <th>Category: </th>
-        <th>Prep Time: </th>
-        <th>Cook Time: </th>
-        <th>Servings for: </th>
-        <th>Ingredients: </th>
-        <th>Source </th>
-        <th>URL</th>
-        <th>Directions: </th>
-        <th>Difficulty: </th>
-        <th>Note: </th>
-    </tr>
-    <tr th:each="recipe : ${recipes}" >
-        <td th:text="*{recipe.description}"></td>
-        <td> PLACE HOLDER </td>
-        <td th:text="*{recipe.prepTime}"></td>
-        <td th:text="*{recipe.cookTime}"></td>
-        <td th:text="*{recipe.servings}"></td>
-        <td th:text="*{recipe.servings}"></td>
-        <td th:text="*{recipe.source}"></td>
-        <td th:text="*{recipe.url}"></td>
-        <td th:text="*{recipe.directions}"></td>
-        <td th:text="*{recipe.difficulty}"></td>
-        <td th:text="*{recipe.note.recipeNotes}"></td>
-
-
-
-
-    </tr>
-
-</table>
-
+                <div class="panel-heading">
+                    <h1 class="panel-title">My Recipes!</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td th:text="${recipe.id}">123</td>
+                                <td th:text="${recipe.description}">Tasty Goodnees 1</td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td th:text="${recipe.id}">12333</td>
+                                <td th:text="${recipe.description}">Tasty Goodnees 2</td>
+                            </tr>
+                            <tr th:each="recipe : ${recipes}">
+                                <td th:text="${recipe.id}">334</td>
+                                <td th:text="${recipe.description}">Tasty Goodnees 3</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

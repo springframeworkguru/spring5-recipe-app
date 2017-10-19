@@ -25,7 +25,7 @@ public class IndexController {
 
     @GetMapping({"","/","/recipes"})
     public String getIndexPage(Model model){
-
+        log.debug("Currently Retriving Index Page");
         /*ArrayList<Recipe>*/ Set<Recipe> recipes = recipeService.getRecipes();
         model.addAttribute("recipes",recipes);
 
