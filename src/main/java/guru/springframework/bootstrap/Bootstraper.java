@@ -49,11 +49,11 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
         Recipe guacRecipe = new Recipe();
         Note guacRecipeNote = new Note();
 
-        guacRecipe.setNote(guacRecipeNote);
+
         guacRecipe.setCategories(new HashSet<>());
         guacRecipe.getCategories().add(mexican);
 
-        guacRecipeNote.setRecipe(guacRecipe);
+        guacRecipe.setNote(guacRecipeNote);
 
         mexican.setRecipes(new HashSet<>());
         mexican.getRecipes().add(guacRecipe);
@@ -78,16 +78,17 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
         guacRecipe.setServings(3);
         guacRecipe.setSource("Simply Recipes");
         guacRecipe.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+
         //Starting to Add the Ingredients Now!
         guacRecipe.setIngredients( new HashSet<>() );
-        guacRecipe.getIngredients().add( new Ingredient("ripe avocados",new BigDecimal(2),none,guacRecipe) );
-        guacRecipe.getIngredients().add( new Ingredient("Kosher salt",new BigDecimal("0.5"),teaspoon,guacRecipe) );
-        guacRecipe.getIngredients().add( new Ingredient("fresh lime juice or lemon juice",new BigDecimal(1),tablespoon,guacRecipe) );
-        guacRecipe.getIngredients().add( new Ingredient("minced red onion or thinly sliced green onion",new BigDecimal(2),tablespoon,guacRecipe) );
-        guacRecipe.getIngredients().add( new Ingredient("serranochiles, stems and seeds removed, minced",new BigDecimal(2),none,guacRecipe) );
-        guacRecipe.getIngredients().add( new Ingredient("cilantro (leaves and tender stems), finely chopped",new BigDecimal(2),tablespoon,guacRecipe) );
-        guacRecipe.getIngredients().add( new Ingredient("of freshly grated black pepper",new BigDecimal(1),dash,guacRecipe) );
-        guacRecipe.getIngredients().add( new Ingredient("ripe tomato, seeds and pulp removed, chopped",new BigDecimal("0.5"),none,guacRecipe) );
+        guacRecipe.addIngredient( new Ingredient("ripe avocados",new BigDecimal(2),none) );
+        guacRecipe.addIngredient( new Ingredient("Kosher salt",new BigDecimal("0.5"),teaspoon) );
+        guacRecipe.addIngredient( new Ingredient("fresh lime juice or lemon juice",new BigDecimal(1),tablespoon) );
+        guacRecipe.addIngredient( new Ingredient("minced red onion or thinly sliced green onion",new BigDecimal(2),tablespoon) );
+        guacRecipe.addIngredient( new Ingredient("serranochiles, stems and seeds removed, minced",new BigDecimal(2),none) );
+        guacRecipe.addIngredient( new Ingredient("cilantro (leaves and tender stems), finely chopped",new BigDecimal(2),tablespoon) );
+        guacRecipe.addIngredient( new Ingredient("of freshly grated black pepper",new BigDecimal(1),dash) );
+        guacRecipe.addIngredient( new Ingredient("ripe tomato, seeds and pulp removed, chopped",new BigDecimal("0.5"),none) );
 
         guacRecipe.setDirections("Method\n" +
                 "\n" +
@@ -114,7 +115,7 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
                 "guacamole brown.) Refrigerate until ready to serve.\n" +
                 "\n" +
                 "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it" +
-                " just before serving.");
+                " just before serving it!.");
 
         recipeRepository.save(guacRecipe);
 
