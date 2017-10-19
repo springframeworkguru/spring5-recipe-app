@@ -1,12 +1,15 @@
 package guru.springframework.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
+@Data
+@EqualsAndHashCode(exclude = {"recipes"})
 public class Category {
 
     @Id
@@ -15,6 +18,5 @@ public class Category {
     private String description;
 
     @ManyToMany(mappedBy = "categories") //mapped by means, it is mapped by the "categories" property of the main object
-    private Set<Recipe> recipes;
-
+    private Set<Recipe> recipes = new HashSet<>();
 }

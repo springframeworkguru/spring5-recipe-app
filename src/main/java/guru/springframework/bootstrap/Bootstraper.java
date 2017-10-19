@@ -4,14 +4,20 @@ import guru.springframework.model.*;
 import guru.springframework.repository.CategoryRepository;
 import guru.springframework.repository.RecipeRepository;
 import guru.springframework.repository.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
+@Slf4j
 @Component
 public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -29,13 +35,16 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        initData();
+        recipeRepository.saveAll(getRecipes());
+        log.debug("Loading Bootstrap Data");
     }
 
-    private void initData() {
+    private List<Recipe> getRecipes() {
 
-        Category american = categoryRepository.findByDescription("American");
-        Category mexican = categoryRepository.findByDescription("Mexican");
+        List<Recipe> recipes = new ArrayList<>(1);
+
+        //Category american = categoryRepository.findByDescription("American");
+        Category mexican = categoryRepository.findByDescription("Mexican").get();
 
         UnitOfMeasure teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon");
         UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon");
@@ -49,14 +58,10 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
         Recipe guacRecipe = new Recipe();
         Note guacRecipeNote = new Note();
 
-
-        guacRecipe.setCategories(new HashSet<>());
+        //Lets true with hibernate initialize
+        //Hibernate.initialize(guacRecipe.getCategories());
         guacRecipe.getCategories().add(mexican);
-
         guacRecipe.setNote(guacRecipeNote);
-
-        mexican.setRecipes(new HashSet<>());
-        mexican.getRecipes().add(guacRecipe);
 
 
 
@@ -80,7 +85,6 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
         guacRecipe.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
 
         //Starting to Add the Ingredients Now!
-        guacRecipe.setIngredients( new HashSet<>() );
         guacRecipe.addIngredient( new Ingredient("ripe avocados",new BigDecimal(2),none) );
         guacRecipe.addIngredient( new Ingredient("Kosher salt",new BigDecimal("0.5"),teaspoon) );
         guacRecipe.addIngredient( new Ingredient("fresh lime juice or lemon juice",new BigDecimal(1),tablespoon) );
@@ -117,9 +121,8 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
                 "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it" +
                 " just before serving it!.");
 
-        recipeRepository.save(guacRecipe);
-
-        System.out.println(guacRecipe);
+        recipes.add(guacRecipe);
+        return recipes;
 
 
     }
