@@ -119,7 +119,7 @@ public class Bootstraper implements ApplicationListener<ContextRefreshedEvent> {
                 "guacamole brown.) Refrigerate until ready to serve.\n" +
                 "\n" +
                 "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it" +
-                " just before serving it!.");
+                " just before serving it.");
 
         recipes.add(guacRecipe);
         return recipes;
