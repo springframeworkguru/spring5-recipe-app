@@ -20,6 +20,7 @@ public class Notes {
     @Lob
     private String recipeNotes;
 
+    // region getters and setters
     public Long getId() {
         return id;
     }
@@ -43,4 +44,5 @@ public class Notes {
     public void setRecipeNotes(String recipeNotes) {
         this.recipeNotes = recipeNotes;
     }
+    //endregion
 }

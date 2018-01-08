@@ -34,6 +34,7 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients;
 
+    // region getters and setters
     public Long getId() {
         return id;
     }
@@ -121,4 +122,5 @@ public class Recipe {
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+    //endregion
 }
