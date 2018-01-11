@@ -15,7 +15,7 @@ public class Category {
     private Long id;
     private String description;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
 
     // region getters and setters
