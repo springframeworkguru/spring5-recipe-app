@@ -53,6 +53,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Dependencies for compiling app under Java 9-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.2.8</version>
+        </dependency>
 	</dependencies>
 
 	<build>
