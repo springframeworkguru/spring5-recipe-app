@@ -20,7 +20,7 @@ public class IndexController {
     public String getIndexPage(Model model) {
 
         model.addAttribute("recipes", recipeService.getRecipes());
-        log.debug("Inside /index endpoint; get recipes: " + recipeService.getRecipes().size());
+        log.debug("Inside '/index' endpoint; get recipes: " + recipeService.getRecipes().size());
         return "index";
     }
 }
