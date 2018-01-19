@@ -35,7 +35,7 @@ public class IndexControllerTest {
     String indexPage = controller.getIndexPage(model);
 
     assertEquals("index", indexPage);
-    verify(service, times(1)).getRecipes();
+    verify(service, times(2)).getRecipes();
     verify(model, times(1)).addAttribute(eq("recipes"), anySet());
   }
 }
