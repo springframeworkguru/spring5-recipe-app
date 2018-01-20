@@ -102,6 +102,10 @@ public class RecipeBootstrap  implements ApplicationListener<ContextRefreshedEve
 
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
+
+        guacRecipe.setUrl("http://www.simplyrecipes.com/recipes/perfect_guacamole/");
+        guacRecipe.setServings(4);
+        guacRecipe.setSource("http://www.simplyrecipes.com");
         // endregion
 
         // region Tacos recipe
@@ -158,6 +162,11 @@ public class RecipeBootstrap  implements ApplicationListener<ContextRefreshedEve
 
         tacosRecipe.getCategories().add(americanCategory);
         tacosRecipe.getCategories().add(mexicanCategory);
+
+        tacosRecipe.setCookTime(15);
+        tacosRecipe.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+        tacosRecipe.setServings(6);
+        tacosRecipe.setSource("http://www.simplyrecipes.com");
         // endregion
 
         recipes.add(guacRecipe);
