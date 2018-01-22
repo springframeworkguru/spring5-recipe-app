@@ -13,7 +13,11 @@ import java.util.stream.Collectors;
 @Component
 public class IngredientCommandToIngredient implements Converter<IngredientCommand, Ingredient> {
 
-    UnitOfMeasureCommandToUnitOfMeasure uomConverter = new UnitOfMeasureCommandToUnitOfMeasure();
+    private final UnitOfMeasureCommandToUnitOfMeasure uomConverter;
+
+    public IngredientCommandToIngredient(UnitOfMeasureCommandToUnitOfMeasure uomConverter) {
+        this.uomConverter = uomConverter;
+    }
 
     @Synchronized
     @Nullable
@@ -29,13 +33,5 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
         } else {
             return null;
         }
-    }
-
-    @Synchronized
-    @Nullable
-    public Set<Ingredient> covert(Set<IngredientCommand> source) {
-        return source.stream()
-                .map(IngredientCommandToIngredient::convert)
-                .collect(Collectors.toSet());
     }
 }
