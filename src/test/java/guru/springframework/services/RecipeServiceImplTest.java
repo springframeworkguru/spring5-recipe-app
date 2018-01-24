@@ -26,7 +26,7 @@ public class RecipeServiceImplTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, null, null);
     }
 
     @Test
