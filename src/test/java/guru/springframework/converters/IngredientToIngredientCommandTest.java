@@ -53,7 +53,7 @@ public class IngredientToIngredientCommandTest {
     ingredient.setDescription(TEST_DESC);
     ingredient.setAmount(AMOUNT);
     ingredient.setRecipe(RECIPE);
-    ingredient.setUom(null);
+    ingredient.setUnitOfMeasure(null);
 
     // when
     IngredientCommand command = ingredientToIngredientCommand.convert(ingredient);
@@ -79,7 +79,7 @@ public class IngredientToIngredientCommandTest {
     ingredient.setDescription(TEST_DESC);
     ingredient.setAmount(AMOUNT);
     ingredient.setRecipe(RECIPE);
-    ingredient.setUom(uom);
+    ingredient.setUnitOfMeasure(uom);
 
     // when
     IngredientCommand command = ingredientToIngredientCommand.convert(ingredient);

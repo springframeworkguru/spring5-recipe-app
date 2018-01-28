@@ -82,7 +82,7 @@ public class IngredientCommandToIngredientTest {
     assertEquals(ID, ingredient.getId());
     assertEquals(TEST_DESC, ingredient.getDescription());
     assertEquals(AMOUNT, ingredient.getAmount());
-    assertEquals(UOM_ID, ingredient.getUom().getId());
-    assertEquals(UOM_DESC, ingredient.getUom().getDescription());
+    assertEquals(UOM_ID, ingredient.getUnitOfMeasure().getId());
+    assertEquals(UOM_DESC, ingredient.getUnitOfMeasure().getDescription());
   }
 }
