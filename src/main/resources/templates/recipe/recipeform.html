@@ -63,7 +63,7 @@
                   <label>Cooktime:</label>
                   <input type="text" class="form-control" th:field="*{cookTime}"/>
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-3 form-group" th:field="*{difficulty}">
                   <label>Difficulty:</label>
                   <select class="form-control">
                     <option>Easy</option>
@@ -107,7 +107,7 @@
                     <li th:remove="all">1 Teaspoon of chocolate</li>
                     <li th:each="ingredient : ${recipe.ingredients}"
                         th:text="${(ingredient.getAmount() +
-                                        ' ' + ingredient.uom.getDescription() +
+                                        ' ' + ingredient.unitOfMeasure.getDescription() +
                                         ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
                     </li>
                   </ul>

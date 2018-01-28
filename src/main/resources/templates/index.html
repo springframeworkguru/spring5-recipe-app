@@ -35,6 +35,7 @@
                                 <th>ID</th>
                                 <th>Description</th>
                                 <th>View</th>
+                                <th>Update</th>
                             </tr>
                             </thead>
                             <tr th:remove="all">
@@ -51,7 +52,8 @@
                                 <!--/*@thymesVar id="recipe" type="guru.springframework.Recipe"*/-->
                                 <td th:text="${recipe.id}">123</td>
                                 <td th:text="${recipe.description}">Recipe 3</td>
-                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}} + 'show/' ">View</a></td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}} + '/show' ">View</a></td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}} + '/update' ">Update</a></td>
                             </tr>
                         </table>
                     </div>
