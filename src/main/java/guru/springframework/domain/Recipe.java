@@ -4,7 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -24,6 +27,8 @@ public class Recipe {
     private String directions;
     
     //private Difficulty difficulty;
+    @OneToMany(cascade = ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
     
     @Lob
     private Byte[] image;
