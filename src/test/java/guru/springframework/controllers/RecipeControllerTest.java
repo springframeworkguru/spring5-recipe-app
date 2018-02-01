@@ -40,6 +40,15 @@ public class RecipeControllerTest {
     }
 
     @Test
+    public void shouldGetNewRecipe() throws Exception {
+
+        mockMvc.perform(get("/recipe/new"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("recipe"))
+            .andExpect(view().name("recipe/recipeform"));
+    }
+
+    @Test
     public void testGetRecipe() throws Exception {
         Recipe recipe = new Recipe();
         recipe.setId(12L);

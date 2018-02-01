@@ -1,5 +1,16 @@
 package guru.springframework.services;
 
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.converters.CategoryCommandToCategory;
+import guru.springframework.converters.CategoryToCategoryCommand;
+import guru.springframework.converters.IngredientCommandToIngredient;
+import guru.springframework.converters.IngredientToIngredientCommand;
+import guru.springframework.converters.NotesCommandToNotes;
+import guru.springframework.converters.NotesToNotesCommand;
+import guru.springframework.converters.RecipeCommandToRecipe;
+import guru.springframework.converters.RecipeToRecipeCommand;
+import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
+import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.Before;
@@ -26,7 +37,11 @@ public class RecipeServiceImplTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository, null, null);
+        recipeService = new RecipeServiceImpl(recipeRepository,
+            new RecipeCommandToRecipe(new CategoryCommandToCategory(), new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure()),
+                new NotesCommandToNotes()),
+            new RecipeToRecipeCommand(new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
+                new NotesToNotesCommand(), new CategoryToCategoryCommand()));
     }
 
     @Test
@@ -46,7 +61,6 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipesById() {
-
         // given
         Recipe recipe = new Recipe();
         final long testId = 23L;
@@ -76,5 +90,24 @@ public class RecipeServiceImplTest {
 
         // then
         verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void shouldFindCommandById() {
+        // given
+        Recipe recipe = new Recipe();
+        final long testId = 23L;
+        recipe.setId(testId);
+        recipe.setDescription("Test recipe");
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        // when
+        RecipeCommand foundRecipe = recipeService.findCommandById(23L);
+
+        // then
+        assertEquals(new Long("23"), foundRecipe.getId());
+        verify(recipeRepository, times(1)).findById(anyLong());
     }
 }
