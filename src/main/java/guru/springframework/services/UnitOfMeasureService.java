@@ -1,9 +1,9 @@
 package guru.springframework.services;
 
-import guru.springframework.domain.UnitOfMeasure;
+import guru.springframework.commands.UnitOfMeasureCommand;
 
 import java.util.Set;
 
 public interface UnitOfMeasureService {
-  Set<UnitOfMeasure> listAllUoms();
+  Set<UnitOfMeasureCommand> listAllUoms();
 }

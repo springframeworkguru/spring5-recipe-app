@@ -34,4 +34,11 @@ public class IngredientServiceImpl implements IngredientService {
 
     return ingredientCommandOptional.orElseThrow(() -> new IllegalArgumentException("Ingredient with id:" + ingredientId + " not found"));
   }
+
+  @Override
+  public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
+    Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getId());
+//    recipeOptional.
+    return null;
+  }
 }

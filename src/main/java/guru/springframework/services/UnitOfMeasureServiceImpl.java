@@ -1,25 +1,28 @@
 package guru.springframework.services;
 
-import guru.springframework.domain.UnitOfMeasure;
+import guru.springframework.commands.UnitOfMeasureCommand;
+import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
 
-  UnitOfMeasureRepository repository;
+  private UnitOfMeasureRepository repository;
+  private UnitOfMeasureToUnitOfMeasureCommand converter;
 
-  public UnitOfMeasureServiceImpl(UnitOfMeasureRepository repository) {
+  public UnitOfMeasureServiceImpl(UnitOfMeasureRepository repository, UnitOfMeasureToUnitOfMeasureCommand converter) {
     this.repository = repository;
+    this.converter = converter;
   }
 
   @Override
-  public Set<UnitOfMeasure> listAllUoms() {
-    Iterable<UnitOfMeasure> units = repository.findAll();
-    Set<UnitOfMeasure> unitOfMeasureList = new HashSet<>();
-    units.forEach(unitOfMeasureList::add);
-    return unitOfMeasureList;
+  public Set<UnitOfMeasureCommand> listAllUoms() {
+    return StreamSupport
+        .stream(repository.findAll().spliterator(), false)
+        .map(converter::convert)
+        .collect(Collectors.toSet());
   }
 }
