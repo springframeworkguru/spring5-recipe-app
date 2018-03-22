@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <!--/*@thymesVar id="ingredient" type="guru.springframework.commands.IngredientCommand"*/-->
-            <form  th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.getRecipeId()} + '/ingredient'} ">
+            <form  th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.getRecipeId()} + '/ingredient'}" method="post">
                 <input type="hidden" th:field="*{id}"/>
                 <div class="pannel-group">
                     <div class="panel panel-primary">
