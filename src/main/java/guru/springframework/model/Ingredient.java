@@ -12,10 +12,10 @@ public class Ingredient {
     private BigDecimal ammount;
 
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToOne
     private Recipe recipe;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private UnitOfMeasure unitOfMeasure;
 
     public long getId() {
