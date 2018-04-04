@@ -9,7 +9,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String categorieName;
+    private String description;
 
     @ManyToMany(mappedBy = "categories")
     Set<Recipe> recipes;
@@ -22,12 +22,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategorieName() {
-        return categorieName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCategorieName(String categorieName) {
-        this.categorieName = categorieName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<Recipe> getRecipes() {
