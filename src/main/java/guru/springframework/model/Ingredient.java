@@ -11,12 +11,18 @@ public class Ingredient {
     private String description;
     private BigDecimal ammount;
 
-
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasure unitOfMeasure;
     @ManyToOne
     private Recipe recipe;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private UnitOfMeasure unitOfMeasure;
+    public Ingredient(){}
+    public Ingredient(String description, BigDecimal ammount, UnitOfMeasure unitOfMeasure, Recipe recipe) {
+        this.description = description;
+        this.ammount = ammount;
+        this.unitOfMeasure = unitOfMeasure;
+        this.recipe = recipe;
+    }
 
     public long getId() {
         return id;

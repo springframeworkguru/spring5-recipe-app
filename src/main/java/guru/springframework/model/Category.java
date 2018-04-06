@@ -1,6 +1,7 @@
 package guru.springframework.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,14 @@ public class Category {
     private String description;
 
     @ManyToMany(mappedBy = "categories")
-    Set<Recipe> recipes;
+    Set<Recipe> recipes=new HashSet<>();
+
+    public Category(){}
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
     public long getId() {
         return id;
