@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class RecipeService {
+public class RecipeService implements RecipeServiceInter{
 
     private RecipeRepository recipeRepository;
 
