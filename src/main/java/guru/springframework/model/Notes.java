@@ -1,12 +1,16 @@
 package guru.springframework.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Setter @Getter
 @Entity
 public class Notes {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -15,18 +19,6 @@ public class Notes {
     @Lob
     private String notes;
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    @Override
-    public String toString() {
-        return "Notes{" +
-                "notes='" + notes + '\'' +
-                '}';
+    public Notes() {
     }
 }

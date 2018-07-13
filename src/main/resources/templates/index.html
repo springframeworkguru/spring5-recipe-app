@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe</title>
+</head>
+<body>
+<h1>Hello To Index</h1>
+
+<th:block th:each="recipe : ${recipes}">
+<h3>Recipie</h3>
+    <br>
+    <h4 th:text="${recipe.description}">Recipe Name</h4>
+    <ui>
+        <li>Prep time: <i th:text="${recipe.prepTime}">20</i> minutes</li>
+        <li>Cook time: <i th:text="${recipe.cookTime}">15</i> minutes</li>
+        <li>Yield time: <i th:text="${recipe.serving}">6</i> servings</li>
+    </ui>
+    <br>
+    <h4>INGREDIENTS</h4>
+    <ui th:each="ingred : ${recipe.ingredients}">
+        <li th:text="${ingred.amount} + ' ' + ${ingred.unit.description} + ' '+ ${ingred.description}">1 Teaspoon garlic</li>
+    </ui>
+    <br>
+    <h4>METHOD</h4>
+    <p th:text="${recipe.notes.notes}">some notes</p>
+    <br>
+</th:block>
+</body>
+</html>
