@@ -85,6 +85,50 @@ public class RecepeBootstrap implements ApplicationListener<ContextRefreshedEven
         recipe.setCategories(categories);
         recipeRepository.save(recipe);
 
+        Recipe recipe1 = new Recipe();
+
+        recipe1.setCookTime(15);
+        recipe1.setPrepTime(20);
+
+        recipe1.setDescription("Chicken Mayo");
+        recipe1.setDifficulty(Difficulty.MODERATE);
+        recipe1.setServing(6);
+        recipe1.setDirections("none");
+        recipe1.setSource("www.simplyrecipes.com");
+        recipe1.setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+
+        Notes notes1 = new Notes();
+        notes1.setNotes("" +
+                "1 Prepare a gas or charcoal grill for medium-high, direct heat.<br>\n" +
+                "<br>\n" +
+                "2 Make the marinade and coat the chicken: In a large bowl, stir together the chili powder, oregano, cumin, sugar, salt, garlic and orange zest. Stir in the orange juice and olive oil to make a loose paste. Add the chicken to the bowl and toss to coat all over.<br>\n" +
+                "<br>\n" +
+                "Set aside to marinate while the grill heats and you prepare the rest of the toppings."+
+                "3 Grill the chicken: Grill the chicken for 3 to 4 minutes per side, or until a thermometer inserted into the thickest part of the meat registers 165F. Transfer to a plate and rest for 5 minutes.<br>\n" +
+                "<br>\n" +
+                "4 Warm the tortillas: Place each tortilla on the grill or on a hot, dry skillet over medium-high heat. As soon as you see pockets of the air start to puff up in the tortilla, turn it with tongs and heat for a few seconds on the other side.<br>\n" +
+                "<br>\n" +
+                "Wrap warmed tortillas in a tea towel to keep them warm until serving.\n" +
+                "<br>\n" +
+                "5 Assemble the tacos: Slice the chicken into strips. On each tortilla, place a small handful of arugula. Top with chicken slices, sliced avocado, radishes, tomatoes, and onion slices. Drizzle with the thinned sour cream. Serve with lime wedges."
+        );
+        recipe1.setNotes(notes1);
+
+        recipe1
+                .addIngredients( new Ingredient("ancho chili powder",new BigDecimal(2),tablespoons))
+                .addIngredients(new Ingredient("dried oregano",new BigDecimal(1),tablespoon))
+                .addIngredients( new Ingredient("dried cumin",new BigDecimal(1),tablespoon))
+                .addIngredients( new Ingredient("sugar",new BigDecimal(1),tablespoon))
+                .addIngredients( new Ingredient("salt",new BigDecimal(0.5),tablespoon))
+                .addIngredients( new Ingredient("garlic",new BigDecimal(1),tablespoon))
+                .addIngredients( new Ingredient("finely grated orange zest",new BigDecimal(1),tablespoon))
+                .addIngredients( new Ingredient("fresh-squeezed orange juice",new BigDecimal(3),tablespoons))
+                .addIngredients( new Ingredient("olive oil",new BigDecimal(2),tablespoons))
+                .addIngredients( new Ingredient("boneless chicken thighs",new BigDecimal(6),pounds));
+
+        recipe1.setCategories(categories);
+        recipeRepository.save(recipe);
+        recipeRepository.save(recipe1);
 
     }
 }
