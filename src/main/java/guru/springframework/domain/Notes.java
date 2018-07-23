@@ -17,7 +17,7 @@ public class Notes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "notes")
     private Recipe recipe;
 
     @Lob
