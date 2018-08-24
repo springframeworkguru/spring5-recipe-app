@@ -135,7 +135,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 						+ "\n"
 						+ "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it just before serving." );
 
-		Notes guacamoleNotes = new Notes(guacamoleRecipe);
+		Notes guacamoleNotes = new Notes();
 		guacamoleNotes.setRecipeNotes( "For a very quick guacamole just take a 1/4 cup of salsa and mix it in with your mashed avocados.\n"
 						+ "\n"
 						+ "Feel free to experiment! One classic Mexican guacamole has pomegranate seeds and chunks of peaches in it (a Diana Kennedy favorite). Try guacamole with added pineapple, mango, or strawberries (see our Strawberry Guacamole).\n"
@@ -145,6 +145,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 						+ "To extend a limited supply of avocados, add either sour cream or cottage cheese to your guacamole dip. Purists may be horrified, but so what? It tastes great.\n"
 						+ "\n" + "For a deviled egg version with guacamole, try our Guacamole Deviled Eggs!" );
 
+		guacamoleNotes.setRecipe( guacamoleRecipe );
 		guacamoleRecipe.setNotes( guacamoleNotes );
 
 		guacamoleRecipe.getIngredients().add( new Ingredient( "ripe avocados" , new BigDecimal( 2 ), eachUom, guacamoleRecipe) );
@@ -162,7 +163,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		recipes.add( guacamoleRecipe );
 
 		Recipe tacosRecipe = new Recipe();
-		tacosRecipe.setDescription( "Perfect Guacamole" );
+		tacosRecipe.setDescription( "Chicken Tacos" );
 		tacosRecipe.setPrepTime( 10 );
 		tacosRecipe.setCookTime( 0 );
 		tacosRecipe.setDifficulty( Difficulty.EASY );
@@ -176,7 +177,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 						+ "\n" + "Wrap warmed tortillas in a tea towel to keep them warm until serving.\n" + "\n"
 						+ "5 Assemble the tacos: Slice the chicken into strips. On each tortilla, place a small handful of arugula. Top with chicken slices, sliced avocado, radishes, tomatoes, and onion slices. Drizzle with the thinned sour cream. Serve with lime wedges.\n" );
 
-		Notes tacosNotes = new Notes(tacosRecipe);
+		Notes tacosNotes = new Notes();
 		tacosNotes.setRecipeNotes( "We have a family motto and it is this: Everything goes better in a tortilla.\n" + "\n"
 						+ "Any and every kind of leftover can go inside a warm tortilla, usually with a healthy dose of pickled jalapenos. I can always sniff out a late-night snacker when the aroma of tortillas heating in a hot pan on the stove comes wafting through the house.\n"
 						+ "\n" + "Today’s tacos are more purposeful – a deliberate meal instead of a secretive midnight snack!\n" + "\n"
@@ -191,6 +192,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 						+ "\n"
 						+ "You could also easily double or even triple this recipe for a larger party. A taco and a cold beer on a warm day? Now that’s living!\n" );
 
+		tacosNotes.setRecipe( tacosRecipe );
 		tacosRecipe.setNotes( tacosNotes );
 
 //		tacosRecipe.getIngredients().add( new Ingredient( "Ancho Chili Powder" , new BigDecimal( 2 ), eachUom, tacosRecipe) );
