@@ -145,10 +145,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 						+ "To extend a limited supply of avocados, add either sour cream or cottage cheese to your guacamole dip. Purists may be horrified, but so what? It tastes great.\n"
 						+ "\n" + "For a deviled egg version with guacamole, try our Guacamole Deviled Eggs!" );
 
-		guacamoleNotes.setRecipe( guacamoleRecipe );
 		guacamoleRecipe.setNotes( guacamoleNotes );
 
-		guacamoleRecipe.getIngredients().add( new Ingredient( "ripe avocados" , new BigDecimal( 2 ), eachUom, guacamoleRecipe) );
+		guacamoleRecipe.addIngredient( new Ingredient( "ripe avocados" , new BigDecimal( 2 ), eachUom) );
 //		guacamoleRecipe.getIngredients().add( new Ingredient( "Kosher salt" , new BigDecimal( ".5" ), eachUom, guacamoleRecipe) );
 //		guacamoleRecipe.getIngredients().add( new Ingredient( "fresh lime juice or lemon juice" , new BigDecimal( 2 ), eachUom, guacamoleRecipe) );
 //		guacamoleRecipe.getIngredients().add( new Ingredient( "minced red onion or thinly sliced green onion" , new BigDecimal( 2 ), eachUom, guacamoleRecipe) );
@@ -192,7 +191,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 						+ "\n"
 						+ "You could also easily double or even triple this recipe for a larger party. A taco and a cold beer on a warm day? Now that’s living!\n" );
 
-		tacosNotes.setRecipe( tacosRecipe );
 		tacosRecipe.setNotes( tacosNotes );
 
 //		tacosRecipe.getIngredients().add( new Ingredient( "Ancho Chili Powder" , new BigDecimal( 2 ), eachUom, tacosRecipe) );
