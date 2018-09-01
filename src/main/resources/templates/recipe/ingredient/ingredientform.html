@@ -23,7 +23,7 @@
       <!--/*@thymesVar id="ingredient" type="guru.springframework.commands.IngredientCommand"*/-->
       <form  th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.getRecipeId()} + '/ingredient'} ">
         <input type="hidden" th:field="*{id}"/>
-        <div class="pannel-group">
+        <div class="panel-group">
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h1 class="panel-title">Edit Ingredient Information</h1>
@@ -43,12 +43,12 @@
                 </div>
 
                 <div class="col-md-3 form-group">
-                  <label>UOM:</label>
-                  <select class="form-control" name="uom.id">
-                    <option th:each="uomEach : ${uomList}"
-                            th:value="${uomEach.id}"
-                            th:selected="${uomEach.id.equals(ingredient.uom.id)}"
-                            th:text="${uomEach.description}">Each</option>
+                  <label>Unit of Measure:</label>
+                  <select class="form-control" name="unitOfMeasure.id">
+                    <option th:each="unitOfMeasureEach : ${unitOfMeasureList}"
+                            th:value="${unitOfMeasureEach.id}"
+                            th:selected="${unitOfMeasureEach.id.equals(ingredient.unitOfMeasure.id)}"
+                            th:text="${unitOfMeasureEach.description}">Each</option>
                   </select>
                 </div>
               </div>

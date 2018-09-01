@@ -52,7 +52,7 @@ public class UnitOfMeasureServiceImplTest {
     when(repository.findAll()).thenReturn(units);
 
     // when
-    Set<UnitOfMeasureCommand> unitOfMeasureCommands = service.listAllUoms();
+    Set<UnitOfMeasureCommand> unitOfMeasureCommands = service.listAllUnitsOfMeasure();
 
     // then
     assertEquals(3, unitOfMeasureCommands.size());

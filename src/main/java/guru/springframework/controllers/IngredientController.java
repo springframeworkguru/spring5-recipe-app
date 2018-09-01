@@ -44,12 +44,12 @@ public class IngredientController {
     }
 
     @PostMapping
-    @RequestMapping("recipe/{recipeId}/ingredient/{ingredientId}")
+    @RequestMapping("recipe/{recipeId}/ingredient/{ingredientId}/update")
     public String updateIngredientDetails(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
         log.debug("Updating details of ingredient: " + ingredientId);
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(
             Long.valueOf(recipeId), Long.valueOf(ingredientId)));
-        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        model.addAttribute("unitOfMeasureList", unitOfMeasureService.listAllUnitsOfMeasure());
 
         return "recipe/ingredient/ingredientform";
     }
