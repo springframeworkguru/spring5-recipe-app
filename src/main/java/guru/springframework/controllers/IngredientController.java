@@ -1,6 +1,8 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -48,7 +50,7 @@ public class IngredientController {
     public String updateIngredientDetails(@PathVariable String recipeId, @PathVariable String ingredientId, Model model) {
         log.debug("Updating details of ingredient: " + ingredientId);
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(
-            Long.valueOf(recipeId), Long.valueOf(ingredientId)));
+                Long.valueOf(recipeId), Long.valueOf(ingredientId)));
         model.addAttribute("unitOfMeasureList", unitOfMeasureService.listAllUnitsOfMeasure());
 
         return "recipe/ingredient/ingredientform";
@@ -60,5 +62,19 @@ public class IngredientController {
       IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
       log.debug("Saved: recipeId: " + savedCommand.getRecipeId() + "; ingredientId: " + savedCommand.getId());
       return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/new")
+    public String addIngredientToRecipe(@PathVariable String recipeId, Model model) {
+        // checkinh if id value is correct
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+        ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
+        model.addAttribute("unitOfMeasureList", unitOfMeasureService.listAllUnitsOfMeasure());
+        return "recipe/ingredient/ingredientform";
     }
 }
