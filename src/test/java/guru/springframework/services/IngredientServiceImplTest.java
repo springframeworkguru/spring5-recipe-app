@@ -27,10 +27,8 @@ public class IngredientServiceImplTest {
     private IngredientServiceImpl ingredientService;
     private IngredientToIngredientCommand ingredientToIngredientCommand;
     private IngredientCommandToIngredient ingredientCommandToIngredient;
-
     @Mock
     private RecipeRepository recipeRepository;
-
     @Mock
     private UnitOfMeasureRepository unitOfMeasureRepository;
 
@@ -77,6 +75,20 @@ public class IngredientServiceImplTest {
         assertEquals(Long.valueOf(3L), savedCommand.getId());
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, times(1)).save(any(Recipe.class));
+    }
+
+    @Test
+    public void shouldDeleteIngredientFromRecipe() {
+        //given
+        final Optional<Recipe> recipeOptional = prepareRecipeOptional();
+        when(recipeRepository.findById(RECIPE_ID)).thenReturn(recipeOptional);
+
+        //when
+        ingredientService.deleteIngredientFromRecipe(RECIPE_ID, 1L);
+
+        //then
+        assertEquals(1, recipeOptional.get().getIngredients().size());
+        verify(recipeRepository, times(1)).save(any());
     }
 
     private Optional<Recipe> prepareRecipeOptional() {
