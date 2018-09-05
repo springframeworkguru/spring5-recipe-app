@@ -22,7 +22,7 @@ public class Recipe {
     private String directions;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+	private Set<Ingredient> ingredient;
 
     @Lob
     private Byte[] image;
@@ -33,11 +33,8 @@ public class Recipe {
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
-    @ManyToMany
-    @JoinTable(name = "recipe_category",
-        joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+	@ManyToMany(mappedBy = "recipe")
+	private Set<Category> category;
 
     public Long getId() {
         return id;
@@ -119,12 +116,12 @@ public class Recipe {
         this.notes = notes;
     }
 
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
+	public Set<Ingredient> getIngredient() {
+		return ingredient;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+	public void setIngredient(Set<Ingredient> ingredient) {
+		this.ingredient = ingredient;
     }
 
     public Difficulty getDifficulty() {
@@ -135,11 +132,11 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+	public Set<Category> getCategory() {
+		return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+	public void setCategory(Set<Category> category) {
+		this.category = category;
     }
 }
