@@ -53,6 +53,16 @@ public class RecipeControllerTest {
     }
 
     @Test
+    public void testGetNewRecipeForm() throws Exception {
+        RecipeCommand command = new RecipeCommand();
+
+        mockMvc.perform(get("/recipe/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"))
+                .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
     public void testPostNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
         command.setId(2L);

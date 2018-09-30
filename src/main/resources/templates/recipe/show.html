@@ -14,7 +14,7 @@
 
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 offset-md-3">
 
             <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
 
@@ -81,9 +81,17 @@
                     </div>
                 </div>
             </div>
+            <br/>
             <div class="card bg-warning">
                 <div class="card-header">
-                    <h1 class="card-title" >Ingredients</h1>
+                    <div class="row">
+                        <div class="col-md-11 ">
+                            <h1 class="card-title">Ingredients!</h1>
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
@@ -104,6 +112,7 @@
                     </div>
                 </div>
             </div>
+            <br/>
             <div class="card bg-success">
                 <div class="card-header">
                     <h1 class="card-title" >Directions</h1>
@@ -118,11 +127,12 @@
                     </div>
                 </div>
             </div>
+            <br/>
             <div class="card bg-danger">
                 <div class="card-header">
                     <h1 class="card-title" >Notes</h1>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="card-text">
                         <div class="row">
                             <div class="col-md-12">
