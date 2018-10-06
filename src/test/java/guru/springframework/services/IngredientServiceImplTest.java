@@ -54,7 +54,7 @@ public class IngredientServiceImplTest {
     }
 
     @Test
-    public void findByRecipeIdAndIngredientIdHappPath() throws Exception {
+    public void findByRecipeIdAndIngredientIdHappyPath() throws Exception {
         //given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
@@ -63,10 +63,10 @@ public class IngredientServiceImplTest {
         ingredient1.setId(1L);
 
         Ingredient ingredient2 = new Ingredient();
-        ingredient1.setId(2L);
+        ingredient2.setId(2L);
 
         Ingredient ingredient3 = new Ingredient();
-        ingredient1.setId(3L);
+        ingredient3.setId(3L);
 
         recipe.addIngredient(ingredient1);
         recipe.addIngredient(ingredient2);
@@ -110,5 +110,41 @@ public class IngredientServiceImplTest {
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, times(1)).save(any(Recipe.class));
 
+    }
+
+    @Test
+    public void testDeleteById() throws Exception {
+        //given
+        Long recipeid = 1L;
+        Long idToDelete = 2L;
+
+        Recipe recipe = new Recipe();
+        recipe.setId(recipeid);
+
+        Ingredient ingredient1 = new Ingredient();
+        ingredient1.setId(1L);
+
+        Ingredient ingredient2 = new Ingredient();
+        ingredient2.setId(idToDelete);
+
+        Ingredient ingredient3 = new Ingredient();
+        ingredient3.setId(3L);
+
+        recipe.addIngredient(ingredient1);
+        recipe.addIngredient(ingredient2);
+        recipe.addIngredient(ingredient3);
+
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        //when
+
+        ingredientService.deleteById(recipeid, idToDelete);
+
+        //then
+
+        assertEquals(2, recipe.getIngredients().size());
+        verify(recipeRepository, times(1)).save(any());
     }
 }
