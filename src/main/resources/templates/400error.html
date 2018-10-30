@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>400 Bad Request Error</title>
+
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}">
+
+
+</head>
+<body>
+<div class="container-fluid" style="...">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1>400 Bad Request</h1>
+            <p th:text="${exception.getMessage()}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
