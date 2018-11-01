@@ -7,10 +7,10 @@ CREATE DATABASE sfg_dev;
 CREATE DATABASE sfg_prod;
 
 # CREATE database service accounts
-CREATE USER 'sfg_dev_user'@'localhost' IDENTIFIED BY 'guru';
-CREATE USER 'sfg_prod_user'@'localhost' IDENTIFIED BY 'guru';
-CREATE USER 'sfg_dev_user'@'%' IDENTIFIED BY 'guru';
-CREATE USER 'sfg_prod_user'@'%' IDENTIFIED BY 'guru';
+CREATE USER 'sfg_dev_user'@'localhost' IDENTIFIED BY 'gucaUIemhhvl8CPm';
+CREATE USER 'sfg_prod_user'@'localhost' IDENTIFIED BY 'C1muxk2asohgDKIg';
+CREATE USER 'sfg_dev_user'@'%' IDENTIFIED BY 'gucaUIemhhvl8CPm';
+CREATE USER 'sfg_prod_user'@'%' IDENTIFIED BY 'C1muxk2asohgDKIg';
 
 # Database grants
 GRANT SELECT ON sfg_dev.* to 'sfg_dev_user'@'localhost';

@@ -3,6 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/sfg_prod
     username: sfg_prod_user
     password: C1muxk2asohgDKIg
+    platform: mysql
   jpa:
     hibernate:
       ddl-auto: validate
