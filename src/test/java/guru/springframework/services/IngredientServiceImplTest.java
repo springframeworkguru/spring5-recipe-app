@@ -122,7 +122,7 @@ public class IngredientServiceImplTest {
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
         //when
-        ingredientService.deleteById(1L, 3L);
+        ingredientService.deleteById(anyLong(), 3L);     
 
         //then
         verify(recipeRepository, times(1)).findById(anyLong());
