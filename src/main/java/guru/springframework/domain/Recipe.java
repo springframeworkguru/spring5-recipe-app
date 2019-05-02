@@ -1,11 +1,17 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by jt on 6/13/17.
  */
+@Entity
 public class Recipe {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String description;
     private Integer prepTime;
@@ -14,11 +20,25 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    //todo add
-    //private Difficulty difficulty;
+    // TODO - ADD
+    // private Difficulty difficulty;
 
-    @OneToOne
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
+
+    @Lob
+    private Byte[] image;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -82,5 +102,21 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
     }
 }
