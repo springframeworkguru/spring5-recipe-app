@@ -5,12 +5,7 @@ import javax.persistence.*;
 /**
  * Created by jt on 6/13/17.
  */
-@Entity
 public class Recipe {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String description;
     private Integer prepTime;
@@ -22,19 +17,8 @@ public class Recipe {
     //todo add
     //private Difficulty difficulty;
 
-    @Lob
-    private Byte[] image;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Notes notes;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;
@@ -90,14 +74,6 @@ public class Recipe {
 
     public void setDirections(String directions) {
         this.directions = directions;
-    }
-
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
     }
 
     public Notes getNotes() {
