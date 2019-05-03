@@ -9,7 +9,9 @@ import org.hibernate.mapping.ToOne;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-
+/**
+ * Created by jt on 6/13/17.
+ */
 @Entity
 public class Ingredient {
 
@@ -18,6 +20,8 @@ public class Ingredient {
     private Long id;
     private String description;
     private BigDecimal amount;
+
+    //private UnitOfMeasure uom;
 
     @ManyToOne
     private Recipe recipe;
