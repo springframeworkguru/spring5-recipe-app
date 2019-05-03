@@ -1,10 +1,14 @@
 package guru.springframework.domain;
 
+/**
+ * Created by jt on 6/13/17.
+ */
 import org.hibernate.annotations.Cascade;
 import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+
 
 @Entity
 public class Ingredient {
