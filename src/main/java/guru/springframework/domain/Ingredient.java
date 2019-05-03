@@ -1,11 +1,15 @@
 package guru.springframework.domain;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
-
 /**
  * Created by jt on 6/13/17.
  */
+import org.hibernate.annotations.Cascade;
+import org.hibernate.mapping.ToOne;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+
 @Entity
 public class Ingredient {
 
@@ -15,10 +19,11 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
-    //private UnitOfMeasure uom;
-
     @ManyToOne
     private Recipe recipe;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private UnitOfMeasure unitOfMeasure;
 
     public Long getId() {
         return id;
