@@ -6,5 +6,8 @@
 </head>
 <body>
 <h1>My Recipes!</h1>
+
+<p th:text="${hasCategory} == 1 ? 'Category ID: ' + ${category.id} : 'Category ID: '"></p>
+<p th:text="${hasUOM} == 1 ? 'UnitOfMeasure ID: ' + ${unitOfMeasure.id} : 'UnitOfMeasure ID: '"></p>
 </body>
 </html>
