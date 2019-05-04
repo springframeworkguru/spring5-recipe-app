@@ -71,16 +71,17 @@ public class DataLoader implements CommandLineRunner {
 
         // Category - Mexican
         Optional<Category> categoryMexican = categoryRepository.findCategoryByDescription("Mexican");
-        Set<Category> categories = new HashSet<>();
-        Set<Recipe> recipes = new HashSet<>();
-        if (categoryMexican.isPresent()) {
-
-            categoryMexican.ifPresent(o -> categories.add(o));
-            categoryMexican.ifPresent(o -> savedRecipe1.setCategories(categories));
-
-            categoryMexican.ifPresent(o -> recipes.add(savedRecipe1));
-            categoryMexican.ifPresent(o -> o.setRecipes(recipes));
+        if (!categoryMexican.isPresent()) {
+            throw new RuntimeException("Mexican Category not found");
         }
+        savedRecipe1.getCategories().add(categoryMexican.get());
+
+        // Category - Mexican
+        Optional<Category> categoryAmerican = categoryRepository.findCategoryByDescription("American");
+        if (!categoryAmerican.isPresent()) {
+            throw new RuntimeException("American Category not found");
+        }
+        savedRecipe1.getCategories().add(categoryAmerican.get());
 
         // Ingredient 1
         Ingredient ingredient1 = new Ingredient();
@@ -197,13 +198,8 @@ public class DataLoader implements CommandLineRunner {
         recipe2.setDirections(directions2);
         Recipe savedRecipe2 = recipeRepository.save(recipe2);
 
-        if (categoryMexican.isPresent()) {
-
-            categoryMexican.ifPresent(o -> savedRecipe2.setCategories(categories));
-
-            categoryMexican.ifPresent(o -> recipes.add(savedRecipe2));
-            categoryMexican.ifPresent(o -> o.setRecipes(recipes));
-        }
+        savedRecipe2.getCategories().add(categoryMexican.get());
+        savedRecipe2.getCategories().add(categoryAmerican.get());
 
 
         Ingredient ingredient9 = new Ingredient();
