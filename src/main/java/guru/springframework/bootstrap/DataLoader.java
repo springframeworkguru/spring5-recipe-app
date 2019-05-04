@@ -5,13 +5,12 @@ import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import org.aspectj.weaver.Iterators;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -34,7 +33,7 @@ public class DataLoader implements CommandLineRunner {
         loadData();
     }
 
-    private void loadData() {
+    private Iterable<Recipe> loadData() {
 
         /*/
         // Query to See Results
@@ -44,6 +43,62 @@ public class DataLoader implements CommandLineRunner {
         LEFT JOIN UNIT_OF_MEASURE uom
            ON i.unit_of_measure_id = uom.id
         //*/
+
+        /**
+         * Categories
+         */
+        // Category - Mexican
+        Optional<Category> optionalCategoryMexican = categoryRepository.findCategoryByDescription("Mexican");
+        if (!optionalCategoryMexican.isPresent()) {
+            throw new RuntimeException("Mexican Category not found");
+        }
+        Category categoryMexican = optionalCategoryMexican.get();
+
+        // Category - Mexican
+        Optional<Category> optionalCategoryAmerican = categoryRepository.findCategoryByDescription("American");
+        if (!optionalCategoryAmerican.isPresent()) {
+            throw new RuntimeException("American Category not found");
+        }
+        Category categoryAmerican = optionalCategoryAmerican.get();
+
+        /**
+         * Units of Measure
+         */
+        Optional<UnitOfMeasure> optionalTeaspoonUom = unitOfMeasureRepository.findUnitOfMeasureByDescription("Teaspoon");
+        if (!optionalTeaspoonUom.isPresent()) {
+            throw new RuntimeException("No Teaspoon UOM");
+        }
+        UnitOfMeasure teaspoonUom = optionalTeaspoonUom.get();
+
+        Optional<UnitOfMeasure> optionalTablespoonUom = unitOfMeasureRepository.findUnitOfMeasureByDescription("Tablespoon");
+        if (!optionalTablespoonUom.isPresent()) {
+            throw new RuntimeException("No Tablespoon UOM");
+        }
+        UnitOfMeasure tablespoonUom = optionalTablespoonUom.get();
+
+        Optional<UnitOfMeasure> optionalDashUom = unitOfMeasureRepository.findUnitOfMeasureByDescription("Dash");
+        if (!optionalDashUom.isPresent()) {
+            throw new RuntimeException("No Dash UOM");
+        }
+        UnitOfMeasure dashUom = optionalDashUom.get();
+
+        Optional<UnitOfMeasure> optionalCloveUom = unitOfMeasureRepository.findUnitOfMeasureByDescription("Clove");
+        if (!optionalCloveUom.isPresent()) {
+            throw new RuntimeException("No Clove UOM");
+        }
+        UnitOfMeasure cloveUom = optionalCloveUom.get();
+
+        Optional<UnitOfMeasure> optionalCupUom = unitOfMeasureRepository.findUnitOfMeasureByDescription("Cup");
+        if (!optionalCupUom.isPresent()) {
+            throw new RuntimeException("No Cup UOM");
+        }
+        UnitOfMeasure cupUom = optionalCupUom.get();
+
+        Optional<UnitOfMeasure> optionalPintUom = unitOfMeasureRepository.findUnitOfMeasureByDescription("Pint");
+        if (!optionalPintUom.isPresent()) {
+            throw new RuntimeException("No Pint UOM");
+        }
+        UnitOfMeasure pintUom = optionalPintUom.get();
 
         /**
          * Recipe - Perfect Guacaomole
@@ -69,110 +124,57 @@ public class DataLoader implements CommandLineRunner {
         recipe1.setDirections(directions);
         Recipe savedRecipe1 = recipeRepository.save(recipe1);
 
-        // Category - Mexican
-        Optional<Category> categoryMexican = categoryRepository.findCategoryByDescription("Mexican");
-        if (!categoryMexican.isPresent()) {
-            throw new RuntimeException("Mexican Category not found");
-        }
-        savedRecipe1.getCategories().add(categoryMexican.get());
+        // Add Categories
+        savedRecipe1.getCategories().add(categoryMexican);
+        savedRecipe1.getCategories().add(categoryAmerican);
 
-        // Category - Mexican
-        Optional<Category> categoryAmerican = categoryRepository.findCategoryByDescription("American");
-        if (!categoryAmerican.isPresent()) {
-            throw new RuntimeException("American Category not found");
-        }
-        savedRecipe1.getCategories().add(categoryAmerican.get());
+        // Save
+        Recipe savedRecipe1_2 = recipeRepository.save(savedRecipe1);
 
-        // Ingredient 1
-        Ingredient ingredient1 = new Ingredient();
-        ingredient1.setDescription("ripe avocados");
-        BigDecimal bigDecimalAmount1 = new BigDecimal("2");
-        ingredient1.setAmount(bigDecimalAmount1);
-        ingredient1.setRecipe(savedRecipe1);
-        ingredientRepository.save(ingredient1);
+        /**
+         * Ingredients
+         */
+        Ingredient ingredient1 = new Ingredient("ripe avocados", new BigDecimal(2));
+        Ingredient ingredient2 = new Ingredient("Kosher salt", new BigDecimal("0.5"), teaspoonUom);
+        Ingredient ingredient3 = new Ingredient("fresh lime juice or lemon juice", new BigDecimal(1), tablespoonUom);
+        Ingredient ingredient4 = new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tablespoonUom);
+        Ingredient ingredient5 = new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal("1.5"));
+        Ingredient ingredient6 = new Ingredient("cilantro (leaves and tender stems), finally chopped", new BigDecimal(2), tablespoonUom);
+        Ingredient ingredient7 = new Ingredient("freshly grated black pepper", new BigDecimal(1), dashUom);
+        Ingredient ingredient8 = new Ingredient("ripe tomato, seeds and pulp remvoed, chopped", new BigDecimal("0.5"));
 
-        // Ingredient 2
-        Ingredient ingredient2 = new Ingredient();
-        ingredient2.setDescription("Kosher salt");
-        BigDecimal bigDecimalAmount2 = new BigDecimal("0.5");
-        ingredient2.setAmount(bigDecimalAmount2);
-        ingredient2.setRecipe(savedRecipe1);
+        // Add Recipe Relationship
+        ingredient1.setRecipe(savedRecipe1_2);
+        ingredient2.setRecipe(savedRecipe1_2);
+        ingredient3.setRecipe(savedRecipe1_2);
+        ingredient4.setRecipe(savedRecipe1_2);
+        ingredient5.setRecipe(savedRecipe1_2);
+        ingredient6.setRecipe(savedRecipe1_2);
+        ingredient7.setRecipe(savedRecipe1_2);
+        ingredient8.setRecipe(savedRecipe1_2);
 
-        Optional<UnitOfMeasure> optionalUnitOfMeasure2 = unitOfMeasureRepository.findUnitOfMeasureByDescription("Teaspoon");
-        if (optionalUnitOfMeasure2.isPresent()) {
-            optionalUnitOfMeasure2.ifPresent(o -> ingredient2.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient2);
+        // Save Ingredients
+        Ingredient savedIngredient1 = ingredientRepository.save(ingredient1);
+        Ingredient savedIngredient2 = ingredientRepository.save(ingredient2);
+        Ingredient savedIngredient3 = ingredientRepository.save(ingredient3);
+        Ingredient savedIngredient4 = ingredientRepository.save(ingredient4);
+        Ingredient savedIngredient5 = ingredientRepository.save(ingredient5);
+        Ingredient savedIngredient6 = ingredientRepository.save(ingredient6);
+        Ingredient savedIngredient7 = ingredientRepository.save(ingredient7);
+        Ingredient savedIngredient8 = ingredientRepository.save(ingredient8);
 
+        // Add Ingredients to Recipe
+        savedRecipe1_2.getIngredients().add(savedIngredient1);
+        savedRecipe1_2.getIngredients().add(savedIngredient2);
+        savedRecipe1_2.getIngredients().add(savedIngredient3);
+        savedRecipe1_2.getIngredients().add(savedIngredient4);
+        savedRecipe1_2.getIngredients().add(savedIngredient5);
+        savedRecipe1_2.getIngredients().add(savedIngredient6);
+        savedRecipe1_2.getIngredients().add(savedIngredient7);
+        savedRecipe1_2.getIngredients().add(savedIngredient8);
 
-        // Ingredient 3
-        Ingredient ingredient3 = new Ingredient();
-        ingredient3.setDescription("fresh lime juice or lemon juice");
-        BigDecimal bigDecimalAmount3 = new BigDecimal("1");
-        ingredient3.setAmount(bigDecimalAmount3);
-        ingredient3.setRecipe(savedRecipe1);
-
-        Optional<UnitOfMeasure> optionalUnitOfMeasure3 = unitOfMeasureRepository.findUnitOfMeasureByDescription("Tablespoon");
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient3.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient3);
-
-
-        // Ingredient 4
-        Ingredient ingredient4 = new Ingredient();
-        ingredient4.setDescription("minced red onion or thinly sliced green onion");
-        ingredient4.setAmount(bigDecimalAmount3);
-        ingredient4.setRecipe(savedRecipe1);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient4.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient4);
-
-
-        // Ingredient 5
-        Ingredient ingredient5 = new Ingredient();
-        ingredient5.setDescription("serrano chiles, stems and seeds removed, minced");
-        BigDecimal bigDecimalAmount5 = new BigDecimal("1.5");
-        ingredient5.setAmount(bigDecimalAmount5);
-        ingredient5.setRecipe(savedRecipe1);
-        ingredientRepository.save(ingredient5);
-
-
-        // Ingredient 6
-        Ingredient ingredient6 = new Ingredient();
-        ingredient6.setDescription("cilantro (leaves and tender stems), finally chopped");
-        ingredient6.setAmount(bigDecimalAmount1);
-        ingredient6.setRecipe(savedRecipe1);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient6.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient6);
-
-
-        // Ingredient 7
-        Ingredient ingredient7 = new Ingredient();
-        ingredient7.setDescription("freshly grated black pepper");
-        ingredient7.setAmount(bigDecimalAmount3);
-        ingredient7.setRecipe(savedRecipe1);
-
-        Optional<UnitOfMeasure> optionalUnitOfMeasure7 = unitOfMeasureRepository.findUnitOfMeasureByDescription("Dash");
-        if (optionalUnitOfMeasure7.isPresent()) {
-            optionalUnitOfMeasure7.ifPresent(o -> ingredient7.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient7);
-
-
-        // Ingredient 8
-        Ingredient ingredient8 = new Ingredient();
-        ingredient8.setDescription("ripe tomato, seeds and pulp remvoed, chopped");
-        ingredient8.setAmount(bigDecimalAmount5);
-        ingredient8.setRecipe(savedRecipe1);
-        ingredientRepository.save(ingredient8);
-
-
+        // Save Recipe
+        Recipe savedRecipe1_3 = recipeRepository.save(savedRecipe1_2);
 
         /**
          * Recipe - Spicy Grilled Chicken Tacos
@@ -198,217 +200,106 @@ public class DataLoader implements CommandLineRunner {
         recipe2.setDirections(directions2);
         Recipe savedRecipe2 = recipeRepository.save(recipe2);
 
-        savedRecipe2.getCategories().add(categoryMexican.get());
-        savedRecipe2.getCategories().add(categoryAmerican.get());
-
-
-        Ingredient ingredient9 = new Ingredient();
-        ingredient9.setDescription("ancho chile powder");
-        ingredient9.setAmount(bigDecimalAmount1);
-        ingredient9.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure2.isPresent()) {
-            optionalUnitOfMeasure2.ifPresent(o -> ingredient9.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient9);
-
-
-
-
-        Ingredient ingredient10 = new Ingredient();
-        ingredient10.setDescription("dried oregano");
-        ingredient10.setAmount(bigDecimalAmount3);
-        ingredient10.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient10.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient10);
-
-
-
-
-        Ingredient ingredient11 = new Ingredient();
-        ingredient11.setDescription("dried cumin");
-        ingredient11.setAmount(bigDecimalAmount3);
-        ingredient11.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient11.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient11);
-
-
-
-
-        Ingredient ingredient12 = new Ingredient();
-        ingredient12.setDescription("sugar");
-        ingredient12.setAmount(bigDecimalAmount3);
-        ingredient12.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient12.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient12);
-
-
-
-
-        Ingredient ingredient13 = new Ingredient();
-        ingredient13.setDescription("salt");
-        ingredient13.setAmount(bigDecimalAmount2);
-        ingredient13.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient13.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient13);
-
-
-        Ingredient ingredient14 = new Ingredient();
-        ingredient14.setDescription("garlic, finely chopped");
-        ingredient14.setAmount(bigDecimalAmount3);
-        ingredient14.setRecipe(savedRecipe2);
-        Optional<UnitOfMeasure> optionalUnitOfMeasure14 = unitOfMeasureRepository.findUnitOfMeasureByDescription("Clove");
-        if (optionalUnitOfMeasure14.isPresent()) {
-            optionalUnitOfMeasure14.ifPresent(o -> ingredient14.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient14);
-
-
-
-        Ingredient ingredient15 = new Ingredient();
-        ingredient15.setDescription("finely grated orange zest");
-        ingredient15.setAmount(bigDecimalAmount3);
-        ingredient15.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient15.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient15);
-
-
-
-        Ingredient ingredient16 = new Ingredient();
-        ingredient16.setDescription("fresh squeezed orange juice");
-        BigDecimal bigDecimalAmount16 = new BigDecimal("3");
-        ingredient16.setAmount(bigDecimalAmount16);
-        ingredient16.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient16.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient16);
-
-
-
-        Ingredient ingredient17 = new Ingredient();
-        ingredient17.setDescription("olive oil");
-        ingredient17.setAmount(bigDecimalAmount1);
-        ingredient17.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure3.isPresent()) {
-            optionalUnitOfMeasure3.ifPresent(o -> ingredient17.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient17);
-
-
-        Ingredient ingredient18 = new Ingredient();
-        ingredient18.setDescription("skinless, boneless chicken thighs");
-        BigDecimal bigDecimalAmount18 = new BigDecimal("5");
-        ingredient18.setAmount(bigDecimalAmount18);
-        ingredient18.setRecipe(savedRecipe2);
-        ingredientRepository.save(ingredient18);
-
-
-        Ingredient ingredient19 = new Ingredient();
-        ingredient19.setDescription("small corn tortillas");
-        BigDecimal bigDecimalAmount19 = new BigDecimal("8");
-        ingredient19.setAmount(bigDecimalAmount19);
-        ingredient19.setRecipe(savedRecipe2);
-        ingredientRepository.save(ingredient19);
-
-
-        Ingredient ingredient20 = new Ingredient();
-        ingredient20.setDescription("packed baby arugula");
-        ingredient20.setAmount(bigDecimalAmount16);
-        ingredient20.setRecipe(savedRecipe2);
-
-        Optional<UnitOfMeasure> optionalUnitOfMeasure20 = unitOfMeasureRepository.findUnitOfMeasureByDescription("Cup");
-        if (optionalUnitOfMeasure20.isPresent()) {
-            optionalUnitOfMeasure20.ifPresent(o -> ingredient20.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient20);
-
-
-        Ingredient ingredient21 = new Ingredient();
-        ingredient21.setDescription("medium, ripe avocados");
-        ingredient21.setAmount(bigDecimalAmount1);
-        ingredient21.setRecipe(savedRecipe2);
-        ingredientRepository.save(ingredient21);
-
-
-        Ingredient ingredient22 = new Ingredient();
-        ingredient22.setDescription("radishes, thinly sliced");
-        BigDecimal bigDecimalAmount22 = new BigDecimal("4");
-        ingredient22.setAmount(bigDecimalAmount22);
-        ingredient22.setRecipe(savedRecipe2);
-        ingredientRepository.save(ingredient22);
-
-
-        Ingredient ingredient23 = new Ingredient();
-        ingredient23.setDescription("cherry tomatoes");
-        ingredient23.setAmount(bigDecimalAmount2);
-        ingredient23.setRecipe(savedRecipe2);
-
-        Optional<UnitOfMeasure> optionalUnitOfMeasure23 = unitOfMeasureRepository.findUnitOfMeasureByDescription("Pint");
-        if (optionalUnitOfMeasure23.isPresent()) {
-            optionalUnitOfMeasure23.ifPresent(o -> ingredient23.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient23);
-
-
-        Ingredient ingredient24 = new Ingredient();
-        ingredient24.setDescription("red onion, thinly sliced");
-        BigDecimal bigDecimalAmount25 = new BigDecimal("0.25");
-        ingredient24.setAmount(bigDecimalAmount25);
-        ingredient24.setRecipe(savedRecipe2);
-        ingredientRepository.save(ingredient24);
-
-
-        Ingredient ingredient25 = new Ingredient();
-        ingredient25.setDescription("roughly chopped cilantro");
-        ingredient25.setRecipe(savedRecipe2);
-        ingredientRepository.save(ingredient25);
-
-
-        Ingredient ingredient26 = new Ingredient();
-        ingredient26.setDescription("sour cream");
-        ingredient26.setAmount(bigDecimalAmount2);
-        ingredient26.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure20.isPresent()) {
-            optionalUnitOfMeasure20.ifPresent(o -> ingredient26.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient26);
-
-
-        Ingredient ingredient27 = new Ingredient();
-        ingredient27.setDescription("milk");
-        ingredient27.setAmount(bigDecimalAmount25);
-        ingredient27.setRecipe(savedRecipe2);
-
-        if (optionalUnitOfMeasure20.isPresent()) {
-            optionalUnitOfMeasure20.ifPresent(o -> ingredient27.setUnitOfMeasure(o));
-        }
-        ingredientRepository.save(ingredient27);
-
-
-        Ingredient ingredient28 = new Ingredient();
-        ingredient28.setDescription("lime, cut into wedges");
-        ingredient28.setAmount(bigDecimalAmount3);
-        ingredient28.setRecipe(savedRecipe2);
-        ingredientRepository.save(ingredient28);
-
+        // Add Categories
+        savedRecipe2.getCategories().add(categoryMexican);
+        savedRecipe2.getCategories().add(categoryAmerican);
+
+        // Save Recipe
+        Recipe savedRecipe2_2 = recipeRepository.save(savedRecipe2);
+
+        /**
+         * Ingredients
+         */
+        Ingredient ingredient9 = new Ingredient("ancho chile powder", new BigDecimal(2), tablespoonUom);
+        Ingredient ingredient10 = new Ingredient("dried oregano", new BigDecimal(1), teaspoonUom);
+        Ingredient ingredient11 = new Ingredient("dried cumin", new BigDecimal(1), teaspoonUom);
+        Ingredient ingredient12 = new Ingredient("sugar", new BigDecimal(1), teaspoonUom);
+        Ingredient ingredient13 = new Ingredient("salt", new BigDecimal("0.5"), tablespoonUom);
+        Ingredient ingredient14 = new Ingredient("garlic, finely chopped", new BigDecimal(1), cloveUom);
+        Ingredient ingredient15 = new Ingredient("finely grated orange zest", new BigDecimal(1), tablespoonUom);
+        Ingredient ingredient16 = new Ingredient("fresh squeezed orange juice", new BigDecimal(3), tablespoonUom);
+        Ingredient ingredient17 = new Ingredient("olive oil", new BigDecimal(2), tablespoonUom);
+        Ingredient ingredient18 = new Ingredient("skinless, boneless chicken thighs", new BigDecimal(5));
+        Ingredient ingredient19 = new Ingredient("small corn tortillas", new BigDecimal(8));
+        Ingredient ingredient20 = new Ingredient("packed baby arugula", new BigDecimal(3), cupUom);
+        Ingredient ingredient21 = new Ingredient("medium, ripe avocados", new BigDecimal(2));
+        Ingredient ingredient22 = new Ingredient("radishes, thinly sliced", new BigDecimal(4));
+        Ingredient ingredient23 = new Ingredient("cherry tomatoes", new BigDecimal("0.5"), pintUom);
+        Ingredient ingredient24 = new Ingredient("red onion, thinly sliced", new BigDecimal("0.25"));
+        Ingredient ingredient25 = new Ingredient("roughly chopped cilantro");
+        Ingredient ingredient26 = new Ingredient("sour cream", new BigDecimal("0.5"), cupUom);
+        Ingredient ingredient27 = new Ingredient("milk", new BigDecimal("0.25"), cupUom);
+        Ingredient ingredient28 = new Ingredient("lime, cut into wedges", new BigDecimal(1));
+
+        // Add Recipe Relationship
+        ingredient9.setRecipe(savedRecipe2_2);
+        ingredient11.setRecipe(savedRecipe2_2);
+        ingredient12.setRecipe(savedRecipe2_2);
+        ingredient13.setRecipe(savedRecipe2_2);
+        ingredient14.setRecipe(savedRecipe2_2);
+        ingredient15.setRecipe(savedRecipe2_2);
+        ingredient16.setRecipe(savedRecipe2_2);
+        ingredient17.setRecipe(savedRecipe2_2);
+        ingredient18.setRecipe(savedRecipe2_2);
+        ingredient19.setRecipe(savedRecipe2_2);
+        ingredient20.setRecipe(savedRecipe2_2);
+        ingredient21.setRecipe(savedRecipe2_2);
+        ingredient22.setRecipe(savedRecipe2_2);
+        ingredient23.setRecipe(savedRecipe2_2);
+        ingredient24.setRecipe(savedRecipe2_2);
+        ingredient25.setRecipe(savedRecipe2_2);
+        ingredient26.setRecipe(savedRecipe2_2);
+        ingredient27.setRecipe(savedRecipe2_2);
+        ingredient28.setRecipe(savedRecipe2_2);
+
+        // Save Ingredients
+        Ingredient savedIngredient9 = ingredientRepository.save(ingredient9);
+        Ingredient savedIngredient10 = ingredientRepository.save(ingredient10);
+        Ingredient savedIngredient11 = ingredientRepository.save(ingredient11);
+        Ingredient savedIngredient12 = ingredientRepository.save(ingredient12);
+        Ingredient savedIngredient13 = ingredientRepository.save(ingredient13);
+        Ingredient savedIngredient14 = ingredientRepository.save(ingredient14);
+        Ingredient savedIngredient15 = ingredientRepository.save(ingredient15);
+        Ingredient savedIngredient16 = ingredientRepository.save(ingredient16);
+        Ingredient savedIngredient17 = ingredientRepository.save(ingredient17);
+        Ingredient savedIngredient18 = ingredientRepository.save(ingredient18);
+        Ingredient savedIngredient19 = ingredientRepository.save(ingredient19);
+        Ingredient savedIngredient20 = ingredientRepository.save(ingredient20);
+        Ingredient savedIngredient21 = ingredientRepository.save(ingredient21);
+        Ingredient savedIngredient22 = ingredientRepository.save(ingredient22);
+        Ingredient savedIngredient23 = ingredientRepository.save(ingredient23);
+        Ingredient savedIngredient24 = ingredientRepository.save(ingredient24);
+        Ingredient savedIngredient25 = ingredientRepository.save(ingredient25);
+        Ingredient savedIngredient26 = ingredientRepository.save(ingredient26);
+        Ingredient savedIngredient27 = ingredientRepository.save(ingredient27);
+        Ingredient savedIngredient28 = ingredientRepository.save(ingredient28);
+
+        // Add Ingredients to Recipe
+        savedRecipe2_2.getIngredients().add(savedIngredient9);
+        savedRecipe2_2.getIngredients().add(savedIngredient10);
+        savedRecipe2_2.getIngredients().add(savedIngredient11);
+        savedRecipe2_2.getIngredients().add(savedIngredient12);
+        savedRecipe2_2.getIngredients().add(savedIngredient13);
+        savedRecipe2_2.getIngredients().add(savedIngredient14);
+        savedRecipe2_2.getIngredients().add(savedIngredient15);
+        savedRecipe2_2.getIngredients().add(savedIngredient16);
+        savedRecipe2_2.getIngredients().add(savedIngredient17);
+        savedRecipe2_2.getIngredients().add(savedIngredient18);
+        savedRecipe2_2.getIngredients().add(savedIngredient19);
+        savedRecipe2_2.getIngredients().add(savedIngredient20);
+        savedRecipe2_2.getIngredients().add(savedIngredient21);
+        savedRecipe2_2.getIngredients().add(savedIngredient22);
+        savedRecipe2_2.getIngredients().add(savedIngredient23);
+        savedRecipe2_2.getIngredients().add(savedIngredient24);
+        savedRecipe2_2.getIngredients().add(savedIngredient25);
+        savedRecipe2_2.getIngredients().add(savedIngredient26);
+        savedRecipe2_2.getIngredients().add(savedIngredient27);
+        savedRecipe2_2.getIngredients().add(savedIngredient27);
+
+        // Save Recipe
+        Recipe savedRecipe2_3 = recipeRepository.save(savedRecipe2_2);
+
+        // Return Two Recipes
+        return Arrays.asList(savedRecipe1_3, savedRecipe2_3);
     }
 }
