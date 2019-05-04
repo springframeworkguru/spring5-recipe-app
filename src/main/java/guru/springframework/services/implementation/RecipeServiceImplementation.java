@@ -1,7 +1,8 @@
-package guru.springframework.services;
+package guru.springframework.services.implementation;
 
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.services.RecipeService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
