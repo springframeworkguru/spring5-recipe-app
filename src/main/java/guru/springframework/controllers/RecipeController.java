@@ -21,7 +21,7 @@ public class RecipeController {
     @RequestMapping({"", "/", "/index"})
     public String getRecipeList(Model model) {
 
-        Iterable<Recipe> recipes = recipeService.fetchRecipeList();
+        Set<Recipe> recipes = recipeService.fetchRecipeList();
         model.addAttribute("recipes", recipes);
 
         return "recipes/index";

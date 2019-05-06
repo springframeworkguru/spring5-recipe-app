@@ -3,8 +3,6 @@ package guru.springframework.domain;
 /**
  * Created by jt on 6/13/17.
  */
-import org.hibernate.annotations.Cascade;
-import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,21 +21,14 @@ public class Ingredient {
         this.description = description;
     }
 
-    public Ingredient(String description, Recipe recipe) {
+    public Ingredient(String description, BigDecimal amount) {
         this.description = description;
-        this.recipe = recipe;
-    }
-
-    public Ingredient(String description, Recipe recipe, BigDecimal amount) {
-        this.description = description;
-        this.recipe = recipe;
         this.amount = amount;
     }
 
-    public Ingredient(String description, Recipe recipe, BigDecimal amount, UnitOfMeasure unitOfMeasure) {
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure) {
         this.description = description;
         this.amount = amount;
-        this.recipe = recipe;
         this.unitOfMeasure = unitOfMeasure;
     }
 
