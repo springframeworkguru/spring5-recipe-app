@@ -5,13 +5,12 @@ import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import org.aspectj.weaver.Iterators;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -170,8 +169,6 @@ public class DataLoader implements CommandLineRunner {
         savedRecipe1.getIngredients().add(ingredient8);
 
         recipeRepository.save(savedRecipe1);
-
-
 
         // Recipe 2
         Recipe recipe2 = new Recipe();
