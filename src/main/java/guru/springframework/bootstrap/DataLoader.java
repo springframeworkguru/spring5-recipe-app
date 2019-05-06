@@ -5,13 +5,12 @@ import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import org.aspectj.weaver.Iterators;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -34,7 +33,7 @@ public class DataLoader implements CommandLineRunner {
         loadData();
     }
 
-    private void loadData() {
+    private Iterable<Recipe> loadData() {
 
         /*/
         // SQL to check data was inserted
@@ -56,14 +55,14 @@ public class DataLoader implements CommandLineRunner {
         // Category - Mexican
         Optional<Category> optionalCategoryMexican = categoryRepository.findCategoryByDescription("Mexican");
         if (!optionalCategoryMexican.isPresent()) {
-            throw new RuntimeException("No Mexican Category.");
+            throw new RuntimeException("Mexican Category not found");
         }
         Category categoryMexican = optionalCategoryMexican.get();
 
-        // Category - American
+        // Category - Mexican
         Optional<Category> optionalCategoryAmerican = categoryRepository.findCategoryByDescription("American");
         if (!optionalCategoryAmerican.isPresent()) {
-            throw new RuntimeException("No American Category.");
+            throw new RuntimeException("American Category not found");
         }
         Category categoryAmerican = optionalCategoryAmerican.get();
 
@@ -114,7 +113,7 @@ public class DataLoader implements CommandLineRunner {
 
         /**
          * Recipes
-          */
+         */
         // Recipe 1
         Recipe recipe1 = new Recipe();
         recipe1.setDescription("Perfect Guacamole");
@@ -170,9 +169,7 @@ public class DataLoader implements CommandLineRunner {
         savedRecipe1.getIngredients().add(ingredient8);
 
         recipeRepository.save(savedRecipe1);
-
-
-
+      
         // Recipe 2
         Recipe recipe2 = new Recipe();
         recipe2.setDescription("Spicy Grilled Chicken Tacos");
