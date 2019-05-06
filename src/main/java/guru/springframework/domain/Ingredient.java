@@ -15,6 +15,32 @@ import java.math.BigDecimal;
 @Entity
 public class Ingredient {
 
+    public Ingredient() {
+
+    }
+
+    public Ingredient(String description) {
+        this.description = description;
+    }
+
+    public Ingredient(String description, Recipe recipe) {
+        this.description = description;
+        this.recipe = recipe;
+    }
+
+    public Ingredient(String description, Recipe recipe, BigDecimal amount) {
+        this.description = description;
+        this.recipe = recipe;
+        this.amount = amount;
+    }
+
+    public Ingredient(String description, Recipe recipe, BigDecimal amount, UnitOfMeasure unitOfMeasure) {
+        this.description = description;
+        this.amount = amount;
+        this.recipe = recipe;
+        this.unitOfMeasure = unitOfMeasure;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
