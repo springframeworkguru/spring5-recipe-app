@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Recipe Home</title>
+</head>
+<body>
+<h1>My Recipes!</h1>
+
+<p th:text="${hasCategory} == 1 ? 'Category ID: ' + ${category.id} : 'Category ID: '">Category ID: 7</p>
+<p th:text="${hasUOM} == 1 ? 'UnitOfMeasure ID: ' + ${unitOfMeasure.id} : 'UnitOfMeasure ID: '">UnitOfMeasure ID: 8</p>
+
+
+
+
+
+
+</body>
+</html>
