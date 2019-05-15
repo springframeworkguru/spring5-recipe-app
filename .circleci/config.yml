@@ -1,0 +1,28 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+version: 2
+jobs:
+build:
+working_directory: ~/spring5-recipe-app
+docker:
+  # specify the version you desire here
+  - image: circleci/openjdk:8-jdk
+steps:
+  - checkout
+  # Download and cache dependencies
+  - restore_cache:
+key: spring5-recipe-app-{‌{ checksum "pom.xml" }}
+       - run: mvn install -DskipTests
+       - run: mvn dependency:go-offline
+       - save_cache:
+paths:
+  - ~/.m2
+key: spring5-recipe-app-{‌{ checksum "pom.xml" }}
+  # run tests!
+  - run: mvn package
+  - store_test_results:
+path: target/surefire-reports
+        - store_artifacts:
+path: target/spring5-recipe-app-0.0.1-SNAPSHOT.jar
