@@ -25,7 +25,8 @@ public class Ingredient {
     @OneToOne(fetch = FetchType.EAGER)
     private UnitOfMeasure uom;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="RECIPE_ID", nullable = false)
     private Recipe recipe;
 
     public Ingredient() {
