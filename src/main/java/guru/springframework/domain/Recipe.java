@@ -1,7 +1,7 @@
 package guru.springframework.domain;
 
-import javax.crypto.spec.PSource;
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by ccabo 8/17/19
@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private String description;
     private Integer prepTime;
@@ -20,8 +21,13 @@ public class Recipe {
     private String directions;
     //todo add
     //private Difficulty difficulty;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") //each set of ingredient would be on a property call recipe.
+    private Set<Ingredient> ingredients;
+
     @Lob
     private Byte[] image;
+
     @OneToOne(cascade = CascadeType.ALL) //if we wanna delete the recipe, we delete the notes for that recipe.
     private Notes notes;
 
