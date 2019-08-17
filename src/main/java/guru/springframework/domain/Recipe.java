@@ -1,11 +1,16 @@
 package guru.springframework.domain;
 
 import javax.crypto.spec.PSource;
+import javax.persistence.*;
 
 /**
  * Created by ccabo 8/17/19
  */
+@Entity
 public class Recipe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String description;
     private Integer prepTime;
     private Integer cookTime;
@@ -15,8 +20,18 @@ public class Recipe {
     private String directions;
     //todo add
     //private Difficulty difficulty;
+    @Lob
     private Byte[] image;
+    @OneToOne(cascade = CascadeType.ALL) //if we wanna delete the recipe, we delete the notes for that recipe.
     private Notes notes;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
