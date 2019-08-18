@@ -1,5 +1,10 @@
 package guru.springframework.domain;
 
+import net.bytebuddy.asm.Advice;
+import net.bytebuddy.implementation.bind.annotation.This;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -22,6 +27,13 @@ public class Ingredient {
 
     public Ingredient() {
     }
+
+    @Autowired
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
+    } //instead of passing Recipe by constructor, I did the bilateral relationship in line 128 in Recipe.java.
 
     public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
         this.description = description;
