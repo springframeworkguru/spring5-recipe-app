@@ -1,5 +1,7 @@
 package guru.springframework.domain;
 
+import guru.springframework.enums.Difficulty;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -19,8 +21,6 @@ public class Recipe {
     private String Source;
     private String url;
     private String directions;
-    //todo add
-    //private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") //each set of ingredient would be on a property call recipe.
     private Set<Ingredient> ingredients;
@@ -28,8 +28,17 @@ public class Recipe {
     @Lob
     private Byte[] image;
 
+    @Enumerated(value = EnumType.STRING) //its allow us to add a new value on "Difficulty" later on.
+    private Difficulty difficulty;
+
     @OneToOne(cascade = CascadeType.ALL) //if we wanna delete the recipe, we delete the notes for that recipe.
     private Notes notes;
+
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
     public Long getId() {
         return id;
@@ -95,6 +104,14 @@ public class Recipe {
         this.directions = directions;
     }
 
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public Byte[] getImage() {
         return image;
     }
@@ -103,11 +120,27 @@ public class Recipe {
         this.image = image;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public Notes getNotes() {
         return notes;
     }
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

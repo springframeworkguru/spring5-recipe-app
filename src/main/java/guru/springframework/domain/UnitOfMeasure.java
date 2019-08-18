@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Created by ccabo 8/17/19
+ */
 @Entity
 public class UnitOfMeasure {
     @Id
