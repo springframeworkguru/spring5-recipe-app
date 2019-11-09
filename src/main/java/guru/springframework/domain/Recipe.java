@@ -26,7 +26,7 @@ public class Recipe {
     @Lob
     private Byte[] image;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
     @ManyToMany

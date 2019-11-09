@@ -15,13 +15,13 @@ public class Ingredient {
     private Recipe recipe;
 
     @OneToOne(fetch = FetchType.EAGER) // by default, OneToOne fetchType is eager
-    private UnitOfMeassure uom;
+    private UnitOfMeasure uom;
 
-    public UnitOfMeassure getUom() {
+    public UnitOfMeasure getUom() {
         return uom;
     }
 
-    public void setUom(UnitOfMeassure uom) {
+    public void setUom(UnitOfMeasure uom) {
         this.uom = uom;
     }
 
