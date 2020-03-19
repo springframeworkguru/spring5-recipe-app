@@ -1,5 +1,6 @@
 package guru.springframework.controllers;
 
+import guru.springframework.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,11 +22,24 @@ public class ControllerExceptionHandler {
         log.error("Handling Number Format Exception");
         log.error(exception.getMessage());
 
-        ModelAndView modelAndView = new ModelAndView();
+        return genericExceptionMethod(exception, "400 BAD REQUEST");
+    }
 
-        modelAndView.setViewName("400error");
-        modelAndView.addObject("exception", exception);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound(Exception exception){
 
-        return modelAndView;
+        log.error("Handling not found exception");
+        log.error(exception.getMessage());
+
+        return genericExceptionMethod(exception, "404 NOT FOUND");
+    }
+
+    private ModelAndView genericExceptionMethod(Exception exception, String response) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("response", response);
+        mav.addObject("message", exception.getMessage());
+        mav.setViewName("error");
+        return mav;
     }
 }
