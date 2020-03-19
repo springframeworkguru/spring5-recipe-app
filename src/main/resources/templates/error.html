@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${response}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+    <style>
+        .text-center {
+            top:50%;
+            left: 50%;
+            transform: translate3d(-50%,-50%, 0);
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center">
+        <h1 th:text="${response}"></h1>
+        <p th:text="${message}"></p>
+        <a th:href="@{/index}" class="btn btn-primary">HOME PAGE</a>
+    </div>
+</body>
+</html>
