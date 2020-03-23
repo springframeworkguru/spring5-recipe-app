@@ -2,6 +2,7 @@ package guru.springframework.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -38,6 +39,15 @@ public class Recipe {
     private Set<Category> categories = new HashSet<>();
 
     public Recipe() {
+    }
+
+    public Recipe addIngredient(Ingredient ingredient) {
+        Objects.requireNonNull(ingredient, "method requires non null parameter");
+
+        ingredient.setRecipe(this);
+        ingredients.add(ingredient);
+
+        return this;
     }
 
     public Set<Ingredient> getIngredients() {
@@ -118,6 +128,10 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+
+        //notes should be nullable
+        if (notes != null)
+            notes.setRecipe(this);
     }
 
     public Long getId() {
