@@ -17,6 +17,16 @@ public class Ingredient {
     @OneToOne(fetch = FetchType.EAGER) //guess it's normal behaviour but can be kind of a showcase here
     private UnitOfMeasure unit;
 
+    public Ingredient() {
+    }
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unit, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.recipe = recipe;
+        this.unit = unit;
+    }
+
     public String getDescription() {
         return description;
     }
