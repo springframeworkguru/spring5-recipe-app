@@ -15,6 +15,7 @@ public class Notes {
     @OneToOne
     private Recipe recipe;
 
+    //LOB allows to use more than 255 caracters in SQL fields
     @Lob
     private String recipeNotes;
 

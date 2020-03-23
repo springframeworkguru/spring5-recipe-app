@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by jt on 6/13/17.
@@ -25,8 +26,12 @@ public class Recipe {
     @Lob
     private Byte[] image;
 
+    //Cascade means we own notes and if this obj is destroyed then the notes will be too
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
 
     public Long getId() {
         return id;
