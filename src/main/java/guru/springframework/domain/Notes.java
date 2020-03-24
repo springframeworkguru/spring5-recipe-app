@@ -1,11 +1,18 @@
 package guru.springframework.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 /**
  * Created by jt on 6/13/17.
  */
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Notes {
 
     @Id

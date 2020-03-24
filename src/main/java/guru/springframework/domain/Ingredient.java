@@ -1,10 +1,18 @@
 package guru.springframework.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = "recipe")
 @Entity
 public class Ingredient {
     @Id
@@ -12,6 +20,12 @@ public class Ingredient {
     private Long id;
 
     private String description;
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure) {
+        this.description = description;
+        this.unitOfMeasure = unitOfMeasure;
+        this.amount = amount;
+    }
 
     @OneToOne(fetch=FetchType.EAGER)
     private UnitOfMeasure unitOfMeasure;

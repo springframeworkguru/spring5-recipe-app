@@ -1,12 +1,22 @@
 package guru.springframework.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by jt on 6/13/17.
  */
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude="categories")
 public class Recipe {
 
     @Id
@@ -19,6 +29,7 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+    @Lob
     private String directions;
 
     @Lob
@@ -29,14 +40,19 @@ public class Recipe {
 
     @ManyToMany
     @JoinTable(name="recipe_category", joinColumns = @JoinColumn(name="recipe_id"), inverseJoinColumns = @JoinColumn(name="category_id"))
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     //Cascade means we own notes and if this obj is destroyed then the notes will be too
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
+
+    public void addIngredient(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+    }
 
     public Set<Category> getCategories() {
         return categories;
