@@ -1,7 +1,6 @@
 package guru.springframework.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -10,7 +9,8 @@ public class Ingredient extends BaseEntity{
     private String description;
     private BigDecimal amount;
 
-    // private UnitOfMeasure uom;
+    @OneToOne(fetch = FetchType.EAGER) // Retrieve this field every time from the DB
+    private UnitOfMeasure uom;
 
     // Map: Many Ingredient -> One Recipe , While the Recipe owns the Ingredient entity
     // No Cascade here, Deleting an Ingredient should not delete a Recipe
@@ -39,5 +39,13 @@ public class Ingredient extends BaseEntity{
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public UnitOfMeasure getUom() {
+        return uom;
+    }
+
+    public void setUom(UnitOfMeasure uom) {
+        this.uom = uom;
     }
 }
