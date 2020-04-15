@@ -4,7 +4,11 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-public class Ingredient extends BaseEntity{
+public class Ingredient{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // get the id value from the DB
+    private Long id;
 
     private String description;
     private BigDecimal amount;
@@ -16,6 +20,14 @@ public class Ingredient extends BaseEntity{
     // No Cascade here, Deleting an Ingredient should not delete a Recipe
     @ManyToOne
     private Recipe recipe;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -33,19 +45,19 @@ public class Ingredient extends BaseEntity{
         this.amount = amount;
     }
 
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
     public UnitOfMeasure getUom() {
         return uom;
     }
 
     public void setUom(UnitOfMeasure uom) {
         this.uom = uom;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

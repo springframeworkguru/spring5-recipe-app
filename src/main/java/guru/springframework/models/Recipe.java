@@ -4,7 +4,11 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Recipe extends BaseEntity{
+public class Recipe{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // get the id value from the DB
+    private Long id;
 
     private String description;
     private Integer prepTime;
@@ -15,6 +19,12 @@ public class Recipe extends BaseEntity{
 
     @Enumerated(value = EnumType.STRING) // specify to use the String value of the Enum
     private Difficulty difficulty;
+
+    @ManyToMany
+    @JoinTable( name = "recipe_category",
+                joinColumns = @JoinColumn(name = "recipe_id"),
+                inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
     // Map: One Recipe -> Many Ingredient, While the Recipe owns the Ingredient entity
     // cascade = CascadeType.ALL , Delete a Recipe will delete all Ingredient
@@ -27,6 +37,14 @@ public class Recipe extends BaseEntity{
 
     @OneToOne(cascade = CascadeType.ALL) // Recipe is owner of Notes, so by deleting Recipe we also delete his Notes
     private Notes notes; // 1-1
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -76,6 +94,22 @@ public class Recipe extends BaseEntity{
         this.directions = directions;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
     public Set<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -98,13 +132,5 @@ public class Recipe extends BaseEntity{
 
     public void setNotes(Notes notes) {
         this.notes = notes;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
     }
 }
