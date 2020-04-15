@@ -1,6 +1,7 @@
 package guru.springframework.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe extends BaseEntity{
@@ -14,12 +15,17 @@ public class Recipe extends BaseEntity{
     // ToDo add
     // private Difficulty difficulty;
 
+    // Map: One Recipe -> Many Ingredient, While the Recipe owns the Ingredient entity
+    // cascade = CascadeType.ALL , Delete a Recipe will delete all Ingredient
+    // mappedBy = "recipe" The Ingredient entity there will be a Recipe field to rough back to Recipe
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients; // Unique set on Ingredient !!
+
     @Lob // Large Object, hint JPA to expect big byte[] here
     private byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL) // Recipe is owner of Notes, so by deleting Recipe we also delete his Notes
     private Notes notes; // 1-1
-
 
     public String getDescription() {
         return description;
@@ -67,6 +73,14 @@ public class Recipe extends BaseEntity{
 
     public void setDirections(String directions) {
         this.directions = directions;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public byte[] getImage() {
