@@ -12,8 +12,9 @@ public class Recipe extends BaseEntity{
     private Integer servings;
     private String source;
     private String directions;
-    // ToDo add
-    // private Difficulty difficulty;
+
+    @Enumerated(value = EnumType.STRING) // specify to use the String value of the Enum
+    private Difficulty difficulty;
 
     // Map: One Recipe -> Many Ingredient, While the Recipe owns the Ingredient entity
     // cascade = CascadeType.ALL , Delete a Recipe will delete all Ingredient
@@ -97,5 +98,13 @@ public class Recipe extends BaseEntity{
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 }
