@@ -28,6 +28,7 @@ public class Recipe{
 
     // Map: One Recipe -> Many Ingredient, While the Recipe owns the Ingredient entity
     // cascade = CascadeType.ALL , Delete a Recipe will delete all Ingredient
+    // cascade = CascadeType.ALL , Any change to Recipe.ingredients will be saved to ingredients Table
     // mappedBy = "recipe" The Ingredient entity there will be a Recipe field to rough back to Recipe
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients; // Unique set on Ingredient !!
@@ -35,7 +36,9 @@ public class Recipe{
     @Lob // Large Object, hint JPA to expect big byte[] here
     private byte[] image;
 
-    @OneToOne(cascade = CascadeType.ALL) // Recipe is owner of Notes, so by deleting Recipe we also delete his Notes
+    // Recipe is owner of Notes, so by deleting Recipe we also delete his Notes
+    // CascadeType.ALL , any update to the Recipe.notes will be persistent to Notes table
+    @OneToOne(cascade = CascadeType.ALL)
     private Notes notes; // 1-1
 
     public Long getId() {
