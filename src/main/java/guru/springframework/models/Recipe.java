@@ -1,6 +1,7 @@
 package guru.springframework.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,6 +16,8 @@ public class Recipe{
     private Integer cookTime;
     private Integer servings;
     private String source;
+
+    @Lob // create a large field , default is 255 char
     private String directions;
 
     @Enumerated(value = EnumType.STRING) // specify to use the String value of the Enum
@@ -24,14 +27,14 @@ public class Recipe{
     @JoinTable( name = "recipe_category",
                 joinColumns = @JoinColumn(name = "recipe_id"),
                 inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     // Map: One Recipe -> Many Ingredient, While the Recipe owns the Ingredient entity
     // cascade = CascadeType.ALL , Delete a Recipe will delete all Ingredient
     // cascade = CascadeType.ALL , Any change to Recipe.ingredients will be saved to ingredients Table
     // mappedBy = "recipe" The Ingredient entity there will be a Recipe field to rough back to Recipe
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients; // Unique set on Ingredient !!
+    private Set<Ingredient> ingredients = new HashSet<>(); // Unique set on Ingredient !!
 
     @Lob // Large Object, hint JPA to expect big byte[] here
     private byte[] image;
