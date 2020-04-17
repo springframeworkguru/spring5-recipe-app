@@ -107,27 +107,25 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         perfectGuacamole.setDifficulty(Difficulty.MODERATE);
         perfectGuacamole.getCategories().add(americanCategory);
 
-        perfectGuacamole.getIngredients().add(new Ingredient("ripe avocados", BigDecimal.valueOf(2L), null, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("salt", BigDecimal.valueOf(.25), teaspoon, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("fresh lime juice", BigDecimal.valueOf(1), tablespoon, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("minced red onion", BigDecimal.valueOf(2), tablespoon, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("serrano chiles", BigDecimal.valueOf(2), null, perfectGuacamole));
+        perfectGuacamole.addIngredient(new Ingredient("ripe avocados", BigDecimal.valueOf(2L), null));
+        perfectGuacamole.addIngredient(new Ingredient("salt", BigDecimal.valueOf(.25), teaspoon));
+        perfectGuacamole.addIngredient(new Ingredient("fresh lime juice", BigDecimal.valueOf(1), tablespoon));
+        perfectGuacamole.addIngredient(new Ingredient("minced red onion", BigDecimal.valueOf(2), tablespoon));
+        perfectGuacamole.addIngredient(new Ingredient("serrano chiles", BigDecimal.valueOf(2), null));
 
         perfectGuacamole.setDirections("Directions");
 
         Notes notes = new Notes();
-        notes.setRecipe(perfectGuacamole);
-        notes.setRecipeNotes("THE BEST WAY TO CUT AN AVOCADO\n" +
-                "To slice open an avocado, cut it in half lengthwise with a sharp chef’s knife and twist apart the sides. One side will have the pit. To remove it, you can do one of two things:\n" +
-                "\n" +
-                "Method #1: Gently tap the pit with your chef’s knife so the knife gets wedged into the pit. Twist your knife slightly to dislodge the pit and lift to remove. If you use this method, first protect your hand with a thick kitchen towel before proceeding.\n" +
-                "Method #2: Cut the side with the pit in half again, exposing more of the pit. Use your fingers or a spoon to remove the pit\n" +
-                "Once the pit is removed, just cut the avocado into chunks right inside the peel and use a spoon to scoop them out.");
+        notes.setRecipeNotes("Note 1");
         perfectGuacamole.setNotes(notes);
         recipes.add(perfectGuacamole);
 
         Recipe spicyGrilledChicken = new Recipe();
         spicyGrilledChicken.setDescription("Spicy Grilled Chicken Tacos");
+
+        Notes note2 = new Notes();
+        note2.setRecipeNotes("Note 2");
+        spicyGrilledChicken.setNotes(note2);
 
         recipes.add(spicyGrilledChicken);
 
