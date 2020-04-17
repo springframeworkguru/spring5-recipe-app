@@ -5,11 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Recipe{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // get the id value from the DB
-    private Long id;
+public class Recipe extends BaseEntity{
 
     private String description;
     private Integer prepTime;
@@ -43,14 +39,6 @@ public class Recipe{
     // CascadeType.ALL , any update to the Recipe.notes will be persistent to Notes table
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes; // 1-1
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;

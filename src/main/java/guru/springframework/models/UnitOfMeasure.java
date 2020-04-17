@@ -6,21 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class UnitOfMeasure{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // get the id value from the DB
-    private Long id;
+public class UnitOfMeasure extends BaseEntity{
 
     private String description; // Unit Of Measure
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;
