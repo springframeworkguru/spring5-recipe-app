@@ -1,10 +1,13 @@
 package guru.springframework.models;
 
+import lombok.*;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+@Data
 @MappedSuperclass
 public class BaseEntity {
 
@@ -14,19 +17,4 @@ public class BaseEntity {
 
     private Integer version;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 }

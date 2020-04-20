@@ -4,16 +4,16 @@ import guru.springframework.models.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
+@Slf4j
 @Component
 public class BootstrapData implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -31,9 +31,14 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         recipeRepository.saveAll(loadData());
+        log.debug("loading bootstrap data");
     }
 
-    private Set<Recipe> loadData() {
+    private List<Recipe> loadData() {
+
+        log.debug("loadData - start");
+
+        List<Recipe> recipes = new ArrayList<>();
 
 //        load Category
         Optional<Category> catAmerican = categoryRepository.findByDescription("American");
@@ -51,7 +56,6 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         Optional<Category> catFastFood = categoryRepository.findByDescription("Fast Food");
         if(!catFastFood.isPresent())
             throw new RuntimeException("Fast Food category not found");
-
 
         Category americanCategory = catAmerican.get();
         Category italianCategory = catItalian.get();
@@ -95,9 +99,6 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         UnitOfMeasure clove = uomClove.get();
         UnitOfMeasure pint = uomPint.get();
 
-
-        Set<Recipe> recipes = new HashSet<>();
-
         Recipe perfectGuacamole = new Recipe();
         perfectGuacamole.setDescription("How to Make Perfect Guacamole");
         perfectGuacamole.setPrepTime(10);
@@ -105,6 +106,7 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         perfectGuacamole.setServings(15);
         perfectGuacamole.setSource("Good source");
         perfectGuacamole.setDifficulty(Difficulty.MODERATE);
+
         perfectGuacamole.getCategories().add(americanCategory);
 
         perfectGuacamole.addIngredient(new Ingredient("ripe avocados", BigDecimal.valueOf(2L), null));
@@ -118,7 +120,10 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         Notes notes = new Notes();
         notes.setRecipeNotes("Note 1");
         perfectGuacamole.setNotes(notes);
+
         recipes.add(perfectGuacamole);
+
+        ////////////////////////////////////////////////////////////
 
         Recipe spicyGrilledChicken = new Recipe();
         spicyGrilledChicken.setDescription("Spicy Grilled Chicken Tacos");
@@ -129,6 +134,7 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
 
         recipes.add(spicyGrilledChicken);
 
+        log.debug("loadData - finish");
         return recipes;
     }
 
