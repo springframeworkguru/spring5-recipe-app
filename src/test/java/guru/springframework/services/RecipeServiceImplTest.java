@@ -49,4 +49,5 @@ public class RecipeServiceImplTest {
         // make sure that the recipeRepository.findAll was called once and only once
         verify(recipeRepository, times(1)).findAll();
     }
+
 }

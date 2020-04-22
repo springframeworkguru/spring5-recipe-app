@@ -12,10 +12,19 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-// Example Integration Test
-
+// Load Spring Context
 @RunWith(SpringRunner.class)
-@DataJpaTest // will bring enbeded database , and will configure SpringDataJPA
+
+//DataJpaTest dependencies on
+// maven-failsafe-plugin
+// and {
+//        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+//        compile('org.springframework.boot:spring-boot-starter-web')
+//        runtime('com.h2database:h2')
+//        testCompile('org.springframework.boot:spring-boot-starter-test')
+//        testCompile('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+//        }
+@DataJpaTest
 public class UnitOfMeasureRepositoryIT {
 
     // Spring context will start up and we will get an instance of the UnitOfMeasureRepository injected
@@ -28,9 +37,7 @@ public class UnitOfMeasureRepositoryIT {
 
     @Test
     public void findByDescription() {
-
         Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
-
         assertEquals("Teaspoon", unitOfMeasureOptional.get().getDescription());
     }
 
@@ -41,5 +48,4 @@ public class UnitOfMeasureRepositoryIT {
 
         assertEquals("Cup", unitOfMeasureOptional.get().getDescription());
     }
-
 }

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @Data
+@EqualsAndHashCode
 @MappedSuperclass
 public class BaseEntity {
 

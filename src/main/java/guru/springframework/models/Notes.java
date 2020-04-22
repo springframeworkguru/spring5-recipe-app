@@ -8,7 +8,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 @Data
-@EqualsAndHashCode(exclude = {"recipe"})
+//@EqualsAndHashCode(exclude = {"recipe"})
+@EqualsAndHashCode(callSuper = false)
 @Entity
 public class Notes extends BaseEntity{
 

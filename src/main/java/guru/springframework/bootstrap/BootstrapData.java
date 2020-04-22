@@ -30,7 +30,7 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-//        recipeRepository.saveAll(loadData());
+        recipeRepository.saveAll(loadData());
         log.debug("loading bootstrap data");
     }
 
@@ -137,5 +137,5 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         log.debug("loadData - finish");
         return recipes;
     }
-
 }
+

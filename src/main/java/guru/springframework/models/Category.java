@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Data
 @EqualsAndHashCode(exclude = {"recipes"})
+//@EqualsAndHashCode(callSuper = false)
 @Entity
 public class Category extends BaseEntity{
 

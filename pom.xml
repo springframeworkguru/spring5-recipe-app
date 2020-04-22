@@ -57,9 +57,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+		<dependency> <!-- @DataJpaTest -->
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.5.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -72,7 +73,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!--			Add Integration test support-->
+			<!--	Add Integration test support, @DataJpaTest-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -86,29 +87,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-failsafe-plugin</artifactId>-->
-<!--				<configuration>-->
-<!--					<includes>-->
-<!--						<include>**/*IT.java</include>-->
-<!--					</includes>-->
-<!--					<additionalClasspathElements>-->
-<!--						<additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>-->
-<!--					</additionalClasspathElements>-->
-<!--					<parallel>none</parallel>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<phase>integration-test</phase>-->
-<!--						<goals>-->
-<!--							<goal>integration-test</goal>-->
-<!--							<goal>verify</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
 		</plugins>
 	</build>
 
