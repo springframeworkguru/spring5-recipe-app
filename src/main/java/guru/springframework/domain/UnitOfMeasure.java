@@ -8,11 +8,8 @@ public class UnitOfMeasure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+    private String description;
 
-    private String uom;
-
-    @OneToOne
-    private Ingredient ingredient;
 
     public Long getId() {
         return Id;
@@ -22,19 +19,12 @@ public class UnitOfMeasure {
         Id = id;
     }
 
-    public Ingredient getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
-    }
 
     public String getUom() {
-        return uom;
+        return description;
     }
 
     public void setUom(String uom) {
-        this.uom = uom;
+        this.description = uom;
     }
 }
