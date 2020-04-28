@@ -1,14 +1,17 @@
 package guru.springframework.models;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+//@Data
 //@EqualsAndHashCode(exclude = {"categories", "ingredients"})
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity
 public class Recipe extends BaseEntity{
@@ -52,8 +55,9 @@ public class Recipe extends BaseEntity{
     }
 
     public void setNotes(Notes notes) {
-        notes.setRecipe(this);
+        //notes.setRecipe(this);
         this.notes = notes;
     }
+
 
 }

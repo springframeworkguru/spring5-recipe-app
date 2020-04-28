@@ -1,11 +1,14 @@
 package guru.springframework.controller;
 
+import guru.springframework.models.Recipe;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.RecipeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -24,6 +27,6 @@ public class RecipeList {
 
         model.addAttribute("recipes", recipeService.getRecipes());
 
-        return "recipe/index";
+        return "index";
     }
 }
