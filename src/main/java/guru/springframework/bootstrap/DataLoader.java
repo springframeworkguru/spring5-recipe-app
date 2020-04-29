@@ -58,7 +58,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         guacamole.setNotes(guacNotes);
         guacamole.setServings(4);
-        guacamole.setPrepTime(1);
+        guacamole.setPrepTime(30);
         guacamole.setSource("Simply Recipes");
         guacamole.setUrl("http://localhost:8080/recipes");
 

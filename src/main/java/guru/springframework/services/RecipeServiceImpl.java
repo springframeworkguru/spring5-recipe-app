@@ -26,11 +26,16 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.saveAll(recipes);
     }
 
+    @Override
+    public Recipe findById(Long l) {
 
-    public Optional<Recipe> findById(Long id) {
-        return recipeRepository.findById(id);
+        Optional<Recipe> recipeOptional = recipeRepository.findById(l);
+
+        if (!recipeOptional.isPresent()) {
+            throw new RuntimeException("Recipe Not Found!");
+        }
+        return recipeOptional.get();
     }
-
 
     public boolean existsById(Long id) {
         return recipeRepository.existsById(id);
