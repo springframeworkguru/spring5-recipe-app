@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:https="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Recipe Home</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}">
+
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"></script>
 </head>
 <body>
 
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <div class="card card-primary">
-
+            <div class="card">
                 <div class="card-header bg-primary text-light">
                     <h1 class="card-title">My Recipes!</h1>
                 </div>
@@ -28,19 +30,28 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Description</th>
+                                <th>View</th>
+                                <th>Update</th>
+                                <th>Delete</th>
                             </tr>
                             </thead>
                             <tr th:remove="all">
                                 <td th:text="${recipe.id}">123</td>
                                 <td th:text="${recipe.description}">Tasty Goodnees 1</td>
+                                <td><a href="#">View</a> </td>
                             </tr>
                             <tr th:remove="all">
                                 <td th:text="${recipe.id}">12333</td>
                                 <td th:text="${recipe.description}">Tasty Goodnees 2</td>
+                                <td><a href="#">View</a> </td>
                             </tr>
                             <tr th:each="recipe : ${recipes}">
+                                <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
                                 <td th:text="${recipe.id}">334</td>
                                 <td th:text="${recipe.description}">Tasty Goodnees 3</td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/show'}">View</a></td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/update'}">Update</a></td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/delete'}">Delete</a></td>
                             </tr>
                         </table>
                     </div>
