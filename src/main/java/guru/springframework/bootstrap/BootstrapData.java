@@ -103,17 +103,20 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         perfectGuacamole.setDescription("How to Make Perfect Guacamole");
         perfectGuacamole.setPrepTime(10);
         perfectGuacamole.setCookTime(10);
-        perfectGuacamole.setServings(15);
+        perfectGuacamole.setServings(4);
         perfectGuacamole.setSource("Good source");
         perfectGuacamole.setDifficulty(Difficulty.MODERATE);
 
-        perfectGuacamole.getCategories().add(americanCategory);
+        perfectGuacamole.setUrl("http://google.com");
 
-        perfectGuacamole.addIngredient(new Ingredient("ripe avocados", BigDecimal.valueOf(2L), null));
+        perfectGuacamole.getCategories().add(americanCategory);
+        perfectGuacamole.getCategories().add(italianCategory);
+
+        perfectGuacamole.addIngredient(new Ingredient("ripe avocados", BigDecimal.valueOf(2L), tablespoon));
         perfectGuacamole.addIngredient(new Ingredient("salt", BigDecimal.valueOf(.25), teaspoon));
         perfectGuacamole.addIngredient(new Ingredient("fresh lime juice", BigDecimal.valueOf(1), tablespoon));
         perfectGuacamole.addIngredient(new Ingredient("minced red onion", BigDecimal.valueOf(2), tablespoon));
-        perfectGuacamole.addIngredient(new Ingredient("serrano chiles", BigDecimal.valueOf(2), null));
+        perfectGuacamole.addIngredient(new Ingredient("serrano chiles", BigDecimal.valueOf(2), tablespoon));
 
         perfectGuacamole.setDirections("Directions");
 

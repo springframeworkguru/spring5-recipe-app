@@ -34,9 +34,7 @@
                             </div>
                             <div class="col-md-9">
                                 <ul>
-                                    <li>Cat one</li>
-                                    <li>Cat two</li>
-                                    <li>Cat three</li>
+                                    <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">1</li>
                                 </ul>
                             </div>
                         </div>
@@ -45,13 +43,13 @@
                                 <h5>Prep Time:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>30 min</p>
+                                <p th:text="${(recipe.getPrepTime() + ' min')}">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Difficulty:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>Easy</p>
+                                <p th:text="${recipe.getDifficulty()}">Easy!</p>
                             </div>
                         </div>
                         <div class="row">
@@ -59,13 +57,13 @@
                                 <h5>Cooktime:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>30 min</p>
+                                <p th:text="${(recipe.getCookTime() + ' min')}">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Servings:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>4</p>
+                                <p th:text="${recipe.getServings()}">4</p>
                             </div>
                         </div>
                         <div class="row">
@@ -73,13 +71,13 @@
                                 <h5>Source:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>30 min</p>
+                                <p th:text="${recipe.getSource()}">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>http://www.example.com</p>
+                                <p th:text="${recipe.getUrl()}">http://www.example.com</p>
                             </div>
                         </div>
                     </div>
@@ -92,9 +90,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul>
-                                    <li>1 Cup of milk</li>
-                                    <li>1 Teaspoon of Chocolate</li>
-                                    <li>1 Teaspoon of Sugar</li>
+                                    <li th:each="ingredient : ${recipe.ingredients}"
+                                        th:text="${(ingredient.getAmount() + ' ' + ingredient.getUom().getDescription() + ' - ' + ingredient.getDescription())}">1 Cup of milk</li>
                                 </ul>
                             </div>
                         </div>
@@ -107,7 +104,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p>lorm bla bla bla ...</p>
+                                <p th:text="${recipe.getDescription()}">lorm bla bla bla ...</p>
                             </div>
                         </div>
                     </div>
@@ -119,7 +116,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p>Notes bla bla bla...</p>
+                                <p th:text="${recipe.getNotes().getRecipeNotes()}">Notes bla bla bla...</p>
                             </div>
                         </div>
                     </div>

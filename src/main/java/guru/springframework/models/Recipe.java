@@ -21,6 +21,7 @@ public class Recipe extends BaseEntity{
     private Integer cookTime;
     private Integer servings;
     private String source;
+    private String url;
 
     @Lob // create a large field , default is 255 char
     private String directions;
@@ -57,6 +58,14 @@ public class Recipe extends BaseEntity{
     public void setNotes(Notes notes) {
         //notes.setRecipe(this);
         this.notes = notes;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 
