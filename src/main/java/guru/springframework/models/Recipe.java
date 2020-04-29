@@ -29,7 +29,7 @@ public class Recipe extends BaseEntity{
     @Enumerated(value = EnumType.STRING) // specify to use the String value of the Enum
     private Difficulty difficulty;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable( name = "recipe_category",
                 joinColumns = @JoinColumn(name = "recipe_id"),
                 inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -39,7 +39,7 @@ public class Recipe extends BaseEntity{
     // cascade = CascadeType.ALL , Delete a Recipe will delete all Ingredient
     // cascade = CascadeType.ALL , Any change to Recipe.ingredients will be saved to ingredients Table
     // mappedBy = "recipe" The Ingredient entity there will be a Recipe field to rough back to Recipe
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe", fetch = FetchType.EAGER)
     private Set<Ingredient> ingredients = new HashSet<>(); // Unique set on Ingredient !!
 
     @Lob // Large Object, hint JPA to expect big byte[] here

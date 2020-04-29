@@ -13,7 +13,7 @@ public class Category extends BaseEntity{
 
     private String description;
 
-    @ManyToMany(mappedBy = "categories") // mappedBy = "categories" , the name of the attribute in Recipe
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER) // mappedBy = "categories" , the name of the attribute in Recipe
     private Set<Recipe> recipes;
 
 }

@@ -128,14 +128,14 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
 
         ////////////////////////////////////////////////////////////
 
-        Recipe spicyGrilledChicken = new Recipe();
-        spicyGrilledChicken.setDescription("Spicy Grilled Chicken Tacos");
-
-        Notes note2 = new Notes();
-        note2.setRecipeNotes("Note 2");
-        spicyGrilledChicken.setNotes(note2);
-
-        recipes.add(spicyGrilledChicken);
+//        Recipe spicyGrilledChicken = new Recipe();
+//        spicyGrilledChicken.setDescription("Spicy Grilled Chicken Tacos");
+//
+//        Notes note2 = new Notes();
+//        note2.setRecipeNotes("Note 2");
+//        spicyGrilledChicken.setNotes(note2);
+//
+//        recipes.add(spicyGrilledChicken);
 
         log.debug("loadData - finish");
         return recipes;
