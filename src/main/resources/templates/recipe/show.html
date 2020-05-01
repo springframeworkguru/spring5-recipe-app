@@ -91,7 +91,9 @@
                             <div class="col-md-12">
                                 <ul>
                                     <li th:each="ingredient : ${recipe.ingredients}"
-                                        th:text="${(ingredient.getAmount() + ' ' + ingredient.getUom().getDescription() + ' - ' + ingredient.getDescription())}">1 Cup of milk</li>
+                                        th:text="${(ingredient.getAmount()
+                                        + ' ' + ingredient.getUom().getDescription()
+                                        + ' - ' + ingredient.getDescription())}">1 Cup of milk</li>
                                 </ul>
                             </div>
                         </div>
@@ -104,7 +106,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p th:text="${recipe.getDescription()}">lorm bla bla bla ...</p>
+                                <p th:text="${recipe.getDirections()}">Directions ...</p>
                             </div>
                         </div>
                     </div>
