@@ -83,9 +83,17 @@
                     </div>
                 </div>
                 <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Ingredient</h1>
+                    <div class="panel-heading clearfix" style="padding-top: 0px; padding-bottom: 0px;">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h4>Ingredient:</h4>
+                            </div>
+                            <div class="col-md-offset-11" style="padding-top: 4px;">
+                                <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" class="btn btn-default btn-sm">Add</a>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">

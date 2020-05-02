@@ -1,5 +1,6 @@
 package guru.springframework.controller;
 
+import guru.springframework.command.RecipeCommand;
 import guru.springframework.models.Recipe;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
