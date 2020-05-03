@@ -73,6 +73,24 @@ public class IngredientControllerTest {
     }
 
     @Test
+    public void testNewIngredientForm() throws Exception {
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+        when(unitOfMeasureService.listAllUOM()).thenReturn(new HashSet<>());
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/1/ingredient/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/ingredientform"))
+                .andExpect(model().attributeExists("ingredient"))
+                .andExpect(model().attributeExists("uomList"));
+    }
+
+    @Test
     public void testUpdateIngredientForm() throws Exception {
 
         IngredientCommand ingredientCommand = new IngredientCommand();
@@ -102,6 +120,21 @@ public class IngredientControllerTest {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
 
         mockMvc.perform(MockMvcRequestBuilders.post("/recipe/1/ingredient")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)    // mimic a form post
+                .param("id", "")                        // mimic an empty string
+                .param("description", "some string")    // some description
+        )
+                .andExpect(status().is3xxRedirection()) // expect 3xx status of redirection
+                .andExpect(view().name("redirect:/recipe/1/ingredients")); // redirection string
+
+    }
+
+    @Test
+    public void testDeleteIngredient() throws Exception {
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/recipe/1/ingredient/2/delete")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)    // mimic a form post
                 .param("id", "")                        // mimic an empty string
                 .param("description", "some string")    // some description
