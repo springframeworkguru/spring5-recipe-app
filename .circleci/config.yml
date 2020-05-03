@@ -6,5 +6,6 @@ orbs:
 workflows:
   maven_test:
     jobs:
-      - maven/test # #checkout, build, test, and upload test results
-  © 2020 GitHub, Inc.
+      - maven/test
+      - # #checkout, build, test, and upload test results
+      # © 2020 GitHub, Inc.
