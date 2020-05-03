@@ -141,7 +141,6 @@ public class IngredientControllerTest {
         )
                 .andExpect(status().is3xxRedirection()) // expect 3xx status of redirection
                 .andExpect(view().name("redirect:/recipe/1/ingredients")); // redirection string
-
     }
 
 
