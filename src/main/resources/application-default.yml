@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    platform: h2
+  jpa:
+    show-sql: true
