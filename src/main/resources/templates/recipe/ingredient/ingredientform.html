@@ -25,7 +25,7 @@
             <!-- th:object="${recipe}" Object is recipe , we will pass in a recipe command object to the property recipe, to be used in the rest of the form -->
             <!-- th:action="@{/recipe/}" action is saying that we will post to the recipe -->
 
-            <form th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.getRecipeId()} + '/ingredient'}">
+            <form th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.getRecipeId()} + '/ingredient'}" method="post">
                 <input type="hidden" th:field="*{id}"/>
                 <div class="panel-group">
                     <div class="panel panel-primary">

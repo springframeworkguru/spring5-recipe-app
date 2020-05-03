@@ -18,8 +18,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @GetMapping
-    @RequestMapping("/recipe/{id}/show")
+    @GetMapping("/recipe/{id}/show")
     public String showById(Model model, @PathVariable String id){
 
         Recipe recipe = recipeService.findById(Long.valueOf(id));
@@ -29,8 +28,7 @@ public class RecipeController {
     }
 
     // load an empty recipe form for creat
-    @GetMapping
-    @RequestMapping("/recipe/new")
+    @GetMapping("/recipe/new")
     public String loadNewRecipeForm(Model model){
 
         model.addAttribute("recipe", new RecipeCommand());
@@ -39,8 +37,7 @@ public class RecipeController {
     }
 
     // load a filed form with recipe
-    @GetMapping
-    @RequestMapping("/recipe/{id}/update")
+    @GetMapping("/recipe/{id}/update")
     public String loadFiledRecipeFormForUpdate(Model model, @PathVariable String id){
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
 
@@ -50,8 +47,7 @@ public class RecipeController {
     }
 
     // handle the post
-    @PostMapping()
-    @RequestMapping("recipe")
+    @PostMapping("recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand command){
 
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
@@ -60,8 +56,7 @@ public class RecipeController {
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 
-    @GetMapping
-    @RequestMapping("/recipe/{id}/delete")
+    @GetMapping("/recipe/{id}/delete")
     public String deleteRecipe(@PathVariable String id){
         log.debug("deleteRecipe :" + id);
 
