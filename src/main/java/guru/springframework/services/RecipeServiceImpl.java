@@ -2,6 +2,7 @@ package guru.springframework.services;
 
 import guru.springframework.Converters.RecipeCommandToRecipe;
 import guru.springframework.Converters.RecipeToRecipeCommand;
+import guru.springframework.command.IngredientCommand;
 import guru.springframework.command.RecipeCommand;
 import guru.springframework.models.Recipe;
 import guru.springframework.repositories.RecipeRepository;
@@ -41,7 +42,6 @@ public class RecipeServiceImpl implements RecipeService{
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
         if(!recipeOptional.isPresent()){
             throw  new RuntimeException("Recipe Not Found");
-
         }
 
         return recipeOptional.get();
@@ -75,4 +75,5 @@ public class RecipeServiceImpl implements RecipeService{
     public void deleteById(Long id) {
         recipeRepository.deleteById(id);
     }
+
 }
