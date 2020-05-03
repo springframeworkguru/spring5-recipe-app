@@ -1,6 +1,6 @@
 package guru.springframework.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,14 +25,14 @@ public class Recipe {
     private String directions;
 
     @Lob
-    private byte[] image;
+    private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
-    ;
+
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;

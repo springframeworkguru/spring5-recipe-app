@@ -1,29 +1,33 @@
 package guru.springframework.services;
 
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.converters.RecipeCommandToRecipe;
+import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.repository.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             RecipeCommandToRecipe recipeCommandToRecipe,
+                             RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
-    }
-
-    public Recipe save(Recipe recipe) {
-        return recipeRepository.save(recipe);
-    }
-
-    public Iterable<Recipe> saveAll(List<Recipe> recipes) {
-        return recipeRepository.saveAll(recipes);
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -32,58 +36,40 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe with id " + l +" not found!");
         }
         return recipeOptional.get();
     }
 
-    public boolean existsById(Long id) {
-        return recipeRepository.existsById(id);
-    }
-
-
-    public List<Recipe> findAll() {
-        List recipes = new ArrayList();
-        recipeRepository.findAll().forEach(recipe -> recipes.add(recipe));
-        return recipes;
-    }
-
-
-    public Iterable<Recipe> findAllById(Iterable<Long> ids) {
-        return recipeRepository.findAllById(ids);
-    }
-
-
-    public long count() {
-        return recipeRepository.count();
-    }
-
-
-    public void deleteById(Long id) {
-        recipeRepository.deleteById(id);
-    }
-
-
-    public void delete(Recipe entity) {
-        recipeRepository.delete(entity);
-    }
-
-
-    public void deleteAll(Iterable<? extends Recipe> entities) {
-        recipeRepository.deleteAll(entities);
-    }
-
-
-    public void deleteAll() {
-        recipeRepository.deleteAll();
-    }
 
     @Override
     public Set<Recipe> getRecipes() {
-       log.debug("I am in get recipe method of Recipe Service");
+        log.debug("I am in get recipe method of Recipe Service");
 
         Set<Recipe> recipes = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
         return recipes;
+    }
+
+    @Override
+    @Transactional
+    public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+        Recipe detached = recipeCommandToRecipe.convert(recipeCommand);
+        Recipe savedRecipe = recipeRepository.save(detached);
+
+        log.debug("Saved Recipe's id:" + savedRecipe.getId());
+        return recipeToRecipeCommand.convert(savedRecipe);
+    }
+
+    @Transactional
+    @Override
+    public RecipeCommand findCommandById(long id) {
+        Recipe recipe = findById(id);
+        return recipeToRecipeCommand.convert(recipe);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        recipeRepository.deleteById(id);
     }
 }
