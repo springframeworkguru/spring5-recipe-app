@@ -22,6 +22,6 @@ public class RecipeCommand extends BaseEntity{
     private Difficulty difficulty;
     private Set<CategoryCommand> categories;
     private Set<IngredientCommand> ingredients;
-    private byte[] image;
+    private Byte[] image;
     private NotesCommand notes;
 }

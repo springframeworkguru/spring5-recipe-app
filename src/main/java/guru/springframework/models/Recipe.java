@@ -43,7 +43,7 @@ public class Recipe extends BaseEntity{
     private Set<Ingredient> ingredients = new HashSet<>(); // Unique set on Ingredient !!
 
     @Lob // Large Object, hint JPA to expect big byte[] here
-    private byte[] image;
+    private Byte[] image;
 
     // Recipe is owner of Notes, so by deleting Recipe we also delete his Notes
     // CascadeType.ALL , any update to the Recipe.notes will be persistent to Notes table
