@@ -5,6 +5,7 @@ import guru.springframework.services.ImageService;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class ImageControllerTest {
 
+    @InjectMocks
     ImageController imageController;
 
     @Mock

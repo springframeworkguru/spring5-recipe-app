@@ -4,6 +4,7 @@ import guru.springframework.Converters.RecipeCommandToRecipe;
 import guru.springframework.Converters.RecipeToRecipeCommand;
 import guru.springframework.models.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import javassist.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -86,6 +87,20 @@ public class RecipeServiceImplTest {
 
         // then
         verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
+
+    // Test exception for not found
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound(){
+
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+
+        // should go BOOM
     }
 
 

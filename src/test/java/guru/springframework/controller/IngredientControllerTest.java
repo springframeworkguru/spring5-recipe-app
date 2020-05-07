@@ -2,13 +2,12 @@ package guru.springframework.controller;
 
 import guru.springframework.command.IngredientCommand;
 import guru.springframework.command.RecipeCommand;
-import guru.springframework.command.UnitOfMeasureCommand;
-import guru.springframework.models.Ingredient;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
@@ -17,23 +16,23 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class IngredientControllerTest {
 
+    @InjectMocks
+    IngredientController ingredientController;
+
     @Mock
     RecipeService recipeService;
-
     @Mock
     IngredientService ingredientService;
     @Mock
     UnitOfMeasureService unitOfMeasureService;
 
-    IngredientController ingredientController;
 
     MockMvc mockMvc;
 

@@ -1,5 +1,6 @@
 package guru.springframework.bootstrap;
 
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.models.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
@@ -43,19 +44,19 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
 //        load Category
         Optional<Category> catAmerican = categoryRepository.findByDescription("American");
         if(!catAmerican.isPresent())
-            throw new RuntimeException("American category not found");
+            throw new NotFoundException("American category not found");
 
         Optional<Category> catItalian = categoryRepository.findByDescription("Italian");
         if(!catItalian.isPresent())
-            throw new RuntimeException("Italian category not found");
+            throw new NotFoundException("Italian category not found");
 
         Optional<Category> catMexican = categoryRepository.findByDescription("Mexican");
         if(!catMexican.isPresent())
-            throw new RuntimeException("Mexican category not found");
+            throw new NotFoundException("Mexican category not found");
 
         Optional<Category> catFastFood = categoryRepository.findByDescription("Fast Food");
         if(!catFastFood.isPresent())
-            throw new RuntimeException("Fast Food category not found");
+            throw new NotFoundException("Fast Food category not found");
 
         Category americanCategory = catAmerican.get();
         Category italianCategory = catItalian.get();
@@ -65,31 +66,31 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
         // load UOM
         Optional<UnitOfMeasure> uomTeaspoon = unitOfMeasureRepository.findByDescription("Teaspoon");
         if(!uomTeaspoon.isPresent())
-            throw new RuntimeException("UOM Teaspoon not found");
+            throw new NotFoundException("UOM Teaspoon not found");
 
         Optional<UnitOfMeasure> uomTablespoon = unitOfMeasureRepository.findByDescription("Tablespoon");
         if(!uomTablespoon.isPresent())
-            throw new RuntimeException("UOM Tablespoon not found");
+            throw new NotFoundException("UOM Tablespoon not found");
 
         Optional<UnitOfMeasure> uomCup = unitOfMeasureRepository.findByDescription("Cup");
         if(!uomCup.isPresent())
-            throw new RuntimeException("UOM Cup not found");
+            throw new NotFoundException("UOM Cup not found");
 
         Optional<UnitOfMeasure> uomPinch = unitOfMeasureRepository.findByDescription("Pinch");
         if(!uomPinch.isPresent())
-            throw new RuntimeException("UOM Pinch not found");
+            throw new NotFoundException("UOM Pinch not found");
 
         Optional<UnitOfMeasure> uomOunce = unitOfMeasureRepository.findByDescription("Ounce");
         if(!uomOunce.isPresent())
-            throw new RuntimeException("UOM Ounce not found");
+            throw new NotFoundException("UOM Ounce not found");
 
         Optional<UnitOfMeasure> uomClove = unitOfMeasureRepository.findByDescription("Clove");
         if(!uomClove.isPresent())
-            throw new RuntimeException("UOM Clove not found");
+            throw new NotFoundException("UOM Clove not found");
 
         Optional<UnitOfMeasure> uomPint = unitOfMeasureRepository.findByDescription("Pint");
         if(!uomPint.isPresent())
-            throw new RuntimeException("UOM Pint not found");
+            throw new NotFoundException("UOM Pint not found");
 
         UnitOfMeasure teaspoon = uomTeaspoon.get();
         UnitOfMeasure tablespoon = uomTablespoon.get();

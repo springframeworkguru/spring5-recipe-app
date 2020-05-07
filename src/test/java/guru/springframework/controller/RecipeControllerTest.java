@@ -1,10 +1,12 @@
 package guru.springframework.controller;
 
 import guru.springframework.command.RecipeCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.models.Recipe;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -16,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class RecipeControllerTest {
 
+    @InjectMocks
     RecipeController recipeController;
 
     @Mock
@@ -45,6 +48,18 @@ public class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    // test a Not Found exception
+    @Test
+    public void testGetRecipeNotFound() throws Exception{
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
+
     }
 
     @Test

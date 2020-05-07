@@ -3,6 +3,7 @@ package guru.springframework.services;
 import guru.springframework.Converters.IngredientCommandToIngredient;
 import guru.springframework.Converters.IngredientToIngredientCommand;
 import guru.springframework.command.IngredientCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.models.Ingredient;
 import guru.springframework.models.Recipe;
 import guru.springframework.models.UnitOfMeasure;
@@ -39,7 +40,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
         if(!recipeOptional.isPresent()){
             // ToDo
-            throw new RuntimeException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
 
         Recipe recipe = recipeOptional.get();
@@ -57,7 +58,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Ingredient> optionalIngredient = filter.findFirst();
         if(!optionalIngredient.isPresent()){
             // ToDo
-            throw new RuntimeException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
 
         Ingredient ingredient = optionalIngredient.get();
@@ -73,7 +74,7 @@ public class IngredientServiceImpl implements IngredientService {
         if(!recipeOptional.isPresent()){
             // ToDo
             log.error("Recipe not found for id: " + command.getRecipeId());
-            throw new RuntimeException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         } else {
 
             // get the recipe
@@ -112,7 +113,7 @@ public class IngredientServiceImpl implements IngredientService {
             if(!savedIngredientOptional.isPresent()){
                 // ToDo
                 log.error("Ingredient not found for id: " + command.getRecipeId());
-                throw new RuntimeException("Recipe not found");
+                throw new NotFoundException("Recipe not found");
             } else {
                 return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
             }
@@ -127,7 +128,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
         if(!optionalRecipe.isPresent()){
             // todo
-            throw new RuntimeException("recipe not found by recipeId :" + recipeId);
+            throw new NotFoundException("recipe not found by recipeId :" + recipeId);
         }
 
         Recipe recipe = optionalRecipe.get();
@@ -140,6 +141,7 @@ public class IngredientServiceImpl implements IngredientService {
         if(!optionalIngredient.isPresent()){
             // todo
             log.error("Ingredient not found id:" + ingredientId);
+            throw new NotFoundException("Ingredient not found id:" + ingredientId);
         }
 
         Ingredient ingredient = optionalIngredient.get();
