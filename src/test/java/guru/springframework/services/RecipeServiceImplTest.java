@@ -2,9 +2,9 @@ package guru.springframework.services;
 
 import guru.springframework.Converters.RecipeCommandToRecipe;
 import guru.springframework.Converters.RecipeToRecipeCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.models.Recipe;
 import guru.springframework.repositories.RecipeRepository;
-import javassist.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
