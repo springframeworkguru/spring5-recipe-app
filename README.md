@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/LeMikaelF/spring5-recipe-app/tree/circleci-project-setup.svg?style=svg)](https://circleci.com/gh/LeMikaelF/spring5-recipe-app/tree/circleci-project-setup)
+[![CircleCI](https://circleci.com/gh/LeMikaelF/spring5-recipe-app.svg?style=svg)](https://circleci.com/gh/LeMikaelF/spring5-recipe-app)
 
 # Spring Boot Recipe Application
 
