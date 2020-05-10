@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Set;
 
 @Slf4j
-@RequestMapping("/recipes")
 @Controller
-public class ListController {
+public class IndexController {
     private final RecipeService recipeService;
 
-    public ListController(RecipeService recipeService) {
+    public IndexController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 
@@ -23,7 +22,7 @@ public class ListController {
     public String getRecipes(Model model) {
         final Set<Recipe> recipes = recipeService.getRecipes();
         model.addAttribute("recipes", recipes);
-        log.debug("Added to model: {} recipes", recipes.size());
-        return "recipes/list";
+        log.info("Added to model: {} recipes", recipes.size());
+        return "index";
     }
 }
