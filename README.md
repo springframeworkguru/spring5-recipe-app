@@ -1,5 +1,4 @@
-[![<ORG_NAME>](https://circleci.com/gh/LeMikaelF/spring5-recipe-app.svg?style=shield)](https://app.circleci.com/pipelines/github/LeMikaelF/spring5-recipe-app)
-
+[![CircleCI](https://circleci.com/gh/LeMikaelF/spring5-recipe-app/tree/circleci-project-setup.svg?style=svg)](https://circleci.com/gh/LeMikaelF/spring5-recipe-app/tree/circleci-project-setup)
 
 # Spring Boot Recipe Application
 
