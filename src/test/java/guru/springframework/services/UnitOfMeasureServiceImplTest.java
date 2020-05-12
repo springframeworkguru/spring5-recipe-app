@@ -1,5 +1,7 @@
 package guru.springframework.services;
 
+import guru.springframework.commands.UnitOfMeasureCommand;
+import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
@@ -21,15 +23,18 @@ public class UnitOfMeasureServiceImplTest {
     @Mock
     UnitOfMeasureRepository repository;
     UnitOfMeasureService service;
+    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
+
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        service = new UnitOfMeasureServiceImpl(repository);
+        unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+        service = new UnitOfMeasureServiceImpl(repository, unitOfMeasureToUnitOfMeasureCommand);
     }
 
     @Test
-    public void findAll() {
+    public void findAllCommands() {
         //given
         UnitOfMeasure unitOfMeasure1 = new UnitOfMeasure();
         unitOfMeasure1.setId(1L);
@@ -42,7 +47,7 @@ public class UnitOfMeasureServiceImplTest {
         when(repository.findAll()).thenReturn(set);
 
         //when
-        final Set<UnitOfMeasure> all = service.findAll();
+        final Set<UnitOfMeasureCommand> all = service.findAllCommands();
 
         //then
         assertEquals(set.size(), all.size());
@@ -57,7 +62,7 @@ public class UnitOfMeasureServiceImplTest {
         when(repository.findById(eq(uomId))).thenReturn(Optional.of(unitOfMeasure));
 
         //when
-        final UnitOfMeasure found = service.findById(uomId);
+        final UnitOfMeasureCommand found = service.findCommandById(uomId);
 
         //then
         assertEquals(uomId, found.getId());
