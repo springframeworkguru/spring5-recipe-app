@@ -2,4 +2,6 @@
 
 # Spring Boot Recipe Application
 
-This repository a demo application built in the "Spring Framework 5 - Beginner to Guru" course
+This repository a demo application built in the "Spring Framework 5 - Beginner to Guru" course. 
+
+I built the backend; most of the frontend (HTML, css) is by John Thompson.
