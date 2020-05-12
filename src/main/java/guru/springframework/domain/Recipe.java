@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "notes")
 @Entity
 public class Recipe {
     @Id
