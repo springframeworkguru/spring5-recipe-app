@@ -1,7 +1,6 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
-import guru.springframework.exceptions.RecipeNotFoundException;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -50,7 +49,6 @@ public class IngredientController {
 
     @GetMapping("/ingredient/new")
     public String newIngredient(@PathVariable Long recipeId, Model model) {
-        validateRecipeId(recipeId);
         final IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setRecipeId(recipeId);
         model.addAttribute("ingredient", ingredientCommand);
@@ -58,9 +56,12 @@ public class IngredientController {
         return "recipe/ingredient/ingredientform";
     }
 
-    private void validateRecipeId(Long id) {
-        if (!recipeService.recipeExists(id)) {
-            throw new RecipeNotFoundException(id);
-        }
+    @GetMapping("/ingredient/{ingredientId}/delete")
+    public String deleteIngredient(@PathVariable Long ingredientId, @PathVariable Long recipeId) {
+        ingredientService.deleteByIngredientIdAndRecipeId(ingredientId, recipeId);
+        return String.format("redirect:/recipe/%d/ingredients", recipeId);
     }
+
+
+//TODO add error handling
 }

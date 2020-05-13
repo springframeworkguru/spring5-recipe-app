@@ -14,10 +14,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -69,23 +69,27 @@ public class IngredientServiceImplTest {
     @Test
     public void save() {
         //given
+        final UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
+        unitOfMeasureCommand.setId(unitOfMeasureId);
+
         final IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setId(ingredientId);
+        ingredientCommand.setAmount(BigDecimal.valueOf(3));
         ingredientCommand.setRecipeId(recipeId);
+
+        final UnitOfMeasure unitOfMeasure = new UnitOfMeasure();
+        unitOfMeasure.setId(unitOfMeasureId);
+        ingredientCommand.setUom(unitOfMeasureCommand);
 
         final Ingredient ingredient = new Ingredient();
         ingredient.setId(ingredientId);
+        ingredient.setUom(unitOfMeasure);
 
         final Recipe recipe = new Recipe();
         recipe.addIngredient(ingredient);
         recipe.setId(recipeId);
         ingredient.setRecipe(recipe);
 
-        final UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
-        unitOfMeasureCommand.setId(unitOfMeasureId);
-
-        final UnitOfMeasure unitOfMeasure = new UnitOfMeasure();
-        ingredientCommand.setUom(unitOfMeasureCommand);
 
         when(recipeRepository.findById(any())).thenReturn(Optional.of(recipe));
         when(recipeRepository.save(any(Recipe.class))).thenReturn(recipe);
@@ -100,4 +104,24 @@ public class IngredientServiceImplTest {
         assertNotNull(savedIngredientCommand);
         assertEquals(recipeId, savedIngredientCommand.getRecipeId());
     }
+
+    @Test
+    public void deleteByIngredientIdAndRecipeId() {
+        //given
+        final Recipe recipe = new Recipe();
+        recipe.setId(recipeId);
+        final Ingredient ingredient = new Ingredient();
+        ingredient.setId(ingredientId);
+        ingredient.setRecipe(recipe);
+        recipe.addIngredient(ingredient);
+
+        when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(recipe));
+
+        //when
+        service.deleteByIngredientIdAndRecipeId(ingredientId, recipeId);
+
+        //then
+        assertTrue(recipe.getIngredients().isEmpty());
+    }
+
 }

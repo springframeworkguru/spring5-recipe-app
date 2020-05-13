@@ -69,15 +69,30 @@ public class IngredientServiceImpl implements IngredientService {
             recipe.addIngredient(ingredient);
             ingredient.setRecipe(recipe);
         }
+        log.debug("IngredientCommand to save: {}", command.toString());
         return recipeRepository.save(recipe).getIngredients().stream()
                 .peek(ingredient -> log.debug(ingredient.toString()))
                 .filter(ingredient ->
                         Objects.equals(ingredient.getDescription(), command.getDescription())
-                        && Objects.equals(ingredient.getAmount(), command.getAmount())
-                        && Objects.equals(ingredient.getUom().getId(), command.getUom().getId()))
+                                && Objects.equals(ingredient.getAmount(), command.getAmount())
+                                && Objects.equals(ingredient.getUom().getId(), command.getUom().getId()))
                 .findFirst()
                 .map(ingredientToIngredientCommand::convert)
                 .orElse(null);
+    }
+
+    @Override
+    public void deleteByIngredientIdAndRecipeId(Long ingredientId, Long recipeId) {
+        recipeRepository.findById(recipeId)
+                .ifPresent(recipe -> {
+                    recipe.getIngredients().stream()
+                            .filter(ingredient -> Objects.equals(ingredientId, ingredient.getId()))
+                            .findFirst().ifPresent(ingredient -> {
+                        recipe.getIngredients().remove(ingredient);
+                        ingredient.setRecipe(null);
+                    });
+                    recipeRepository.save(recipe);
+                });
     }
 
 }

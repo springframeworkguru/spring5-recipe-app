@@ -121,4 +121,15 @@ public class IngredientControllerTest {
                 .andExpect(model().attributeExists("ingredient"))
                 .andExpect(model().attributeExists("uomList"));
     }
+
+    @Test
+    public void deleteIngredient() throws Exception {
+        //when
+        mockMvc.perform(get(String.format("/recipe/%d/ingredient/%d/delete", recipeId, ingredientId)))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name(String.format("redirect:/recipe/%d/ingredients", recipeId)));
+
+        //then
+        verify(ingredientService).deleteByIngredientIdAndRecipeId(eq(ingredientId), eq(recipeId));
+    }
 }
