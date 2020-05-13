@@ -15,6 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import static org.junit.Assert.*;
 
 
@@ -51,4 +54,22 @@ public class RecipeServiceIT {
         assertEquals(recipe.getCategories().size(), recipeCommand.getCategories().size());
         assertEquals(recipe.getIngredients().size(), savedRecipeCommand.getIngredients().size());
     }
+
+    @Test
+    public void recipeExistsTrue() {
+        final Recipe recipe = repository.findAll().iterator().next();
+        assertTrue(service.recipeExists(recipe.getId()));
+    }
+
+    @Test
+    public void recipeExistsFalse() {
+        Set<Long> ids = new TreeSet<>();
+        repository.findAll().iterator().forEachRemaining(recipe -> ids.add(recipe.getId()));
+        Long tracker = Long.MIN_VALUE;
+        for (Long id : ids) {
+            tracker = id;
+        }
+        assertFalse(service.recipeExists(tracker + 1));
+    }
+
 }
