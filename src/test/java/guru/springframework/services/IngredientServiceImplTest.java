@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class IngredientServiceImplTest {
@@ -122,6 +123,7 @@ public class IngredientServiceImplTest {
 
         //then
         assertTrue(recipe.getIngredients().isEmpty());
+        verify(recipeRepository).save(eq(recipe));
     }
 
 }

@@ -32,7 +32,7 @@ public class RecipeController {
     @PostMapping("")
     public String postRecipe(@ModelAttribute RecipeCommand command) {
         final RecipeCommand savedCommand = recipeService.saveRecipeFromCommandObject(command);
-        return "redirect:recipe/" + savedCommand.getId() + "/show";
+        return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 
     @GetMapping("/{id}/update")

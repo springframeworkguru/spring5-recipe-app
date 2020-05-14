@@ -21,12 +21,21 @@
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form  th:object="${recipe}" th:action="@{/recipe/}"  method="post">
+            <form th:object="${recipe}" th:action="@{/recipe/}" method="post">
                 <input type="hidden" th:field="*{id}"/>
                 <div class="pannel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h1 class="panel-title">Edit Recipe Information</h1>
+
+                            <div class="row">
+                                <div class="col-md-11 ">
+                                    <h1 class="panel-title">Edit Recipe Information</h1>
+                                </div>
+                                <div class="col-md-1">
+<!--                                    TODO redigier vers le bon chemin-->
+                                    <a class="btn btn-default" href="#" role="button" th:href="@{'/recipe/'}">Upload Image</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -65,10 +74,14 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
-                                    <select class="form-control">
-                                        <option>Easy</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
+                                    <select class="form-control" th:field="*{difficulty}">
+                                        <option th:remove="all">Easy</option>
+                                        <option th:remove="all">Medium</option>
+                                        <option th:each="difficultyValue :
+                                        ${T(guru.springframework.domain.Difficulty).values()}"
+                                                th:value="${difficultyValue.name()}"
+                                                th:text="${difficultyValue.name()}">Hard
+                                        </option>
                                     </select>
                                 </div>
                             </div>
