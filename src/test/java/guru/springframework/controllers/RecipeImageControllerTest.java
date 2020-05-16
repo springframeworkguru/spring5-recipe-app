@@ -56,15 +56,14 @@ public class RecipeImageControllerTest {
         verify(recipeService).recipeExists(eq(recipeId));
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void showUploadFormNonExistingRecipe() throws Exception {
         //given
         when(recipeService.recipeExists(eq(nonExistingRecipeId))).thenReturn(false);
 
         //when-then
         mockMvc.perform(get(String.format(String.format("/recipe/%d/image", nonExistingRecipeId))))
-                .andExpect(MockMvcResultMatchers.status().isNoContent())
-                .andExpect(model().attributeDoesNotExist("recipeId"));
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test

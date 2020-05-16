@@ -4,6 +4,7 @@ import guru.springframework.commands.RecipeCommand;
 import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.RecipeNotFoundException;
 import guru.springframework.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipeById(Long id) {
-        return recipeRepository.findById(id).orElse(null);
+        return recipeRepository.findById(id).orElseThrow(() -> new RecipeNotFoundException(id));
     }
 
     @Transactional
@@ -51,7 +52,7 @@ class RecipeServiceImpl implements RecipeService {
     @Override
     public RecipeCommand findCommandById(Long id) {
         final Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
-        return optionalRecipe.map(recipeToRecipeCommand::convert).orElse(null);
+        return optionalRecipe.map(recipeToRecipeCommand::convert).orElseThrow(() -> new RecipeNotFoundException(id));
     }
 
     @Override

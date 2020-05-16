@@ -4,6 +4,7 @@ import guru.springframework.commands.RecipeCommand;
 import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.RecipeNotFoundException;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -82,6 +83,17 @@ public class RecipeServiceImplTest {
     public void deleteById() {
         service.deleteById(id);
         verify(repository).deleteById(eq(id));
+    }
+
+    @Test(expected = RecipeNotFoundException.class)
+    public void findRecipeByIdNotFound() {
+        //given
+        when(repository.findById(id)).thenReturn(Optional.empty());
+
+        //when
+        service.findCommandById(id);
+
+        //then exception is thrown
     }
 }
 
