@@ -26,10 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class RecipeControllerTest {
 
+    final String nonExistingUrl = "/NONEXISTINGURLHOPEFULLY";
     @Mock
     RecipeService service;
     RecipeController recipeController;
-
     MockMvc mockMvc;
     Long id = 33L;
     Recipe recipe;
@@ -59,7 +59,8 @@ public class RecipeControllerTest {
 
         //when
         mockMvc.perform(get("/recipe/33/show"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+        .andExpect(view().name("errors/404error"));
 
         //then
         verify(service).getRecipeById(anyLong());
@@ -99,4 +100,6 @@ public class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
         verify(service).deleteById(id);
     }
+
+
 }
