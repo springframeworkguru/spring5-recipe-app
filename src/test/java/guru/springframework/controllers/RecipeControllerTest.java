@@ -53,20 +53,6 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void showRecipeByIdNotFound() throws Exception {
-        //given
-        when(service.getRecipeById(anyLong())).thenThrow(RecipeNotFoundException.class);
-
-        //when
-        mockMvc.perform(get("/recipe/33/show"))
-                .andExpect(status().isNotFound())
-        .andExpect(view().name("errors/404error"));
-
-        //then
-        verify(service).getRecipeById(anyLong());
-    }
-
-    @Test
     public void postRecipe() throws Exception {
         RecipeCommand command = new RecipeCommand();
         command.setId(id);
@@ -101,5 +87,28 @@ public class RecipeControllerTest {
         verify(service).deleteById(id);
     }
 
+    @Test
+    public void showRecipeByIdNotFound() throws Exception {
+        //given
+        when(service.getRecipeById(anyLong())).thenThrow(RecipeNotFoundException.class);
+
+        //when
+        mockMvc.perform(get("/recipe/33/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("errors/404error"))
+                .andExpect(model().attributeExists("exception"));
+
+
+        //then
+        verify(service).getRecipeById(anyLong());
+    }
+
+    @Test
+    public void numberFormatExceptionHandler() throws Exception {
+        mockMvc.perform(get("/recipe/auieauie/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("errors/400error"))
+                .andExpect(model().attributeExists("exception"));
+    }
 
 }
