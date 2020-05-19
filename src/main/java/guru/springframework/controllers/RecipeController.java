@@ -8,8 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RequestMapping("/recipe")
@@ -35,7 +39,12 @@ public class RecipeController {
     }
 
     @PostMapping("")
-    public String postRecipe(@ModelAttribute RecipeCommand command) {
+    public String postRecipe(@Valid @ModelAttribute("recipe") RecipeCommand command,
+                             BindingResult result) {
+        if (result.hasErrors()) {
+            result.getAllErrors().stream().map(ObjectError::toString).forEach(log::debug);
+            return "recipe/recipeform";
+        }
         final RecipeCommand savedCommand = recipeService.saveRecipeFromCommandObject(command);
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
@@ -57,14 +66,6 @@ public class RecipeController {
     @ExceptionHandler(RecipeNotFoundException.class)
     public ModelAndView fourOfourHandler(Exception exception) {
         final ModelAndView modelAndView = new ModelAndView("errors/404error");
-        modelAndView.addObject("exception", exception);
-        return modelAndView;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView numberFormatExceptionHandler(Exception exception) {
-        final ModelAndView modelAndView = new ModelAndView("errors/400error");
         modelAndView.addObject("exception", exception);
         return modelAndView;
     }
