@@ -59,8 +59,6 @@ public class RecipeControllerTest {
     public void postRecipeInvalid() throws Exception {
         RecipeCommand command = new RecipeCommand();
         command.setId(id);
-        when(service.saveRecipeFromCommandObject(ArgumentMatchers.any()))
-                .thenReturn(command);
 
         mockMvc.perform(post("/recipe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
