@@ -18,6 +18,7 @@ public class Ingredient {
     @OneToOne(fetch = FetchType.EAGER)
     UnitOfMeasure unitOfMeasure;
 
+    //region getters and setters
     public Long getId() {
         return id;
     }
@@ -57,4 +58,5 @@ public class Ingredient {
     public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
+    //endregion
 }

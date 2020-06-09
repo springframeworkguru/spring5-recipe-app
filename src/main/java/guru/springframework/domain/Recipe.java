@@ -21,7 +21,7 @@ public class Recipe {
     private String url;
     private String directions;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // means it cannot be exist without the recipe. its not independent
     private Set<Ingredient> ingredientSet;
 
     @Lob // longer then 256 chars ( large object)
@@ -30,10 +30,16 @@ public class Recipe {
     @OneToOne(cascade = CascadeType.ALL) // delete this aswell when delete recipe
     private Notes notes;
 
-
     @Enumerated(value = EnumType.STRING) // save in DB as string and not as number
     private Difficulty difficulty;
 
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+    joinColumns = @JoinColumn(name = "recipe_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
+
+    //region getters and setters
     public Long getId() {
         return id;
     }
@@ -129,4 +135,14 @@ public class Recipe {
     public void setIngredientSet(Set<Ingredient> ingredientSet) {
         this.ingredientSet = ingredientSet;
     }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    //endregion
 }
