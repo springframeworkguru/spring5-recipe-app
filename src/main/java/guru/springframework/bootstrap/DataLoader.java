@@ -107,18 +107,16 @@ public class DataLoader implements CommandLineRunner {
 
         guacamole.setNotes(guacamoleNotes);
 
-        final Set<Ingredient> guacamoleIngredients = guacamole.getIngredients();
-
-        guacamoleIngredients.add(new Ingredient("Avocado", BigDecimal.valueOf(2), unit, guacamole));
-        guacamoleIngredients.add(new Ingredient("Salt", BigDecimal.valueOf(.25), teaspoon, guacamole));
-        guacamoleIngredients.add(new Ingredient("Fresh lime or lemon juice", BigDecimal.ONE, tablespoon, guacamole));
-        guacamoleIngredients.add(new Ingredient("Minced red onionGuacamole or thinly sliced green onionGuacamole", BigDecimal.valueOf(.25), cup, guacamole));
-        guacamoleIngredients.add(new Ingredient("Serrano chilesGuacamole, stems and seeds removed, minced", BigDecimal.valueOf(2), unit, guacamole));
-        guacamoleIngredients.add(new Ingredient("Cilantro (leaves and tender stems), finely chopped", BigDecimal.valueOf(2), tablespoon, guacamole));
-        guacamoleIngredients.add(new Ingredient("Freshly grated black pepper", BigDecimal.ONE, dash,guacamole));
-        guacamoleIngredients.add(new Ingredient("Freshly grated black pepper", BigDecimal.valueOf(.5), unit, guacamole));
-        guacamoleIngredients.add(new Ingredient("Jicama, to garnish", BigDecimal.ONE, unit, guacamole));
-        guacamoleIngredients.add(new Ingredient("Tortilla chips", BigDecimal.ONE, bag, guacamole));
+        guacamole.addIngredient(new Ingredient("Avocado", BigDecimal.valueOf(2), unit));
+        guacamole.addIngredient(new Ingredient("Salt", BigDecimal.valueOf(.25), teaspoon));
+        guacamole.addIngredient(new Ingredient("Fresh lime or lemon juice", BigDecimal.ONE, tablespoon));
+        guacamole.addIngredient(new Ingredient("Minced red onionGuacamole or thinly sliced green onionGuacamole", BigDecimal.valueOf(.25), cup));
+        guacamole.addIngredient(new Ingredient("Serrano chilesGuacamole, stems and seeds removed, minced", BigDecimal.valueOf(2), unit));
+        guacamole.addIngredient(new Ingredient("Cilantro (leaves and tender stems), finely chopped", BigDecimal.valueOf(2), tablespoon));
+        guacamole.addIngredient(new Ingredient("Freshly grated black pepper", BigDecimal.ONE, dash));
+        guacamole.addIngredient(new Ingredient("Freshly grated black pepper", BigDecimal.valueOf(.5), unit));
+        guacamole.addIngredient(new Ingredient("Jicama, to garnish", BigDecimal.ONE, unit));
+        guacamole.addIngredient(new Ingredient("Tortilla chips", BigDecimal.ONE, bag));
 
         Recipe spicyChickenTacos = new Recipe();
         spicyChickenTacos.setDescription("Spicy Chicken Tacos");
@@ -144,7 +142,6 @@ public class DataLoader implements CommandLineRunner {
         spicyChickenTacos.setImage(this.imageConverter.convertFromUrl("https://www.simplyrecipes.com/wp-content/uploads/2017/05/2017-05-29-GrilledChickenTacos-2.jpg", "jpg"));
 
         final Notes spicyChickenTacosNotes = new Notes();
-        spicyChickenTacosNotes.setRecipe(spicyChickenTacos);
         spicyChickenTacosNotes.setRecipeNotes("We have a family motto and it is this: Everything goes better in a tortilla.\n" +
                 "\n" +
                 "Any and every kind of leftover can go inside a warm tortilla, usually with a healthy dose of pickled jalapenos. I can always sniff out a late-night snacker when the aroma of tortillas heating in a hot pan on the stove comes wafting through the house.\n" +
@@ -164,28 +161,26 @@ public class DataLoader implements CommandLineRunner {
 
         spicyChickenTacos.setNotes(spicyChickenTacosNotes);
 
-        final Set<Ingredient> spicyChickenTacosIngredients = spicyChickenTacos.getIngredients();
-
-        spicyChickenTacosIngredients.add(new Ingredient("Ancho chili powder", BigDecimal.valueOf(2), tablespoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Salt", BigDecimal.valueOf(.5), teaspoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Dried oregano", BigDecimal.ONE, teaspoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Cumin", BigDecimal.ONE, teaspoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Sugar", BigDecimal.ONE, teaspoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Garlic", BigDecimal.ONE, clove, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Orange zest", BigDecimal.ONE, tablespoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Orange juice", BigDecimal.valueOf(3), tablespoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Olive oil", BigDecimal.valueOf(2), tablespoon, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Boneless chicken thighs", BigDecimal.valueOf(1.25), pound, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Corn tortillas", BigDecimal.valueOf(8), unit, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Baby arugula", BigDecimal.valueOf(3), cup, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Medium ripe avocado", BigDecimal.valueOf(2), unit, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Radish, thinly sliced",BigDecimal.valueOf(4), unit, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Cherry Tomato, halved", BigDecimal.valueOf(.5), pint, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Red onion, thinly sliced", BigDecimal.valueOf(.25), pint, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Cilantro, roughly chopped",BigDecimal.ONE, cup, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Sour cream", BigDecimal.valueOf(.5), cup, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Milk", BigDecimal.valueOf(.25), cup, spicyChickenTacos));
-        spicyChickenTacosIngredients.add(new Ingredient("Lime, wedged", BigDecimal.ONE, unit, spicyChickenTacos));
+        spicyChickenTacos.addIngredient(new Ingredient("Ancho chili powder", BigDecimal.valueOf(2), tablespoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Salt", BigDecimal.valueOf(.5), teaspoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Dried oregano", BigDecimal.ONE, teaspoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Cumin", BigDecimal.ONE, teaspoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Sugar", BigDecimal.ONE, teaspoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Garlic", BigDecimal.ONE, clove));
+        spicyChickenTacos.addIngredient(new Ingredient("Orange zest", BigDecimal.ONE, tablespoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Orange juice", BigDecimal.valueOf(3), tablespoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Olive oil", BigDecimal.valueOf(2), tablespoon));
+        spicyChickenTacos.addIngredient(new Ingredient("Boneless chicken thighs", BigDecimal.valueOf(1.25), pound));
+        spicyChickenTacos.addIngredient(new Ingredient("Corn tortillas", BigDecimal.valueOf(8), unit));
+        spicyChickenTacos.addIngredient(new Ingredient("Baby arugula", BigDecimal.valueOf(3), cup));
+        spicyChickenTacos.addIngredient(new Ingredient("Medium ripe avocado", BigDecimal.valueOf(2), unit));
+        spicyChickenTacos.addIngredient(new Ingredient("Radish, thinly sliced",BigDecimal.valueOf(4), unit));
+        spicyChickenTacos.addIngredient(new Ingredient("Cherry Tomato, halved", BigDecimal.valueOf(.5), pint));
+        spicyChickenTacos.addIngredient(new Ingredient("Red onion, thinly sliced", BigDecimal.valueOf(.25), pint));
+        spicyChickenTacos.addIngredient(new Ingredient("Cilantro, roughly chopped",BigDecimal.ONE, cup));
+        spicyChickenTacos.addIngredient(new Ingredient("Sour cream", BigDecimal.valueOf(.5), cup));
+        spicyChickenTacos.addIngredient(new Ingredient("Milk", BigDecimal.valueOf(.25), cup));
+        spicyChickenTacos.addIngredient(new Ingredient("Lime, wedged", BigDecimal.ONE, unit));
 
         final Set<Recipe> recipes = new HashSet<>();
         recipes.add(guacamole);
