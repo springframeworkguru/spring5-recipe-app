@@ -3,24 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipes</title>
+    <!-- CSS only -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <h2 th:text="'List of Recipes'">List of Recipes...</h2>
-    <table id="recipes">
-        <thead>
-            <tr>
-                <td>Id</td>
-                <td>Name</td>
-                <td>Difficulty</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="recipe : ${recipes}">
-                <td th:text="${recipe.id}">1</td>
-                <td th:text="${recipe.description}">Guacamole</td>
-                <td th:text="${recipe.difficulty}">Medium</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1 class="panel-title" th:text="'List of Recipes'">List of Recipes...</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                        <table id="recipes" class="table table-hover">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Difficulty</th>
+                                </tr>
+                            </thead>
+                            <tr th:each="recipe : ${recipes}">
+                                <td th:text="${recipe.id}">1</td>
+                                <td th:text="${recipe.description}">Guacamole</td>
+                                <td th:text="${recipe.difficulty}">Medium</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

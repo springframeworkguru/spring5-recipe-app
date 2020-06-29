@@ -5,6 +5,8 @@ import guru.springframework.image.ImageConverter;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,8 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
+@AllArgsConstructor
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -20,13 +24,6 @@ public class DataLoader implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final ImageConverter imageConverter;
-
-    public DataLoader(RecipeRepository recipeRepository, CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository, ImageConverter imageConverter) {
-        this.recipeRepository = recipeRepository;
-        this.categoryRepository = categoryRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
-        this.imageConverter = imageConverter;
-    }
 
     @Override
     public void run(String... args) {
@@ -41,8 +38,17 @@ public class DataLoader implements CommandLineRunner {
 
         final String couldNotFindUom = "Could not find {0} UOM";
 
-        final Category mexican = this.categoryRepository.findCategoryByDescription("Mexican").orElseThrow(() -> new RuntimeException(MessageFormat.format(couldNotFindCategory, "Mexican")));
-        final Category fastFood = this.categoryRepository.findCategoryByDescription("Fast food").orElseThrow(() -> new RuntimeException(MessageFormat.format(couldNotFindCategory, "Fast food")));
+        final Category mexican = this.categoryRepository.findCategoryByDescription("Mexican").orElseThrow(() -> {
+            final String message = MessageFormat.format(couldNotFindCategory, "Mexican");
+            log.debug(message);
+            return new RuntimeException(message);
+        });
+
+        final Category fastFood = this.categoryRepository.findCategoryByDescription("Fast food").orElseThrow(() -> {
+            final String message = MessageFormat.format(couldNotFindCategory, "Fast food");
+            log.debug(message);
+            return new RuntimeException(message);
+        });
 
         final UnitOfMeasure unit = this.unitOfMeasureRepository.findUnitOfMeasureByDescription("Unit").orElseThrow(() -> new RuntimeException(MessageFormat.format(couldNotFindUom, "Unit")));
         final UnitOfMeasure teaspoon = this.unitOfMeasureRepository.findUnitOfMeasureByDescription("Teaspoon").orElseThrow(() -> new RuntimeException(MessageFormat.format(couldNotFindUom, "Teaspoon")));
@@ -64,7 +70,7 @@ public class DataLoader implements CommandLineRunner {
         guacamole.setDifficulty(Difficulty.EASY);
         guacamole.getCategories().add(mexican);
         guacamole.getCategories().add(fastFood);
-        guacamole.setImage(this.imageConverter.convertFromUrl("https://www.simplyrecipes.com/wp-content/uploads/2018/07/Guacamole-LEAD-6.jpg", "jpg"));
+        guacamole.setImage(this.imageConverter.convertFromUrl("https://www.hola.com/imagenes/cocina/recetas/20191001150561/guacamole-clasico/0-726-364/guacamole-m.jpg", "jpg"));
 
         final Notes guacamoleNotes = new Notes();
         guacamoleNotes.setRecipe(guacamole);
@@ -139,7 +145,7 @@ public class DataLoader implements CommandLineRunner {
         spicyChickenTacos.setCookTime(15);
         spicyChickenTacos.setDifficulty(Difficulty.MODERATE);
         spicyChickenTacos.getCategories().add(mexican);
-        spicyChickenTacos.setImage(this.imageConverter.convertFromUrl("https://www.simplyrecipes.com/wp-content/uploads/2017/05/2017-05-29-GrilledChickenTacos-2.jpg", "jpg"));
+        spicyChickenTacos.setImage(this.imageConverter.convertFromUrl("https://simply-delicious-food.com/wp-content/uploads/2020/04/Crispy-chicken-tacos-4.jpg", "jpg"));
 
         final Notes spicyChickenTacosNotes = new Notes();
         spicyChickenTacosNotes.setRecipeNotes("We have a family motto and it is this: Everything goes better in a tortilla.\n" +
@@ -186,7 +192,9 @@ public class DataLoader implements CommandLineRunner {
         recipes.add(guacamole);
         recipes.add(spicyChickenTacos);
 
-        this.recipeRepository.saveAll(recipes);
+        final Iterable<Recipe> savedRecipes = this.recipeRepository.saveAll(recipes);
+
+        savedRecipes.forEach(recipe -> MessageFormat.format("Saved {0} recipe", recipe.getDescription()));
 
     }
 
