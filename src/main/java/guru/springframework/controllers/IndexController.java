@@ -1,38 +1,41 @@
 package guru.springframework.controllers;
 
-import guru.springframework.model.Category;
-import guru.springframework.model.UnitOfMeasure;
 import guru.springframework.repository.CategoryRepository;
-import guru.springframework.repository.MasureOfRepository;
+import guru.springframework.repository.UnitOfMeasureRepository;
+import guru.springframework.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Optional;
 
 /**
  * Created by jt on 6/1/17.
  */
+@Slf4j
 @Controller
 public class IndexController {
 
     private CategoryRepository categoryRepo;
-    private MasureOfRepository measRepo;
+    private UnitOfMeasureRepository measRepo;
+    private final RecipeService recipeService;
 
-    public IndexController(CategoryRepository categoryRepo, MasureOfRepository measRepo) {
+    public IndexController(CategoryRepository categoryRepo, UnitOfMeasureRepository measRepo, RecipeService recipeService) {
         this.categoryRepo = categoryRepo;
         this.measRepo = measRepo;
+        this.recipeService = recipeService;
+
     }
 
     @RequestMapping({"", "/", "/index"})
-    public String getIndexPage(){
-       Optional<Category> category = categoryRepo.findById(1L);
-       Optional<UnitOfMeasure> UitOfMeasure = measRepo.findById(1L);
+    public String getIndexPage(Model model){
 
-       System.out.println(category.get().getDescription());
-        System.out.println(UitOfMeasure.get().getUom());
-
+        model.addAttribute("recipes",recipeService.getRecipes());
         // Optional<T> findById(ID var1);
 
         return "index";
     }
+
+
+
+
 }

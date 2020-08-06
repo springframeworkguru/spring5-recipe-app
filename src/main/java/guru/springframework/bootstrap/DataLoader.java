@@ -3,10 +3,11 @@ package guru.springframework.bootstrap;
 
 import guru.springframework.model.*;
 import guru.springframework.repository.CategoryRepository;
-import guru.springframework.repository.MasureOfRepository;
+import guru.springframework.repository.UnitOfMeasureRepository;
 import guru.springframework.repository.NotesRepository;
 import guru.springframework.repository.RecipeRepository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -14,11 +15,12 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Slf4j
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     CategoryRepository categoryRepo ;
-    MasureOfRepository unitOfMRepo;
+    UnitOfMeasureRepository unitOfMRepo;
     RecipeRepository recipeRepo;
     private NotesRepository notesrepo;
 
@@ -26,7 +28,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 
     DataLoader(CategoryRepository categoryRepo,
-               MasureOfRepository unitOfMRepo,
+               UnitOfMeasureRepository unitOfMRepo,
                RecipeRepository recipeRepo, NotesRepository notesrepo){
 
             this.categoryRepo = categoryRepo;
@@ -57,29 +59,29 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         Set<Recipe> recipes = new HashSet<Recipe>();
         Recipe guacamoleRecp = new Recipe();
-        Set<Ingredient> ingredients = new HashSet<Ingredient>();
+
         UnitOfMeasure ripeUom= this.unitOfMRepo.findByUom("ripe");
         UnitOfMeasure teaspoonUom= this.unitOfMRepo.findByUom("teaspoon");
         UnitOfMeasure tablespoonUom= this.unitOfMRepo.findByUom("tablespoon");
         UnitOfMeasure  cupUom= this.unitOfMRepo.findByUom("cup");
         UnitOfMeasure dashUom= this.unitOfMRepo.findByUom("dash");
 
-        Category guacomoleCat = this.categoryRepo.findByDescription("Mexican");
+        Optional<Category> guacomoleCat = this.categoryRepo.findByDescription("Mexican");
 
 
 
-        ingredients.add(new Ingredient(new BigDecimal(2), ripeUom,"avocados",guacamoleRecp));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(2), ripeUom,"avocados"));
 
-        guacamoleRecp.getIngredients().add(new Ingredient(new BigDecimal(1/4), teaspoonUom,"of salt, more to taste",guacamoleRecp));
-        guacamoleRecp.getIngredients().add(new Ingredient(new BigDecimal(1), tablespoonUom,"fresh lime juice or lemon juice",guacamoleRecp));
-        guacamoleRecp.getIngredients().add(new Ingredient(new BigDecimal(2), tablespoonUom,"red onion or thinly sliced green onion",guacamoleRecp));
-        guacamoleRecp.getIngredients().add(new Ingredient(new BigDecimal(1), dashUom,"serrano chiles, stems and seeds removed, minced",guacamoleRecp));
-        guacamoleRecp.getIngredients().add(new Ingredient(new BigDecimal(2), tablespoonUom,"cilantro (leaves and tender stems), finely chopped",guacamoleRecp));
-        guacamoleRecp.getIngredients().add(new Ingredient(new BigDecimal(1), dashUom,"of freshly grated black pepper",guacamoleRecp));
-        guacamoleRecp.getIngredients().add(new Ingredient(new BigDecimal(1/2), ripeUom,"tomato, seeds and pulp removed, chopped",guacamoleRecp));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(1/4), teaspoonUom,"of salt, more to taste"));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(1), tablespoonUom,"fresh lime juice or lemon juice"));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(2), tablespoonUom,"red onion or thinly sliced green onion"));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(1), dashUom,"serrano chiles, stems and seeds removed, minced"));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(2), tablespoonUom,"cilantro (leaves and tender stems), finely chopped"));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(1), dashUom,"of freshly grated black pepper"));
+        guacamoleRecp.addIngredient(new Ingredient(new BigDecimal(1/2), ripeUom,"tomato, seeds and pulp removed, chopped"));
 
 
-       // guacamoleRecp.getCategories().add(guacomoleCat);
+        guacamoleRecp.getCategories().add(guacomoleCat.get());
         guacamoleRecp.setCookTime(new Integer(10));
         guacamoleRecp.setServings(new Integer(2));
         guacamoleRecp.setPrepTime(10);
@@ -87,22 +89,23 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         guacamoleRecp.setDiffculty(Difficulty.EASY);
         Notes note = new Notes();
-        note.setRecipeNotes("2 ripe avocados\n" +
-                "    1/4 teaspoon of salt, more to taste\n" +
-                "    1 tablespoon fresh lime juice or lemon juice\n" +
-                "    2 tablespoons to 1/4 cup of minced red onion or thinly sliced green onion\n" +
-                "    1-2 serrano chiles, stems and seeds removed, minced\n" +
-                "    2 tablespoons cilantro (leaves and tender stems), finely chopped\n" +
-                "    A dash of freshly grated black pepper\n" +
-                "    1/2 ripe tomato, seeds and pulp removed, chopped\n" +
-                "    Red radishes or jicama, to garnish\n" +
-                "    Tortilla chips, to serve");
+        note.setRecipeNotes("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. " +
+                "Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. " +
+                "Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim." +
+                " Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. " +
+                "Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. " +
+                "Aenean vulputate eleifend tellus. " +
+                "Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. " +
+                "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. " +
+                "Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, " +
+                "sit amet adipiscing sem neque sed ipsum.");
 
-        note.setRecipe(guacamoleRecp);
-        //this.notesrepo.save(note);
+
+
         guacamoleRecp.setNotes(note);
         guacamoleRecp.setSource("Spring guru");
         guacamoleRecp.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
+        guacamoleRecp.setDiretions("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.");
 
         recipes.add(guacamoleRecp);
 
