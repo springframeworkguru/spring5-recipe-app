@@ -1,7 +1,6 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 public class Ingredient {
@@ -11,7 +10,7 @@ public class Ingredient {
     private Long id;
 
     private String description;
-    private BigDecimal amount;
+    private Double amount;
     @ManyToOne
     private Recipe recipe;
     @OneToOne(fetch = FetchType.EAGER)
@@ -33,11 +32,11 @@ public class Ingredient {
         this.description = description;
     }
 
-    public BigDecimal getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
