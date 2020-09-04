@@ -112,6 +112,13 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
+    }
+
+    public Recipe addIngredients(Set<Ingredient> ingredients) {
+        ingredients.forEach(ingredient -> ingredient.setRecipe(this));
+        this.ingredients.addAll(ingredients);
+        return this;
     }
 
     public Set<Ingredient> getIngredients() {

@@ -45,16 +45,16 @@ public class DataInitializer implements CommandLineRunner {
         guacamoleRecipe.setImage(readBytesForImage("src/main/resources/images/guacamole.jpg"));
 
         Set<Ingredient> guacamoleIngredients = new HashSet<>();
-        Ingredient avocado = getIngredient(2, "Ripe avocado", guacamoleRecipe);
-        Ingredient salt = getIngredientWithUnitOfMeasure(0.25, "salt", "Teaspoon", guacamoleRecipe);
-        Ingredient freshLimeJuice = getIngredientWithUnitOfMeasure(1, "fresh lime juice", "Tablespoon", guacamoleRecipe);
-        Ingredient mincedRedOnion = getIngredientWithUnitOfMeasure(2, "minced red onion", "Tablespoon", guacamoleRecipe);
-        Ingredient serranoChilli = getIngredient(2, "Serrano chilli", guacamoleRecipe);
-        Ingredient cilantro = getIngredientWithUnitOfMeasure(2, "cilantro", "Tablespoon", guacamoleRecipe);
-        Ingredient blackPepper = getIngredientWithUnitOfMeasure(1, "freshly grated black pepper", "Dash", guacamoleRecipe);
-        Ingredient tomato = getIngredient(0.5, "ripe tomato", guacamoleRecipe);
-        Ingredient redRadishes = getIngredient(1, "red radishes", guacamoleRecipe);
-        Ingredient tortillaChips = getIngredient(1, "tortilla chips", guacamoleRecipe);
+        Ingredient avocado = getIngredient(2, "Ripe avocado");
+        Ingredient salt = getIngredientWithUnitOfMeasure(0.25, "salt", "Teaspoon");
+        Ingredient freshLimeJuice = getIngredientWithUnitOfMeasure(1, "fresh lime juice", "Tablespoon");
+        Ingredient mincedRedOnion = getIngredientWithUnitOfMeasure(2, "minced red onion", "Tablespoon");
+        Ingredient serranoChilli = getIngredient(2, "Serrano chilli");
+        Ingredient cilantro = getIngredientWithUnitOfMeasure(2, "cilantro", "Tablespoon");
+        Ingredient blackPepper = getIngredientWithUnitOfMeasure(1, "freshly grated black pepper", "Dash");
+        Ingredient tomato = getIngredient(0.5, "ripe tomato");
+        Ingredient redRadishes = getIngredient(1, "red radishes");
+        Ingredient tortillaChips = getIngredient(1, "tortilla chips");
 
         guacamoleIngredients.add(avocado);
         guacamoleIngredients.add(salt);
@@ -67,10 +67,9 @@ public class DataInitializer implements CommandLineRunner {
         guacamoleIngredients.add(redRadishes);
         guacamoleIngredients.add(tortillaChips);
 
-        guacamoleRecipe.getIngredients().addAll(guacamoleIngredients);
+        guacamoleRecipe.addIngredients(guacamoleIngredients);
 
         Notes guacamoleRecipeNotes = new Notes();
-        guacamoleRecipeNotes.setRecipe(guacamoleRecipe);
         guacamoleRecipeNotes.setRecipeNotes("Guacamole! Did you know that over 2 billion " +
                 "pounds of avocados are consumed each year in the U.S.? (Google it.) That’s over 7" +
                 " pounds per person. I’m guessing that most of those avocados go into what has become America’s" +
@@ -79,8 +78,8 @@ public class DataInitializer implements CommandLineRunner {
         return guacamoleRecipe;
     }
 
-    private Ingredient getIngredientWithUnitOfMeasure(double amount, String description, String unitOfMeasure, Recipe recipe) {
-        Ingredient ingredient = getIngredient(amount, description, recipe);
+    private Ingredient getIngredientWithUnitOfMeasure(double amount, String description, String unitOfMeasure) {
+        Ingredient ingredient = getIngredient(amount, description);
         ingredient.setUnitOfMeasure(getUnitOfMeasure(unitOfMeasure));
         return ingredient;
     }
@@ -100,11 +99,10 @@ public class DataInitializer implements CommandLineRunner {
         return byteArrayOutputStream.toByteArray();
     }
 
-    private Ingredient getIngredient(double amount, String description, Recipe recipe) {
+    private Ingredient getIngredient(double amount, String description) {
         Ingredient ingredient = new Ingredient();
         ingredient.setAmount(amount);
         ingredient.setDescription(description);
-        ingredient.setRecipe(recipe);
         return ingredient;
     }
 }
