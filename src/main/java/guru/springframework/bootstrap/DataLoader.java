@@ -39,10 +39,65 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-
-        recipeRepo.saveAll(this.loadData());
-
+        this.loadCategories();
+        this.loadUom();
+        Set recipes = this.loadData();
+        recipeRepo.saveAll(recipes);
+        System.out.println("Recipe"+recipes);
     }
+
+    private void loadCategories(){
+        Category cat1 = new Category();
+        cat1.setDescription("American");
+        categoryRepo.save(cat1);
+
+        Category cat2 = new Category();
+        cat2.setDescription("Italian");
+        categoryRepo.save(cat2);
+
+        Category cat3 = new Category();
+        cat3.setDescription("Mexican");
+        categoryRepo.save(cat3);
+
+        Category cat4 = new Category();
+        cat4.setDescription("Fast Food");
+        categoryRepo.save(cat4);
+    }
+
+    private void loadUom(){
+        UnitOfMeasure uom1 = new UnitOfMeasure();
+        uom1.setUom("Teaspoon");
+        unitOfMRepo.save(uom1);
+
+        UnitOfMeasure uom2 = new UnitOfMeasure();
+        uom2.setUom("Tablespoon");
+        unitOfMRepo.save(uom2);
+
+        UnitOfMeasure uom3 = new UnitOfMeasure();
+        uom3.setUom("Cup");
+        unitOfMRepo.save(uom3);
+
+        UnitOfMeasure uom4 = new UnitOfMeasure();
+        uom4.setUom("Pinch");
+        unitOfMRepo.save(uom4);
+
+        UnitOfMeasure uom5 = new UnitOfMeasure();
+        uom5.setUom("Ounce");
+        unitOfMRepo.save(uom5);
+
+        UnitOfMeasure uom6 = new UnitOfMeasure();
+        uom6.setUom("Each");
+        unitOfMRepo.save(uom6);
+
+        UnitOfMeasure uom7 = new UnitOfMeasure();
+        uom7.setUom("Pint");
+        unitOfMRepo.save(uom7);
+
+        UnitOfMeasure uom8 = new UnitOfMeasure();
+        uom8.setUom("Dash");
+        unitOfMRepo.save(uom8);
+    }
+
 /*
     2 ripe avocados
     1/4 teaspoon of salt, more to taste
@@ -55,16 +110,17 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     Red radishes or jicama, to garnish
     Tortilla chips, to serve
 */
+
+
     private Set<Recipe> loadData(){
 
         Set<Recipe> recipes = new HashSet<Recipe>();
         Recipe guacamoleRecp = new Recipe();
-
-        UnitOfMeasure ripeUom= this.unitOfMRepo.findByUom("ripe");
-        UnitOfMeasure teaspoonUom= this.unitOfMRepo.findByUom("teaspoon");
-        UnitOfMeasure tablespoonUom= this.unitOfMRepo.findByUom("tablespoon");
-        UnitOfMeasure  cupUom= this.unitOfMRepo.findByUom("cup");
-        UnitOfMeasure dashUom= this.unitOfMRepo.findByUom("dash");
+        UnitOfMeasure ripeUom= this.unitOfMRepo.findByUom("Pint").get();
+        UnitOfMeasure teaspoonUom= this.unitOfMRepo.findByUom("Teaspoon").get();
+        UnitOfMeasure tablespoonUom= this.unitOfMRepo.findByUom("Tablespoon").get();
+        UnitOfMeasure cupUom= this.unitOfMRepo.findByUom("Cup").get();
+        UnitOfMeasure dashUom= this.unitOfMRepo.findByUom("Dash").get();
 
         Optional<Category> guacomoleCat = this.categoryRepo.findByDescription("Mexican");
 
@@ -108,10 +164,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         guacamoleRecp.setDiretions("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.");
 
         recipes.add(guacamoleRecp);
-
         return recipes;
-
-
     }
 
 

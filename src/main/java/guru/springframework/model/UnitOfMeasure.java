@@ -1,19 +1,20 @@
 package guru.springframework.model;
 
 import lombok.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Data
-@Entity
+//@Data
+//@Entity
+@Getter
+@Setter
+@Document
 public class UnitOfMeasure {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private String Id;
     private String uom;
 
 

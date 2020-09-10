@@ -1,22 +1,22 @@
 package guru.springframework.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 
-@Data
-@Entity
+@Getter
+@Setter
+//@Entity
 public class Notes {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @OneToOne
+    private String id;
+//    @OneToOne
     private Recipe recipe;
 
-    @Lob
+//    @Lob
     private String recipeNotes;
 
-    public Notes() {
-    }
 
 }
