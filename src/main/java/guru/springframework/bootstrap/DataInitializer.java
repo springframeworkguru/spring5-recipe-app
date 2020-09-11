@@ -4,6 +4,7 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
 @Component
 public class DataInitializer implements CommandLineRunner {
     private final UnitOfMeasureRepository unitOfMeasureRepository;
@@ -29,8 +31,11 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.debug("Launched DataInitializer");
         Recipe guacamoleRecipe = getGuacamoleRecipe();
+        log.debug("Prepared guacamole recipe");
         recipeRepository.save(guacamoleRecipe);
+        log.debug("Saved guacamole recipe");
     }
 
     private Recipe getGuacamoleRecipe() throws IOException {
