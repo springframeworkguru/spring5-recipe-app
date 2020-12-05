@@ -2,10 +2,15 @@ package cc.paukner.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.Set;
@@ -24,13 +29,28 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    //TODO//private Difficulty difficulty;
+
+    @Enumerated(value = EnumType.STRING) // otherwise ints would be persisted that receive their values by order
+    private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL /*to make this the owner*/, mappedBy = "recipe" /*property on the child class*/)
     private Set<Ingredient> ingredients;
 
     @Lob
     private Byte[] image;
+
+    @OneToOne(cascade = CascadeType.ALL) // Recipe is the owner due to cascade
+                                         // Use case: If recipe is deleted, also delete its notes
+    private Notes notes;
+
+    // If only @ManyToMany specified on both sides, we'll get two tables category_recipes and recipe_categories
+    // with columns {category,recipes}_id vs. {categories,recipe}_id
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"), // this side
+            inverseJoinColumns = @JoinColumn(name = "category_id") // coming back
+    )
+    private Set<Category> categories;
 
     public Long getId() {
         return id;
@@ -39,10 +59,6 @@ public class Recipe {
     public void setId(Long id) {
         this.id = id;
     }
-
-    @OneToOne(cascade = CascadeType.ALL) // Recipe is the owner due to cascade
-                                         // Use case: If recipe is deleted, also delete its notes
-    private Notes notes;
 
     public String getDescription() {
         return description;
@@ -100,6 +116,22 @@ public class Recipe {
         this.directions = directions;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public Byte[] getImage() {
         return image;
     }
@@ -114,5 +146,13 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
