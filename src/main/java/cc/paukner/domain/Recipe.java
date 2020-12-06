@@ -28,12 +28,15 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @Enumerated(value = EnumType.STRING) // otherwise ints would be persisted that receive their values by order
     private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL /*to make this the owner*/, mappedBy = "recipe" /*property on the child class*/)
+                                                                   //^^^^^^^^ Why is this mapped here and not at the other side?
     private Set<Ingredient> ingredients;
 
     @Lob

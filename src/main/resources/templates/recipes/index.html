@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+</head>
+<body>
+    <h1>Recipes</h1>
+    <div th:each="recipe : ${recipes}">
+        <hr>
+        <h2 th:text="${recipe.description}"></h2>
+        <p>
+            Categories:
+<!--            How make this without SPAM SPAM?-->
+            <span th:each="category : ${recipe.categories}">
+                <span th:text="${category.description}"></span>
+            </span>
+        </p>
+        <p>
+            Difficulty: <span th:text="${recipe.difficulty}"></span>
+        </p>
+        <h3>Ingredients</h3>
+        <ul>
+            <li th:each="ingredient : ${recipe.ingredients}">
+<!--                How get this without SPAM SPAM SPAM?-->
+                <span th:text="${ingredient.amount}"></span>
+                <span th:text="${ingredient.unitOfMeasure.description}"></span>
+                <span th:text="${ingredient.description}"></span>
+            </li>
+        </ul>
+        <h3>Directions</h3>
+        <p th:text="${recipe.directions}"></p>
+    </div>
+</body>
+</html>
