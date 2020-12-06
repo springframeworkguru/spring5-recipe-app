@@ -30,6 +30,9 @@
         </ul>
         <h3>Directions</h3>
         <p th:text="${recipe.directions}"></p>
+        <p>
+            Notes: <span th:text="${recipe.notes.content}"></span>
+        </p>
     </div>
 </body>
 </html>

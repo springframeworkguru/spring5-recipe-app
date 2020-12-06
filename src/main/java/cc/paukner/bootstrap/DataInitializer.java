@@ -3,6 +3,7 @@ package cc.paukner.bootstrap;
 import cc.paukner.domain.Category;
 import cc.paukner.domain.Difficulty;
 import cc.paukner.domain.Ingredient;
+import cc.paukner.domain.Notes;
 import cc.paukner.domain.Recipe;
 import cc.paukner.domain.UnitOfMeasure;
 import cc.paukner.repositories.CategoryRepository;
@@ -60,11 +61,9 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         guacamole.setDescription("How to make perfect guacamole");
         guacamole.setDifficulty(Difficulty.EASY);
         guacamole.setCategories(Set.of(mexican, american));
-
-        avocados.setRecipe(guacamole);
-        salt.setRecipe(guacamole);
         guacamole.setIngredients(Set.of(avocados, salt));
         guacamole.setDirections("Cut, do and cook. Serve with wine.");
+        guacamole.setNotes(new Notes("Nota bene"));
 
 
         Ingredient chiliPowder = new Ingredient("Chili powder", BigDecimal.valueOf(2), tablespoon);
@@ -74,11 +73,9 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         grilledChickenTacos.setDescription("Spicy grilled chicken tacos");
         grilledChickenTacos.setDifficulty(Difficulty.MODERATE);
         grilledChickenTacos.setCategories(Set.of(mexican));
-
-        chiliPowder.setRecipe(grilledChickenTacos);
-        driedOregano.setRecipe(grilledChickenTacos);
         grilledChickenTacos.setIngredients(Set.of(chiliPowder, driedOregano));
         grilledChickenTacos.setDirections("Cut, heat up, cook, grill. Serve with beer.");
+        grilledChickenTacos.setNotes(new Notes("My grilled notes"));
 
 
         return List.of(guacamole, grilledChickenTacos);

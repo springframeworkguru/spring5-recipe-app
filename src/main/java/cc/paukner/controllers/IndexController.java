@@ -13,8 +13,8 @@ import java.util.Optional;
 @Controller
 public class IndexController {
 
-    private CategoryRepository categoryRepository;
-    private UnitOfMeasureRepository unitOfMeasureRepository;
+    private final CategoryRepository categoryRepository;
+    private final UnitOfMeasureRepository unitOfMeasureRepository;
 
     public IndexController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
@@ -30,7 +30,7 @@ public class IndexController {
         System.out.println("Unit of measure 'Teaspoon' id is " + unitOfMeasure.get().getId());
 
         model.addAttribute("cat_american_id", category.get().getId());
-        model.addAttribute("uon_teaspoon_id", unitOfMeasure.get().getId());
+        model.addAttribute("uom_teaspoon_id", unitOfMeasure.get().getId());
 
         return "index";
     }

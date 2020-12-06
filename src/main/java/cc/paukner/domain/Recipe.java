@@ -133,6 +133,9 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+        for (Ingredient ingredient : ingredients) {
+            ingredient.setRecipe(this);
+        }
     }
 
     public Byte[] getImage() {
@@ -149,6 +152,7 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
     }
 
     public Set<Category> getCategories() {

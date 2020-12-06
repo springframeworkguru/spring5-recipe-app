@@ -18,7 +18,14 @@ public class Notes {
     private Recipe recipe;
 
     @Lob
-    private String recipeNotes;
+    private String content;
+
+    public Notes() { // needed by Spring
+    }
+
+    public Notes(String content) {
+        this.content = content;
+    }
 
     public Long getId() {
         return id;
@@ -36,11 +43,11 @@ public class Notes {
         this.recipe = recipe;
     }
 
-    public String getRecipeNotes() {
-        return recipeNotes;
+    public String getContent() {
+        return content;
     }
 
-    public void setRecipeNotes(String recipeNotes) {
-        this.recipeNotes = recipeNotes;
+    public void setContent(String content) {
+        this.content = content;
     }
 }
