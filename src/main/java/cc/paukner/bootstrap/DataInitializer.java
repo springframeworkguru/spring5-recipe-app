@@ -9,15 +9,18 @@ import cc.paukner.domain.UnitOfMeasure;
 import cc.paukner.repositories.CategoryRepository;
 import cc.paukner.repositories.RecipeRepository;
 import cc.paukner.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -34,7 +37,10 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional // to avoid race conditions that sometimes lead to lazy initialization failures
+                   // create one single transactional wrapper
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        log.debug("Context refreshed event, bootstrapping data");
         recipeRepository.saveAll(getRecipes());
     }
 
