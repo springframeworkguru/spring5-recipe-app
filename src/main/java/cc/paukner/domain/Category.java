@@ -1,7 +1,10 @@
 package cc.paukner.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +14,9 @@ import javax.persistence.ManyToMany;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @EqualsAndHashCode(exclude = {"recipes"}) // override @Data, exclude this property to break circular reference
 @Entity
 public class Category {
