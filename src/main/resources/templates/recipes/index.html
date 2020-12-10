@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous">
+    </script>
 </head>
 <body>
-    <h1>Recipes</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Recipes</h1>
+                </div>
+                <div class="panel-body">
     <div th:each="recipe : ${recipes}">
         <hr>
         <h2 th:text="${recipe.description}"></h2>
@@ -34,5 +50,11 @@
             Notes: <span th:text="${recipe.notes.content}"></span>
         </p>
     </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
