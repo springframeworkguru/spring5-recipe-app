@@ -46,6 +46,7 @@ public class IndexControllerTest {
         when(unitOfMeasureRepository.findByDescription(teaspoon)).thenReturn(Optional.of(UnitOfMeasure.builder().id(5L).build()));
 
         String view = indexController.getIndexPage(model);
+
         assertEquals("index", view);
         verify(categoryRepository, times(1)).findByDescription(american);
         verify(unitOfMeasureRepository, times(1)).findByDescription(teaspoon);
