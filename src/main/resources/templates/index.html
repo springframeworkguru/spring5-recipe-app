@@ -5,6 +5,20 @@
     <title>Index Page</title>
 </head>
 <body>
-<h2 th:text="'Index'">Index Page</h2>
+    <h2 th:text="'Index'">Index Page</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>description</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="recipe: ${recipes}">
+            <td th:text="${recipe.id}">1</td>
+            <td th:text="${recipe.description}">description</td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>
