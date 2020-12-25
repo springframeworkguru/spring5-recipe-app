@@ -113,18 +113,17 @@ public class LoadData implements ApplicationListener<ContextRefreshedEvent> {
                 "For a very quick guacamole just take a 1/4 cup of salsa and mix it in with your mashed avocados."+
                 "\n"+
                 "To extend a limited supply of avocados, add either sour cream or cottage cheese to your guacamole dip. Purists may be horrified, but so what? It tastes great.");
-        guacamoleNotes.setRecipe(perfectGuacamole);
         perfectGuacamole.setNotes(guacamoleNotes);
 
         // Ingredients
-        perfectGuacamole.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("salt", new BigDecimal(0.5), teaSpoonUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("Fresh lime juice or lemon juice", new BigDecimal(2), tableSpoonUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("serrano chilies, stem and seeds removed, minced", new BigDecimal(2), eachUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("cilantro", new BigDecimal(2), tableSpoonUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal(2), dashUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(.5), eachUOM, perfectGuacamole));
+        perfectGuacamole.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUOM));
+        perfectGuacamole.addIngredient(new Ingredient("salt", new BigDecimal(0.5), teaSpoonUOM));
+        perfectGuacamole.addIngredient(new Ingredient("Fresh lime juice or lemon juice", new BigDecimal(2), tableSpoonUOM));
+        perfectGuacamole.addIngredient(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUOM));
+        perfectGuacamole.addIngredient(new Ingredient("serrano chilies, stem and seeds removed, minced", new BigDecimal(2), eachUOM));
+        perfectGuacamole.addIngredient(new Ingredient("cilantro", new BigDecimal(2), tableSpoonUOM));
+        perfectGuacamole.addIngredient(new Ingredient("freshly grated black pepper", new BigDecimal(2), dashUOM));
+        perfectGuacamole.addIngredient(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(.5), eachUOM));
 
         perfectGuacamole.getCategories().add(americanCategory);
         perfectGuacamole.getCategories().add(mexicanCategory);
@@ -169,13 +168,12 @@ public class LoadData implements ApplicationListener<ContextRefreshedEvent> {
                 "Everyone can grab a warm tortilla from the pile and make their own tacos just they way they like them.\n" +
                 "\n" +
                 "You could also easily double or even triple this recipe for a larger party. A taco and a cold beer on a warm day? Now that’s living!");
-        tacoNotes.setRecipe(tacoRecipe);
         tacoRecipe.setNotes(tacoNotes);
 
-        tacoRecipe.getIngredients().add(new Ingredient("Ancho Chili Powder", new BigDecimal(2), tableSpoonUOM, tacoRecipe));
-        tacoRecipe.getIngredients().add((new Ingredient("Dried Oregano", new BigDecimal(1), teaSpoonUOM, tacoRecipe)));
-        tacoRecipe.getIngredients().add(new Ingredient("Dried Cumin", new BigDecimal(1), teaSpoonUOM, tacoRecipe));
-        tacoRecipe.getIngredients().add(new Ingredient("Sugar", new BigDecimal(1), teaSpoonUOM, tacoRecipe));
+        tacoRecipe.addIngredient(new Ingredient("Ancho Chili Powder", new BigDecimal(2), tableSpoonUOM));
+        tacoRecipe.addIngredient((new Ingredient("Dried Oregano", new BigDecimal(1), teaSpoonUOM)));
+        tacoRecipe.addIngredient(new Ingredient("Dried Cumin", new BigDecimal(1), teaSpoonUOM));
+        tacoRecipe.addIngredient(new Ingredient("Sugar", new BigDecimal(1), teaSpoonUOM));
 
         tacoRecipe.getCategories().add(americanCategory);
         tacoRecipe.getCategories().add(mexicanCategory);
