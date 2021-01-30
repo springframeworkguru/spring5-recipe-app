@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ public class Recipe {
     private Long id;
     private String description;
     private Integer prepTime;
-    private Integer cooktime;
+    private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
@@ -24,7 +25,6 @@ public class Recipe {
     private Difficulty difficulty;
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
-
     @ManyToMany
     @JoinTable(
             name = "recipe_category",
@@ -57,12 +57,12 @@ public class Recipe {
         this.prepTime = prepTime;
     }
 
-    public Integer getCooktime() {
-        return cooktime;
+    public Integer getCookTime() {
+        return cookTime;
     }
 
-    public void setCooktime(Integer cooktime) {
-        this.cooktime = cooktime;
+    public void setCookTime(Integer cooktime) {
+        this.cookTime = cooktime;
     }
 
     public Integer getServings() {
@@ -135,5 +135,14 @@ public class Recipe {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public void addCategory(Category category) {
+        if (category == null) {
+            return;
+        } else if (categories == null) {
+            categories = new HashSet<>();
+        }
+        categories.add(category);
     }
 }

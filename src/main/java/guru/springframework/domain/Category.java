@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -35,5 +36,14 @@ public class Category {
 
     public void setRecipes(Set<Recipe> recipes) {
         this.recipes = recipes;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        if (recipe == null) {
+            return;
+        } else if (recipes == null) {
+            recipes = new HashSet<>();
+        }
+        recipes.add(recipe);
     }
 }
