@@ -4,16 +4,15 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
-import org.springframework.boot.CommandLineRunner;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
 
+@Slf4j
 @Component
 public class RecipeDataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -102,6 +101,8 @@ public class RecipeDataBootstrap implements ApplicationListener<ContextRefreshed
         categoryRepository.save(grill);
         categoryRepository.save(quick);
 
+        log.debug("Loaded extra categories");
+
         chickenTacos.setDescription("Spicy grilled chicken tacos! Quick marinade, then grill. Ready in about 30 minutes. Great for a quick weeknight dinner, backyard cookouts, and tailgate parties.\n");
         chickenTacos.setPrepTime(20);
         chickenTacos.setCookTime(15);
@@ -116,6 +117,8 @@ public class RecipeDataBootstrap implements ApplicationListener<ContextRefreshed
 
         recipeRepository.save(perfectGuacamole);
         recipeRepository.save(chickenTacos);
+
+        log.debug("Loaded recipes!");
     }
 
     public Set<Ingredient> getGuacamoleIngredients(Recipe perfectGuacamole) {
