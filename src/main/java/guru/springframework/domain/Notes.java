@@ -12,6 +12,7 @@ public class Notes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ToString.Exclude
     @OneToOne
     private Recipe recipe;
 

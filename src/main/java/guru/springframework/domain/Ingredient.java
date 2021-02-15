@@ -19,6 +19,7 @@ public class Ingredient {
     @OneToOne(fetch = FetchType.EAGER)
     private UnitOfMeasure uom;
 
+    @ToString.Exclude
     @ManyToOne
     private Recipe recipe;
 
