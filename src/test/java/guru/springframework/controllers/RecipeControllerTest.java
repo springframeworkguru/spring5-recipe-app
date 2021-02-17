@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class RecipeControllerTest {
 
+    public static final long RECIPE_ID = 1L;
     @Mock
     RecipeService recipeService;
 
@@ -36,14 +37,42 @@ public class RecipeControllerTest {
 
     @Test
     public void showRecipeForId() {
-        Recipe recipe = Recipe.builder().id(1L).build();
+        Recipe recipe = Recipe.builder().id(RECIPE_ID).build();
 
         when(recipeService.findById(anyLong())).thenReturn(recipe);
 
         try {
-            mockMvc.perform(get("/recipe/show/1"))
+            mockMvc.perform(get("/recipe/1/show"))
                     .andExpect(status().isOk())
                     .andExpect(view().name("recipe/show"))
+                    .andExpect(model().attributeExists("recipe"));
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void createRecipeForId() {
+        try {
+            mockMvc.perform(get("/recipe/create"))
+                    .andExpect(status().isOk())
+                    .andExpect(view().name("recipe/create"))
+                    .andExpect(model().attributeExists("recipe"));
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void updateRecipeForId() {
+        Recipe recipe = Recipe.builder().id(RECIPE_ID).build();
+
+        when(recipeService.findById(anyLong())).thenReturn(recipe);
+
+        try {
+            mockMvc.perform(get("/recipe/1/update"))
+                    .andExpect(status().isOk())
+                    .andExpect(view().name("recipe/update"))
                     .andExpect(model().attributeExists("recipe"));
         } catch (Exception e) {
             fail();
