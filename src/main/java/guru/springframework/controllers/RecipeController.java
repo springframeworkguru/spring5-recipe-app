@@ -29,14 +29,14 @@ public class RecipeController {
     public String createRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
-        return "recipe/create";
+        return "recipe/recipe_form";
     }
 
     @GetMapping("/recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
 
-        return "recipe/create";
+        return "recipe/recipe_form";
     }
 
     @PostMapping("/recipe")
