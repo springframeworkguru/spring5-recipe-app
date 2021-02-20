@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>View Recipe X</title>
+    <title>View Recipe</title>
 
     <!--    Bootstrap/JQuery -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -93,7 +93,10 @@
     <!--        Ingredients Card-->
             <div class="card text-white bg-secondary mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Ingredients</h5>
+                    <h5 class="card-title">
+                        Ingredients
+                        <a class="btn btn-light" style="float: right;" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/new'}">Add</a>
+                    </h5>
                     <p class="card-text">
                         <ul th:each="ingredient : ${recipe.ingredients}">
                             <li>
