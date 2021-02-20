@@ -54,10 +54,10 @@
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
-                            <select class="form-control" id="difficulty">
-                                <option>Easy</option>
-                                <option>Medium</option>
-                                <option>Hard</option>
+                            <select class="form-control" id="difficulty" th:field="*{difficulty}">
+                                <option th:each="diffValue : ${T(guru.springframework.domain.Difficulty).values()}"
+                                        th:value="${diffValue.name()}"
+                                        th:text="${diffValue.name()}">Easy</option>
                             </select>
                         </div>
                     </div>

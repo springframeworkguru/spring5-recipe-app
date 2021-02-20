@@ -21,7 +21,11 @@
 
 </head>
 <body>
-    <h2 th:text='Recipes'></h2>
+<div style="margin-top: 2em; margin-left: auto; margin-right: auto; max-width: 70%;">
+    <div style="display: inline;">
+        <h2 th:text='Recipes'></h2>
+        <a class="btn btn-dark" style="float: right;" href="/recipe/create">Add</a>
+    </div>
 
     <div class="container-fluid">
         <table class="table table-dark">
@@ -45,6 +49,6 @@
             </tbody>
         </table>
     </div>
-
+</div>
 </body>
 </html>

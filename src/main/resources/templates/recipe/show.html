@@ -29,6 +29,7 @@
     <!--            <img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <h5 class="card-title" th:text="${recipe.description}">Recipe Name</h5>
+                    <a class="btn btn-dark" style="float: right;" th:href="@{'/recipe/' + ${recipe.id} + '/update'}">Edit</a>
                     <p class="card-text">
                         <div class="row">
                             <div class="col-2">
