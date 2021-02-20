@@ -15,7 +15,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -62,4 +62,16 @@ public class IngredientControllerTest {
         }
     }
 
+    @Test
+    public void deleteIngredient() {
+        try {
+            mockMvc.perform(get("/recipe/1/ingredient/3/delete"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/recipe/1/show"));
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+        verify(ingredientService, times(1)).deleteById(anyLong(), anyLong());
+    }
 }

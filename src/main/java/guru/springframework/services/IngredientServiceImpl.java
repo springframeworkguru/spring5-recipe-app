@@ -6,6 +6,10 @@ import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.repositories.IngredientRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
@@ -38,12 +42,19 @@ public class IngredientServiceImpl implements IngredientService {
         ingredient.setRecipe(recipeService.findById(command.getRecipeId()));
         ingredient.setDescription(command.getDescription());
         ingredient.setAmount(command.getAmount());
-        ingredient.setUom(uomConverter.convert(command.getUom()));
+        ingredient.setUom(Optional.of(command.getUom())
+                .filter(uom -> !StringUtils.isEmpty(uom.getDescription()))
+                .map(uomConverter::convert)
+                .orElse(null));
 
         Ingredient savedIngredient = ingredientRepository.save(ingredient);
 
         return converter.convert(savedIngredient);
     }
 
-
+    @Override
+    @Transactional
+    public void deleteById(Long ingredientId, Long recipeId) {
+        ingredientRepository.deleteByIdAndRecipeId(ingredientId, recipeId);
+    }
 }

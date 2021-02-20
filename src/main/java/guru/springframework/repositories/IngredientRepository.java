@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
 
     Optional<Ingredient> findByIdAndRecipeId(Long id, Long recipeId);
+
+    void deleteByIdAndRecipeId(Long id, Long recipeId);
 }
