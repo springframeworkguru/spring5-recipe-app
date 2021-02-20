@@ -22,6 +22,6 @@ public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeas
         command.setId(unitOfMeasure.getId());
         command.setDescription(unitOfMeasure.getDescription());
 
-        return null;
+        return command;
     }
 }

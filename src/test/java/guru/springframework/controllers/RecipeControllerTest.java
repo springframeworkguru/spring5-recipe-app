@@ -78,4 +78,16 @@ public class RecipeControllerTest {
             fail();
         }
     }
+
+    @Test
+    public void deleteRecipeById() {
+
+        try {
+            mockMvc.perform(get("/recipe/1/delete"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/"));
+        } catch (Exception e) {
+            fail();
+        }
+    }
 }

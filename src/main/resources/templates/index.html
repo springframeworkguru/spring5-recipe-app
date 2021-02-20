@@ -15,6 +15,10 @@
     <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
 <!--    End BootStrap/JQuery-->
 
+<!--    Font Awesome Icons-->
+    <script src="https://kit.fontawesome.com/6b9d1b00a5.js" crossorigin="anonymous"></script>
+    <!--    -->
+
 </head>
 <body>
     <h2 th:text='Recipes'></h2>
@@ -25,13 +29,17 @@
                 <th scope="col">#</th>
                 <th scope="col">Description</th>
                 <th scope="col">View</th>
+                <th scope="col">Delete</th>
             </thead>
             <tbody>
                 <tr th:each="recipe : ${recipes}">
                     <th th:text="${recipe.id}" scope="row"></th>
                     <td th:text="${recipe.description}" scope="row"></td>
                     <td scope="row">
-                        <a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a>
+                        <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/show'}"><i class="fas fa-eye"></i></a>
+                    </td>
+                    <td scope="row">
+                        <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/delete'}"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
             </tbody>

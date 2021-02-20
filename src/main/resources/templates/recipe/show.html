@@ -15,12 +15,17 @@
     <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
     <!--    End BootStrap/JQuery-->
 
+    <!--    Font Awesome Icons-->
+    <script src="https://kit.fontawesome.com/6b9d1b00a5.js" crossorigin="anonymous"></script>
+    <!--    -->
+
+
 </head>
 <body>
     <div class="container-fluid">
         <div style="margin-top: 2em; margin-left: auto; margin-right: auto; max-width: 70%;">
         <!--        Recipe Description card-->
-            <div class="card text-white bg-dark mb-3">
+            <div class="card text-white bg-secondary mb-3">
     <!--            <img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <h5 class="card-title" th:text="${recipe.description}">Recipe Name</h5>
@@ -86,14 +91,18 @@
     <!--        END Recipe Description card-->
 
     <!--        Ingredients Card-->
-            <div class="card text-white bg-dark mb-3">
+            <div class="card text-white bg-secondary mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Ingredients</h5>
                     <p class="card-text">
                         <ul th:each="ingredient : ${recipe.ingredients}">
-                            <li th:text="(${ingredient.amount} ?: '') + ' '
-                            + (${ingredient?.uom?.description} ?: '')
-                            + ' ' + (${ingredient.description} ?: '')">1 cup of milk</li>
+                            <li>
+                                <span th:text="(${ingredient.amount} ?: '') + ' '
+                                + (${ingredient?.uom?.description} ?: '')
+                                + ' ' + (${ingredient.description} ?: '')"></span>
+                                <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/update'}" style="color:inherit;"><i class="far fa-edit"></i></a>
+                                <a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/delete'}" style="color:inherit;"><i class="fas fa-trash"></i></a>
+                            </li>
                         </ul>
                     </p>
                 </div>
@@ -101,7 +110,7 @@
     <!--        END Ingredients Card-->
 
     <!--        Directions Card-->
-            <div class="card text-white bg-dark mb-3">
+            <div class="card text-white bg-secondary mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Directions</h5>
                     <p class="card-text" th:text="${recipe.directions}"></p>
@@ -110,7 +119,7 @@
     <!--        END of Directions Card-->
 
     <!--        Notes Card-->
-            <div class="card text-white bg-dark mb-3">
+            <div class="card text-white bg-secondary mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Notes</h5>
                     <p class="card-text" th:text="${recipe.notes.recipeNotes}"></p>
