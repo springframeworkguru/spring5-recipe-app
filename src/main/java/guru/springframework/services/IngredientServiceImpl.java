@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 public class IngredientServiceImpl implements IngredientService {
 
     private final IngredientRepository ingredientRepository;
+    private final RecipeService recipeService;
     private final IngredientToIngredientCommand converter;
     private final UnitOfMeasureCommandToUnitOfMeasure uomConverter;
 
-    public IngredientServiceImpl(IngredientRepository ingredientRepository, IngredientToIngredientCommand converter, UnitOfMeasureCommandToUnitOfMeasure uomConverter) {
+    public IngredientServiceImpl(IngredientRepository ingredientRepository, RecipeService recipeService, IngredientToIngredientCommand converter, UnitOfMeasureCommandToUnitOfMeasure uomConverter) {
         this.ingredientRepository = ingredientRepository;
+        this.recipeService = recipeService;
         this.converter = converter;
         this.uomConverter = uomConverter;
     }
@@ -30,9 +32,10 @@ public class IngredientServiceImpl implements IngredientService {
         Ingredient ingredient = ingredientRepository.findByIdAndRecipeId(command.getId(), command.getRecipeId()).orElse(null);
 
         if (ingredient == null) {
-            throw new RuntimeException("Could not find ingredient");
+            ingredient = new Ingredient();
         }
 
+        ingredient.setRecipe(recipeService.findById(command.getRecipeId()));
         ingredient.setDescription(command.getDescription());
         ingredient.setAmount(command.getAmount());
         ingredient.setUom(uomConverter.convert(command.getUom()));
