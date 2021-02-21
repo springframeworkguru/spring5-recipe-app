@@ -49,6 +49,6 @@ public class IngredientServiceImplTest {
     public void deleteById() {
         ingredientService.deleteById(INGREDIENT_ID, INGREDIENT_ID);
 
-        verify(ingredientRepository, times(1)).deleteById(anyLong());
+        verify(ingredientRepository, times(1)).deleteByIdAndRecipeId(anyLong(), anyLong());
     }
 }
