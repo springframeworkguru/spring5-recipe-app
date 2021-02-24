@@ -39,6 +39,7 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
         recipeCommand.setSource(recipe.getSource());
         recipeCommand.setUrl(recipe.getUrl());
         recipeCommand.setDirections(recipe.getDirections());
+        recipeCommand.setImage(recipe.getImage());
         recipeCommand.setIngredients(recipe.getIngredients()
                 .stream()
                 .map(ingredientConverter::convert)

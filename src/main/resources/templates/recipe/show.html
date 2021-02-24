@@ -26,7 +26,8 @@
         <!--        Recipe Description card-->
             <div class="card text-white bg-secondary mb-3">
                 <img src="https://cdn.loveandlemons.com/wp-content/uploads/2019/04/guacamole.jpg" class="img-fluid img-thumbnail card-img-top " alt="..."
-                    style="object-fit: cover; width: 100%; height: 300px;">
+                    style="object-fit: cover; width: 100%; height: 300px;"
+                    th:src="@{'/recipe/' + ${recipe.id} + '/displayImage'}">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${recipe.description}">Recipe Name</h5>
                     <a class="btn btn-dark" style="float: right; margin-left: 0.3em; margin-right: 0.3em;" th:href="@{'/recipe/' + ${recipe.id} + '/image'}">Upload Image</a>
