@@ -19,6 +19,12 @@
 <body>
 <div class="container-fluid" style="margin-top: 2em; margin-left: auto; margin-right: auto; max-width: 70%;">
     <form th:object="${recipe}" th:action="@{/recipe/}" method="post">
+
+        <!--        Errors Display-->
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            Please Correct Errors Below!
+        </div>
+
         <!--        Recipe Description card-->
         <div class="card text-white bg-dark mb-3">
             <div class="card-body">
@@ -26,8 +32,15 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group form-inline">
-                            <label for="recipeDescription">Recipe</label>
-                            <input type="text" class="form-control" id="recipeDescription" aria-describedby="recipeHelp" th:field="*{description}">
+                            <div th:class="${#fields.hasErrors('description') ? 'is-invalid' : ''}">
+                                <label for="recipeDescription">Recipe</label>
+                                <input type="text" class="form-control" id="recipeDescription" aria-describedby="recipeHelp" th:field="*{description}" th:errorclass="is-invalid">
+                                <span class="form-text" th:if="${#fields.hasErrors('description')}">
+                                    <ul style="color: red!important;">
+                                        <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -47,7 +60,14 @@
                         <label for="prepTime">Prep Time:</label>
                     </div>
                     <div class="col-sm">
-                        <input type="number" class="form-control" id="prepTime" th:field="*{prepTime}">
+                        <div th:class="${#fields.hasErrors('prepTime') ? 'is-invalid' : ''}">
+                            <input type="number" class="form-control" id="prepTime" th:field="*{prepTime}" th:errorclass="is-invalid">
+                            <span class="form-text" th:if="${#fields.hasErrors('prepTime')}">
+                                <ul style="color: red!important;">
+                                    <li th:each="err : ${#fields.errors('prepTime')}" th:text="${err}"></li>
+                                </ul>
+                            </span>
+                        </div>
                     </div>
                     <div class="col-sm">
                         <label for="difficulty">Difficulty</label>
@@ -67,13 +87,27 @@
                         <label for="cookTime">Cook Time:</label>
                     </div>
                     <div class="col-sm">
-                        <input type="number" class="form-control" id="cookTime" th:field="*{cookTime}">
+                        <div th:class="${#fields.hasErrors('cookTime') ? 'is-invalid' : ''}">
+                            <input type="number" class="form-control" id="cookTime" th:field="*{cookTime}">
+                            <span class="form-text" th:if="${#fields.hasErrors('cookTime')}">
+                                <ul style="color: red!important;">
+                                    <li th:each="err : ${#fields.errors('cookTime')}" th:text="${err}"></li>
+                                </ul>
+                            </span>
+                        </div>
                     </div>
                     <div class="col-sm">
                         <label for="servings">Servings:</label>
                     </div>
                     <div class="col-sm">
-                        <input type="number" class="form-control" id="servings" th:field="*{servings}">
+                        <div th:class="${#fields.hasErrors('servings') ? 'is-invalid' : ''}">
+                            <input type="number" class="form-control" id="servings" th:field="*{servings}">
+                            <span class="form-text" th:if="${#fields.hasErrors('servings')}">
+                                <ul style="color: red!important;">
+                                    <li th:each="err : ${#fields.errors('servings')}" th:text="${err}"></li>
+                                </ul>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -87,7 +121,14 @@
                         <label for="url">URL:</label>
                     </div>
                     <div class="col-sm">
-                        <input type="text" class="form-control" id="url" th:field="*{url}">
+                        <div th:class="${#fields.hasErrors('url') ? 'is-invalid' : ''}">
+                            <input type="text" class="form-control" id="url" th:field="*{url}">
+                            <span class="form-text" th:if="${#fields.hasErrors('url')}">
+                                <ul style="color: red!important;">
+                                    <li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+                                </ul>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -114,7 +155,14 @@
         <div class="card text-white bg-dark mb-3">
             <div class="card-body">
                 <h5 class="card-title">Directions</h5>
-                <textarea class="form-control" id="directions" rows="3" th:field="*{directions}"></textarea>
+                <div th:class="${#fields.hasErrors('directions') ? 'is-invalid' : ''}">
+                    <textarea class="form-control" id="directions" rows="3" th:field="*{directions}"></textarea>
+                    <span class="form-text" th:if="${#fields.hasErrors('directions')}">
+                        <ul style="color: red!important;">
+                            <li th:each="err : ${#fields.errors('directions')}" th:text="${err}"></li>
+                        </ul>
+                    </span>
+                </div>
             </div>
         </div>
         <!--        END of Directions Card-->

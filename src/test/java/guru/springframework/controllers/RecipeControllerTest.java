@@ -1,5 +1,6 @@
 package guru.springframework.controllers;
 
+import guru.springframework.commands.RecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.RecipeService;
@@ -8,13 +9,16 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RecipeControllerTest {
@@ -117,6 +121,47 @@ public class RecipeControllerTest {
                     .andExpect(redirectedUrl("/"));
         } catch (Exception e) {
             fail();
+        }
+    }
+
+    @Test
+    public void postNewRecipeFormWithValid_ShouldCreateRecipe() {
+        RecipeCommand command = new RecipeCommand();
+        command.setId(RECIPE_ID);
+
+        when(recipeService.saveRecipeCommand(any())).thenReturn(command);
+
+        try {
+            mockMvc.perform(post("/recipe")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("id", "")
+                                .param("description", "Test description")
+                                .param("directions", "Test directions"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/recipe/1/show"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void postNewRecipeFormWithNoDescription_ShouldFailValidationAndReturnToFormView() {
+        RecipeCommand command = new RecipeCommand();
+        command.setId(RECIPE_ID);
+
+        when(recipeService.saveRecipeCommand(any())).thenReturn(command);
+
+        try {
+            mockMvc.perform(post("/recipe")
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .param("id", "")
+                    .param("directions", "Test directions"))
+                    .andExpect(status().isOk())
+                    .andExpect(view().name("recipe/recipe_form"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
         }
     }
 }
