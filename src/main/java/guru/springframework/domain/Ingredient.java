@@ -1,11 +1,12 @@
 package guru.springframework.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyEnumerated;
 
 @Entity
 public class Ingredient {
@@ -16,7 +17,7 @@ public class Ingredient {
 
     
     private String description;
-    private String ammount;
+    private BigDecimal ammount;
 
     @ManyToOne
     private Recipe recipe;
@@ -37,11 +38,11 @@ public class Ingredient {
         this.description = description;
     }
 
-    public String getAmmount() {
+    public BigDecimal getAmmount() {
         return this.ammount;
     }
 
-    public void setAmmount(String ammount) {
+    public void setAmmount(BigDecimal ammount) {
         this.ammount = ammount;
     }
     
