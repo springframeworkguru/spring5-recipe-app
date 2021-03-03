@@ -1,6 +1,5 @@
 package guru.springframework.controllers;
 
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -27,8 +26,9 @@ public class IndexController {
     public String getIndexPage(){
 
         Optional<Category> categoryOptional = categoryRepository.findByDescription("American");
-
+        if (categoryOptional.isPresent()){
         System.out.println(categoryOptional.get().getId());
+        }
         return "index";
     }
 }
