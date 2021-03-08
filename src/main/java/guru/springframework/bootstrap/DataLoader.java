@@ -69,24 +69,14 @@ public class DataLoader implements CommandLineRunner {
         Receita1.setDifficulty(Difficulty.HARD);
         Receita1.setDirections("Simple Guacamole: The simplest version of guacamole is just mashed avocados with salt. Don't let the lack of availability of other ingredients stop you from making guacamole.");
         
-        Ingredient abacate = new Ingredient();
-        abacate.setDescription("Abacate");
-        abacate.setAmmount(new BigDecimal(2.0) );
-        abacate.setRecipe(Receita1);
-        abacate.setUom(unidade);
+        Ingredient abacate = new Ingredient( "Abacate", new BigDecimal(2.0) ,unidade);
+        Ingredient tomate = new Ingredient( "Tomate", new BigDecimal(2.0) ,unidade);
 
-        Ingredient tomate = new Ingredient();
-        tomate.setDescription("Tomate");
-        tomate.setAmmount(new BigDecimal(1.0) );
-        tomate.setRecipe(Receita1);
-        tomate.setUom(unidade);
         
         Set<Ingredient> ingredientesDaReceita = new HashSet<Ingredient>();
         ingredientesDaReceita.add(abacate);
         ingredientesDaReceita.add(tomate);
-        
-        
-        
+            
         Receita1.setIngredients(ingredientesDaReceita);
 
         Notes comentarios = new Notes();
