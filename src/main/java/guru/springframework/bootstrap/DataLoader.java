@@ -68,6 +68,7 @@ public class DataLoader implements CommandLineRunner {
         receita1.setCookTime(15);
         receita1.setDifficulty(Difficulty.HARD);
         receita1.setDirections("Simple Guacamole: The simplest version of guacamole is just mashed avocados with salt. Don't let the lack of availability of other ingredients stop you from making guacamole.");
+
         
         Ingredient abacate = new Ingredient( "Abacate", BigDecimal.valueOf(2.0) ,unidade);
         Ingredient tomate = new Ingredient( "Tomate", BigDecimal.valueOf(2.0) ,unidade);
