@@ -1,7 +1,6 @@
 package guru.springframework.bootstrap;
 
 import java.math.BigDecimal;
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -59,8 +58,7 @@ public class DataLoader implements CommandLineRunner {
         }
         UnitOfMeasure unidade = unidadeUnitOfMeasure.get();
 
-        Long i = (long) 1;
-        // Adiconando os dados da Receita
+         // Adiconando os dados da Receita
         Recipe Receita1 = new Recipe();
         Receita1.setCategories(categoriasDaReceita);
         Receita1.setDescription("Perfect Guacamole");
