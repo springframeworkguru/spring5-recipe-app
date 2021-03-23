@@ -1,13 +1,17 @@
-package guru.springframework.domain;
+package guru.springframework.repositories;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import guru.springframework.domain.Category;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by jt on 6/17/17.
  */
+@Slf4j
 public class CategoryTest {
 
     Category category;
@@ -24,6 +28,7 @@ public class CategoryTest {
         category.setId(idValue);
 
         assertEquals(idValue, category.getId());
+        log.info("TESTE de GETID");
         
     }
 
