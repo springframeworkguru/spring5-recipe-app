@@ -50,7 +50,7 @@ public class IndexControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
-        log.info("Passei aqui");
+        log.info("Passei aqui testMockMVC");
     }
 
     @Test
@@ -75,10 +75,18 @@ public class IndexControllerTest {
 
         //then
         assertEquals("index", viewName);
+
         verify(recipeService, times(1)).getRecipes();
+        
         verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
+        
         Set<Recipe> setInController = argumentCaptor.getValue();
+        
         assertEquals(2, setInController.size());
+        log.error("Passei aqui getIndexPage");
+        log.info("Passei aqui getIndexPage");
+        log.warn("Passei aqui getIndexPage");
+        log.debug("Debug Here");
     }
 
 }
