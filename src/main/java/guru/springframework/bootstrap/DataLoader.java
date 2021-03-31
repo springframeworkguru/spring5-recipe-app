@@ -60,7 +60,7 @@ public class DataLoader implements CommandLineRunner {
         }
         UnitOfMeasure unidade = unidadeUnitOfMeasure.get();
 
-        log.info("Adiconando os dados da Receita");
+        log.info("Adiconando os dados da Receita1");
         Recipe receita1 = new Recipe();
         receita1.setCategories(categoriasDaReceita);
         receita1.setDescription("Perfect Guacamole");
@@ -84,8 +84,62 @@ public class DataLoader implements CommandLineRunner {
         comentarios.setRecipe(receita1);
         comentarios.setRecipeNotes("Comentarios");
         receita1.setNotes(comentarios);
-
         recipeRepository.save(receita1);
+
+
+        log.info("Adiconando os dados da Receita2");
+        Recipe receita2 = new Recipe();
+        receita2.setCategories(categoriasDaReceita);
+        receita2.setDescription("Perfect SucuDuva");
+        receita2.setPrepTime(10);
+        receita2.setCookTime(00);
+        receita2.setDifficulty(Difficulty.EASY);
+        receita2.setDirections("Just Smash all");
+
+
+        Ingredient uva = new Ingredient( "Uvas", BigDecimal.valueOf(2.0) ,unidade);
+        Ingredient acucar = new Ingredient( "Açúcar", BigDecimal.valueOf(4.0) ,unidade);
+        Ingredient agua = new Ingredient( "Agua", BigDecimal.valueOf(1.0) ,unidade);
+
+
+        Set<Ingredient> ingredientesDaReceita2 = new HashSet<>();
+        ingredientesDaReceita.add(uva);
+        ingredientesDaReceita.add(acucar);
+        ingredientesDaReceita.add(agua);
+        
+        receita2.setIngredients(ingredientesDaReceita2);
+
+        Notes comentariosR2 = new Notes();
+        comentariosR2.setRecipe(receita2);
+        comentariosR2.setRecipeNotes("Comentarios");
+        receita2.setNotes(comentariosR2);
+
+        recipeRepository.save(receita2);
+
+        log.info("Adiconando os dados da Receita3");
+        Recipe receita3 = new Recipe();
+        receita3.setCategories(categoriasDaReceita);
+        receita3.setDescription("Perfect Agua Gelada");
+        receita3.setPrepTime(1);
+        receita3.setCookTime(5);
+        receita3.setDifficulty(Difficulty.MODERATE);
+        receita3.setDirections("Simple Guacamole: The simplest version of guacamole is just mashed avocados with salt. Don't let the lack of availability of other ingredients stop you from making guacamole.");
+
+
+        Ingredient gelo = new Ingredient( "Gelo", BigDecimal.valueOf(2.0) ,unidade);
+
+
+        Set<Ingredient> ingredientesDaReceita3 = new HashSet<>();
+        ingredientesDaReceita.add(agua);
+        ingredientesDaReceita.add(gelo);
+
+        receita3.setIngredients(ingredientesDaReceita3);
+
+        Notes comentariosR3 = new Notes();
+        comentariosR3.setRecipe(receita1);
+        comentariosR3.setRecipeNotes("Comentarios");
+        receita3.setNotes(comentariosR3);
+        recipeRepository.save(receita3);
     }
 
 }
