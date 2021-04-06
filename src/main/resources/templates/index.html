@@ -11,41 +11,47 @@
 
     <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"
-          th:href="@{/webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css}">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/5.0.0-beta3/css/bootstrap.min.css}">
 </head>
 
 <body>
-    <div class="container-fluid" style="margin-top: 20px">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-primary">
-
-                    <div class="panel-heading">
-                        <h1 class="panel-title">My Recipes!</h1>
+    <div class="container-sm" style="margin-top: 20px">
+        <div class="row mx-auto">
+            <div class="col-mx-6 col-mx-offset-3">
+                <div class="card text-center">
+                    <div class="card-header text-white bg-primary">
+                        <h1>My Recipes!</h1>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
                             <table class="table table-hover ">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Description</th>
+                                <caption>Lista de Receitas gerada automaticamente.</caption>
+                                <thead>
+                                    <tr class="table-primary">
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Link</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tr th:remove="all">
-                                    <td th:text="${recipe.id}">123</td>
-                                    <td th:text="${recipe.description}">Tasty Goodnees 1</td>
+                                    <td>123</td>
+                                    <td>Tasty Goodnees 1</td>
+                                    <td><a href="#">View</a></td>
+
                                 </tr>
                                 <tr th:remove="all">
-                                    <td th:text="${recipe.id}">12333</td>
-                                    <td th:text="${recipe.description}">Tasty Goodnees 2</td>
+                                    <td>12333</td>
+                                    <td>Tasty Goodnees 2</td>
+                                    <td><a href="#">View</a></td>
                                 </tr>
                                 <tr th:each="recipe : ${recipes}">
                                     <td th:text="${recipe.id}">334</td>
                                     <td th:text="${recipe.description}">Tasty Goodnees 3</td>
+                                    <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">Visualizar</td>
+                                    
                                 </tr>
                             </table>
                         </div>
@@ -55,15 +61,12 @@
         </div>
     </div>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-
-    <script src="/webjars/popper.js/2.5.4/umd/popper.min.js"
-        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
-        crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"
+            th:src="@{/webjars/bootstrap/5.0.0-beta3/js/bootstrap.bundle.min.js}">
     </script>
-    <script src="/webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js"
-        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
-        crossorigin="anonymous"></script>
 
 </body>
 
