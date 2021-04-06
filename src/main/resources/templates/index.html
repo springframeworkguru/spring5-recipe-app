@@ -17,34 +17,41 @@
 </head>
 
 <body>
-    <div class="container-md" style="margin-top: 20px">
+    <div class="container-sm" style="margin-top: 20px">
         <div class="row mx-auto">
             <div class="col-mx-6 col-mx-offset-3">
-                <div class="card text-center ">
-
-                    <div class="card-header ">
+                <div class="card text-center">
+                    <div class="card-header text-white bg-primary">
                         <h1>My Recipes!</h1>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
                             <table class="table table-hover ">
+                                <caption>Lista de Receitas gerada automaticamente.</caption>
                                 <thead>
-                                    <tr class="table-dark">
-                                        <th>ID</th>
-                                        <th>Description</th>
+                                    <tr class="table-primary">
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Link</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tr th:remove="all">
-                                    <td th:text="${recipe.id}">123</td>
-                                    <td th:text="${recipe.description}">Tasty Goodnees 1</td>
+                                    <td>123</td>
+                                    <td>Tasty Goodnees 1</td>
+                                    <td><a href="#">View</a></td>
+
                                 </tr>
                                 <tr th:remove="all">
-                                    <td th:text="${recipe.id}">12333</td>
-                                    <td th:text="${recipe.description}">Tasty Goodnees 2</td>
+                                    <td>12333</td>
+                                    <td>Tasty Goodnees 2</td>
+                                    <td><a href="#">View</a></td>
                                 </tr>
                                 <tr th:each="recipe : ${recipes}">
                                     <td th:text="${recipe.id}">334</td>
                                     <td th:text="${recipe.description}">Tasty Goodnees 3</td>
+                                    <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">Visualizar</td>
+                                    
                                 </tr>
                             </table>
                         </div>
