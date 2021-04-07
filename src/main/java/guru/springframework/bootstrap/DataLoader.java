@@ -133,8 +133,6 @@ public class DataLoader implements CommandLineRunner {
         
         Ingredient abacate = new Ingredient( "Abacate", BigDecimal.valueOf(2.0) ,unidade);
         Ingredient tomate = new Ingredient( "Tomate", BigDecimal.valueOf(2.0) ,unidade);
-
-        
         Set<Ingredient> ingredientesDaReceita = new HashSet<>();
         ingredientesDaReceita.add(abacate);
         ingredientesDaReceita.add(tomate);
@@ -163,9 +161,9 @@ public class DataLoader implements CommandLineRunner {
         Ingredient agua = new Ingredient( "Agua", BigDecimal.valueOf(1.0) ,unidade);
 
          Set<Ingredient> ingredientesDaReceita2 = new HashSet<>();
-        ingredientesDaReceita.add(uva);
-        ingredientesDaReceita.add(acucar);
-        ingredientesDaReceita.add(agua);
+        ingredientesDaReceita2.add(uva);
+        ingredientesDaReceita2.add(acucar);
+        ingredientesDaReceita2.add(agua);
         
         receita2.setIngredients(ingredientesDaReceita2);
 
@@ -187,11 +185,12 @@ public class DataLoader implements CommandLineRunner {
 
 
         Ingredient gelo = new Ingredient( "Gelo", BigDecimal.valueOf(2.0) ,unidade);
-
-
+        Ingredient agua3 = new Ingredient( "Agua", BigDecimal.valueOf(1.0) ,unidade);
+        gelo.setRecipe(receita3);
+        agua3.setRecipe(receita3);
         Set<Ingredient> ingredientesDaReceita3 = new HashSet<>();
-        ingredientesDaReceita.add(agua);
-        ingredientesDaReceita.add(gelo);
+        ingredientesDaReceita3.add(agua3);
+        ingredientesDaReceita3.add(gelo);
 
         receita3.setIngredients(ingredientesDaReceita3);
 
