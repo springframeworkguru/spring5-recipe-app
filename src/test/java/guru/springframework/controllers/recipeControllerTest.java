@@ -3,10 +3,7 @@ package guru.springframework.controllers;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-import java.lang.ModuleLayer.Controller;
-
-import javax.sound.midi.Receiver;
-
+import guru.springframework.services.CategoryService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -14,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import ch.qos.logback.core.status.Status;
 import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +25,16 @@ public class recipeControllerTest {
     @Mock
     RecipeService recipeService;
 
+    @Mock
+    CategoryService categoryService;
+
     RecipeController recipeController;
 
     @Before
     public void setUp() throws Exception{
 
         MockitoAnnotations.initMocks(this);
-        recipeController = new RecipeController(recipeService);
+        recipeController = new RecipeController(recipeService, categoryService);
     }
 
     @Test
