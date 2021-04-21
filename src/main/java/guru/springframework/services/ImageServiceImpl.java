@@ -49,3 +49,7 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 }
+
+/*
+ Add a new block of comment-code, for testing.
+ */
