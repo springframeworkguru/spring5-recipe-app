@@ -28,5 +28,12 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      # run tests!
-      - run: mvn integration-test
+      # run tests and generate code coverage!
+      - run: mvn integration-test jacoco:report
+
+      - store_test_results:
+          path: target/site/jacoco
+
+      - run:
+          name: Send to CodeCov.io
+          command: bash <(curl -s https://codecov.io/bash)
