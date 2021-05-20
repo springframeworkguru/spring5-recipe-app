@@ -1,4 +1,4 @@
-package guru.springframework.services;
+package guru.springframework.bootstrap;
 
 import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
@@ -6,6 +6,7 @@ import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
@@ -14,14 +15,15 @@ import java.util.*;
 
 @Slf4j
 @Component
-public class RecipeDataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
+@Profile("default")
+public class DefaultRecipeDataBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository uomRepository;
     private final CategoryRepository categoryRepository;
     private List<UnitOfMeasure> units;
 
-    public RecipeDataBootstrap(RecipeRepository recipeRepository, UnitOfMeasureRepository uomRepository, CategoryRepository categoryRepository) {
+    public DefaultRecipeDataBootstrap(RecipeRepository recipeRepository, UnitOfMeasureRepository uomRepository, CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
         this.uomRepository = uomRepository;
         this.categoryRepository = categoryRepository;
