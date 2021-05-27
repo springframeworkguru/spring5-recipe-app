@@ -126,7 +126,6 @@ public class Recipe {
         return this;
     }
 
-
     public Difficulty getDifficulty() {
         return difficulty;
     }
