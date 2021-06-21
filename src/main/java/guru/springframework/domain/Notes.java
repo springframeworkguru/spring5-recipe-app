@@ -5,11 +5,13 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+
 @Data
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
-    @Id()
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -18,4 +20,5 @@ public class Notes {
 
     @Lob
     private String recipeNotes;
+
 }
