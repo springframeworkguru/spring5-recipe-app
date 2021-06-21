@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
 @Slf4j
 @Service
 public class IngredientServiceImpl implements IngredientService {

@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.Assert.assertEquals;
 
 
+/**
+ * Created by jt on 6/21/17.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecipeServiceIT {

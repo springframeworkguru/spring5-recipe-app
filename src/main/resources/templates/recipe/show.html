@@ -24,19 +24,35 @@
             <div class="pannel-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                            </div>
+
+                            <div class="col-md-1">
+                                <a class="btn btn-default" href="#"
+                                   th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-3">
                                 <h5>Categories:</h5>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-3">
                                 <ul>
                                     <li th:remove="all">cat one</li>
                                     <li th:remove="all">cat two</li>
-                                    <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">cat three</li>
+                                    <li th:each="category : ${recipe.categories}"
+                                        th:text="${category.getDescription()}">cat three
+                                    </li>
                                 </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="../../static/images/guacamole400x400WithX.jpg"
+                                     th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
+                                     width="200" height="200">
                             </div>
                         </div>
                         <div class="row">
@@ -78,7 +94,7 @@
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p><a href="#" th:href="@{recipe.url}" >View Original</a></p>
+                                <p><a href="#" th:href="@{recipe.url}">View Original</a></p>
                             </div>
                         </div>
                     </div>
@@ -90,7 +106,8 @@
                                 <h1 class="panel-title">Ingredients</h1>
                             </div>
                             <div class="col-md-1">
-                                <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+                                <a class="btn btn-default" href="#"
+                                   th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
                             </div>
                         </div>
                     </div>
@@ -103,7 +120,8 @@
                                     <li th:each="ingredient : ${recipe.ingredients}"
                                         th:text="${(ingredient.getAmount() +
                                         ' ' + ingredient.uom.getDescription() +
-                                        ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar</li>
+                                        ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -111,24 +129,48 @@
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" >Directions</h1>
+                        <h1 class="panel-title">Directions</h1>
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p th:text="${recipe.directions}">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+                                <p th:text="${recipe.directions}">Lorem ipsum dolor sit amet, consectetuer adipiscing
+                                    elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus
+                                    et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies
+                                    nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                                    justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+                                    imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+                                    Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                                    eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac,
+                                    enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus
+                                    viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                                    ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam
+                                    rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero,
+                                    sit amet adipiscing sem neque sed ipsum.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" >Notes</h1>
+                        <h1 class="panel-title">Notes</h1>
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p th:text="${recipe.notes.recipeNotes}">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+                                <p th:text="${recipe.notes.recipeNotes}">Lorem ipsum dolor sit amet, consectetuer
+                                    adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+                                    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+                                    ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                                    Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo,
+                                    rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis
+                                    pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean
+                                    vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,
+                                    eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+                                    Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
+                                    Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+                                    Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper
+                                    libero, sit amet adipiscing sem neque sed ipsum.</p>
                             </div>
                         </div>
                     </div>
