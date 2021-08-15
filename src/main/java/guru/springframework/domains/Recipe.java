@@ -1,6 +1,7 @@
 package guru.springframework.domains;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -18,6 +19,9 @@ public class Recipe {
     //@TODO: it's implemented but I think we'll have problems with JPA
     //private Difficulty difficulty;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
+
     @Lob
     private Byte[] image;
 
@@ -26,6 +30,10 @@ public class Recipe {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
