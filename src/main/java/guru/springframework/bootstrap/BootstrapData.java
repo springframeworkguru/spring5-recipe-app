@@ -4,11 +4,14 @@ import guru.springframework.domains.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
+@Slf4j
 @Component
 public class BootstrapData implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
@@ -22,7 +25,10 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
+        log.debug("Bootstrap started.");
+
         UnitOfMeasure ripe = unitOfMeasureRepository.findByDescription("Ripe").get();
         UnitOfMeasure teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon").get();
         UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon").get();
@@ -75,6 +81,8 @@ public class BootstrapData implements CommandLineRunner {
         guacamole.setDescription("A very easy and practical mexican dish made with avocados.");
 
         recipeRepository.save(guacamole);
+
+        log.debug("Guacamole recipe has been saved to the repository.");
     }
 
 
