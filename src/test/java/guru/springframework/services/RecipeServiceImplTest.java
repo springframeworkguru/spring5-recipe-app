@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -24,6 +25,22 @@ public class RecipeServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         recipeService = new RecipeServiceImpl(recipeRepository);
+    }
+
+    @Test
+    public void getRecipeById() throws Exception{
+        Recipe recipe1 = new Recipe();
+        recipe1.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe1);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipe = recipeRepository.findById(1L).orElse(null);
+
+        assertNotNull("Null recipe returned", recipe);
+
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
     }
 
     @Test
