@@ -41,7 +41,7 @@
                                 <h5>Prep Time:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.prepTime}"></p>
+                                <p th:text="${(recipe.prepTime) + ' Min(s)'}"></p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Difficulty:</h5>
@@ -55,7 +55,7 @@
                                 <h5>Cooktime:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.prepTime}">30 min</p>
+                                <p th:text="${(recipe.cookTime) + ' Min(s)'}">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Servings:</h5>
