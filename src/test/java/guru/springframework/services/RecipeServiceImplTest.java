@@ -64,4 +64,11 @@ public class RecipeServiceImplTest {
         assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
     }
+
+    @Test
+    public void testDeleteById() {
+        recipeService.deleteById(2L);
+
+        verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
 }
