@@ -1,12 +1,16 @@
 package guru.springframework.domains;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = "ingredients")
+@ToString(exclude = "ingredients")
 @Entity
 public class Recipe {
     @Id

@@ -14,14 +14,14 @@ public class UomToUomCommand implements Converter<UnitOfMeasure, UnitOfMeasureCo
     @Nullable
     @Override
     public UnitOfMeasureCommand convert(UnitOfMeasure unitOfMeasure) {
-        if(unitOfMeasure != null){
-            final UnitOfMeasureCommand command = new UnitOfMeasureCommand();
-            command.setId(unitOfMeasure.getId());
-            command.setDescription(unitOfMeasure.getDescription());
-
-            return command;
+        if(unitOfMeasure == null){
+            return null;
         }
 
-        return null;
+        final UnitOfMeasureCommand command = new UnitOfMeasureCommand();
+        command.setId(unitOfMeasure.getId());
+        command.setDescription(unitOfMeasure.getDescription());
+
+        return command;
     }
 }

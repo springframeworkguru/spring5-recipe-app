@@ -4,6 +4,7 @@ import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.services.ingredient.IngredientService;
 import guru.springframework.services.recipe.RecipeService;
+import guru.springframework.services.unitofmeasure.UomService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,6 +12,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -24,6 +27,9 @@ public class IngredientControllerTest {
     @Mock
     IngredientService ingredientService;
 
+    @Mock
+    UomService uomService;
+
     IngredientController controller;
 
     MockMvc mockMvc;
@@ -32,7 +38,7 @@ public class IngredientControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        controller = new IngredientController(recipeService, ingredientService);
+        controller = new IngredientController(recipeService, ingredientService, uomService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -65,6 +71,20 @@ public class IngredientControllerTest {
         mockMvc.perform(get("/recipe/1/ingredient/2/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/show"))
+                .andExpect(model().attributeExists("ingredient"));
+    }
+
+    @Test
+    public void getEditIngredient() throws Exception{
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(1L);
+
+        when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(ingredientCommand);
+
+        mockMvc.perform(get("/recipe/1/ingredient/2/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/ingredientform"))
                 .andExpect(model().attributeExists("ingredient"));
     }
 }

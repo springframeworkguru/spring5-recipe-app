@@ -1,15 +1,17 @@
 package guru.springframework.services.ingredient;
 
 import guru.springframework.commands.IngredientCommand;
+import guru.springframework.converters.ingredients.IngredientCommandToIngredient;
 import guru.springframework.converters.ingredients.IngredientToIngredientCommand;
 import guru.springframework.domains.Ingredient;
 import guru.springframework.domains.Recipe;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
-import guru.springframework.services.recipe.RecipeService;
+import guru.springframework.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -20,12 +22,19 @@ public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
     private final IngredientToIngredientCommand toIngredientCommand;
+    private final IngredientCommandToIngredient fromIngredientCommand;
+    private final UnitOfMeasureRepository uomRepository;
 
     public IngredientServiceImpl(IngredientRepository ingredientRepository,
-                                 RecipeRepository recipeRepository, IngredientToIngredientCommand toIngredientCommand) {
+                                 RecipeRepository recipeRepository,
+                                 IngredientToIngredientCommand toIngredientCommand,
+                                 IngredientCommandToIngredient fromIngredientCommand,
+                                 UnitOfMeasureRepository uomRepository) {
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.toIngredientCommand = toIngredientCommand;
+        this.fromIngredientCommand = fromIngredientCommand;
+        this.uomRepository = uomRepository;
     }
 
     @Override
@@ -73,5 +82,47 @@ public class IngredientServiceImpl implements IngredientService {
 
 
         return ingredientCommandOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public IngredientCommand saveIngredientCommand(IngredientCommand command) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
+
+        if(!recipeOptional.isPresent()){
+
+            //todo toss error if not found!
+            log.error("Recipe not found for id: " + command.getRecipeId());
+            return new IngredientCommand();
+        } else {
+            Recipe recipe = recipeOptional.get();
+
+            Optional<Ingredient> ingredientOptional = recipe
+                    .getIngredients()
+                    .stream()
+                    .filter(ingredient -> ingredient.getId().equals(command.getId()))
+                    .findFirst();
+
+            if(ingredientOptional.isPresent()){
+                Ingredient ingredientFound = ingredientOptional.get();
+                ingredientFound.setDescription(command.getDescription());
+                ingredientFound.setAmount(command.getAmount());
+                ingredientFound.setUom(uomRepository
+                        .findById(command.getUom().getId())
+                        .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
+            } else {
+                //add new Ingredient
+                recipe.addIngredient(fromIngredientCommand.convert(command));
+            }
+
+            Recipe savedRecipe = recipeRepository.save(recipe);
+
+            //to do check for fail
+            return toIngredientCommand.convert(savedRecipe.getIngredients().stream()
+                    .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
+                    .findFirst()
+                    .get());
+        }
+
     }
 }
