@@ -1,6 +1,6 @@
 package guru.springframework.controllers;
 
-import guru.springframework.services.RecipeService;
+import guru.springframework.services.recipe.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

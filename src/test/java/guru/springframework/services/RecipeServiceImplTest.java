@@ -4,6 +4,7 @@ import guru.springframework.converters.recipe.RecipeCommandToRecipe;
 import guru.springframework.converters.recipe.RecipeToRecipeCommand;
 import guru.springframework.domains.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.services.recipe.RecipeServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
