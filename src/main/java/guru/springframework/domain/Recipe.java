@@ -15,12 +15,13 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    // todo add
-    // private Difficulty difficulty
+
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
     Set<Ingredient> ingredients;
 
+    @Enumerated( value = EnumType.STRING)
+    private Difficulty difficulty;
     @Lob
     private Byte[] image;
 
