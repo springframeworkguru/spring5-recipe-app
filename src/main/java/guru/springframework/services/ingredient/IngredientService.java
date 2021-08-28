@@ -9,7 +9,7 @@ public interface IngredientService {
     //Ingredient methods
     Set<Ingredient> getAll();
     Ingredient getById(Long id);
-    void deleteById(Long id);
+    void deleteIngredientFromRecipe(Long recipeId, Long id);
 
     //IngredientCommand methods
     IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long id);

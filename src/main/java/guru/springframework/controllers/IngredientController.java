@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Calendar;
@@ -88,5 +89,14 @@ public class IngredientController {
 
         model.addAttribute("uomList", uomService.findAll());
         return "recipe/ingredient/newingredient";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/{id}/delete")
+    public String getDeleteIngredient(@PathVariable String recipeId,
+                                      @PathVariable String id){
+        ingredientService.deleteIngredientFromRecipe(Long.valueOf(recipeId), Long.valueOf(id));
+
+        return "redirect:/recipe/"+recipeId+"/ingredients";
     }
 }

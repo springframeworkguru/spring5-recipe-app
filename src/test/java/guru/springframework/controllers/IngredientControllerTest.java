@@ -2,6 +2,10 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.domains.Ingredient;
+import guru.springframework.domains.Recipe;
+import guru.springframework.repositories.IngredientRepository;
+import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.services.ingredient.IngredientService;
 import guru.springframework.services.recipe.RecipeService;
 import guru.springframework.services.unitofmeasure.UomService;
@@ -16,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -107,4 +112,12 @@ public class IngredientControllerTest {
         verify(recipeService, times(1)).findCommandById(anyLong());
     }
 
+    @Test
+    public void getDeleteIngredient() throws Exception {
+        mockMvc.perform(get("/recipe/1/ingredient/1/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/1/ingredients"));
+
+        verify(ingredientService, times(1)).deleteIngredientFromRecipe(anyLong(), anyLong());
+    }
 }
