@@ -46,15 +46,17 @@ public class ImageController {
                                     HttpServletResponse response) throws IOException {
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
 
-        byte[] byteArr = new byte[recipeCommand.getImage().length];
+        if (recipeCommand.getImage() != null){
+            byte[] byteArr = new byte[recipeCommand.getImage().length];
 
-        int i = 0;
-        for (Byte wrappedByte: recipeCommand.getImage()) {
-            byteArr[i++] = wrappedByte;
+            int i = 0;
+            for (Byte wrappedByte: recipeCommand.getImage()) {
+                byteArr[i++] = wrappedByte;
+            }
+
+            response.setContentType("image/jpeg");
+            InputStream is = new ByteArrayInputStream(byteArr);
+            IOUtils.copy(is, response.getOutputStream());
         }
-
-        response.setContentType("image/jpeg");
-        InputStream is = new ByteArrayInputStream(byteArr);
-        IOUtils.copy(is, response.getOutputStream());
     }
 }
