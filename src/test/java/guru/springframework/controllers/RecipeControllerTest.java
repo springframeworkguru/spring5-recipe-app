@@ -67,7 +67,7 @@ public class RecipeControllerTest {
                 .param("description", "some string")
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/recipe/show/w"));
+                .andExpect(view().name("redirect:/recipe/show/2"));
 
     }
 
@@ -91,5 +91,12 @@ public class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void getUpdateRecipeImage() throws Exception{
+        mockMvc.perform(get("/recipe/1/imageupload"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/imageupload"));
     }
 }

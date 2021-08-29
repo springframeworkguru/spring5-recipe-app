@@ -19,7 +19,7 @@
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form  th:object="${recipe}" th:action="@{/recipe/}"  method="post">
+            <form th:object="${recipe}" th:action="@{/recipe/}" method="post">
                 <input type="hidden" th:field="*{id}"/>
                 <div class="panel-group">
                     <div class="panel panel-primary">
@@ -63,10 +63,12 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
-                                    <select class="form-control">
-                                        <option>Easy</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
+                                    <select class="form-control" th:field="*{difficulty}">
+                                        <option th:each="difficultyVal : ${T(guru.springframework.domains.Difficulty).values()}"
+                                                th:value="${difficultyVal.name()}"
+                                                th:text="${difficultyVal.name()}">
+                                            value
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -93,7 +95,7 @@
                                     <h1 class="panel-title">Ingredients</h1>
                                 </div>
                                 <div class="col-md-1">
-                                    <a class="btn btn-default" th:href="@{}" role="button">Edit</a>
+                                    <a class="btn btn-default" href="#" role="button">Edit</a>
                                 </div>
                             </div>
                         </div>

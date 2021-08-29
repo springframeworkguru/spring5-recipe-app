@@ -14,43 +14,45 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @GetMapping
-    @RequestMapping("recipe/show/{id}")
+    @GetMapping({"recipe/show/{id}", "/recipe/{id}/show"})
     public String getRecipe(@PathVariable String id, Model model){
         model.addAttribute("recipe", recipeService.getById(Long.valueOf(id)));
 
         return "recipe/show";
     }
 
-    @GetMapping
-    @RequestMapping("recipe/new")
+    @GetMapping("recipe/new")
     public String newRecipe(Model m){
         m.addAttribute("recipe", new RecipeCommand());
 
         return "recipe/recipeform";
     }
 
-    @PostMapping
-    @RequestMapping("recipe")
+    @PostMapping("recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand){
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
 
         return "redirect:/recipe/show/" + savedCommand.getId();
     }
 
-    @GetMapping
-    @RequestMapping("recipe/{id}/update")
+    @GetMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model){
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
 
         return "recipe/recipeform";
     }
 
-    @GetMapping
-    @RequestMapping("/recipe/{id}/delete")
+    @GetMapping("/recipe/{id}/delete")
     public String deleteRecipe(@PathVariable String id){
         recipeService.deleteById(Long.valueOf(id));
 
         return "redirect:/";
     }
+
+    @GetMapping("/recipe/{id}/imageupload")
+    public String getUpdateRecipeImage(@PathVariable String id){
+        return "recipe/imageupload";
+    }
+
+
 }

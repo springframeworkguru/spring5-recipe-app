@@ -53,6 +53,8 @@ public class IngredientControllerTest {
     public void getIngredients() throws Exception{
         //given
         RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
         when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
 
         //when
@@ -60,7 +62,6 @@ public class IngredientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/list"))
                 .andExpect(model().attributeExists("recipe"));
-
 
         //then
         verify(recipeService, times(1)).findCommandById(anyLong());
@@ -83,13 +84,12 @@ public class IngredientControllerTest {
 
     @Test
     public void getEditIngredient() throws Exception{
-
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setId(1L);
 
         when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(ingredientCommand);
 
-        mockMvc.perform(get("/recipe/1/ingredient/2/edit"))
+        mockMvc.perform(get("/recipe/1/ingredient/2/update"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/ingredientform"))
                 .andExpect(model().attributeExists("ingredient"));
