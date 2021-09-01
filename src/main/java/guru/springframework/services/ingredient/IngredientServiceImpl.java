@@ -5,6 +5,7 @@ import guru.springframework.converters.ingredients.IngredientCommandToIngredient
 import guru.springframework.converters.ingredients.IngredientToIngredientCommand;
 import guru.springframework.domains.Ingredient;
 import guru.springframework.domains.Recipe;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
@@ -77,7 +78,7 @@ public class IngredientServiceImpl implements IngredientService {
                 ingredientRepository.deleteById(ingredient.getId());
             }
         } else {
-            log.debug("Recipe with id "+ recipeId + " not found.");
+            throw new NotFoundException("Recipe with id not found: "+recipeId);
         }
     }
 
@@ -87,8 +88,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if (!recipeOptional.isPresent()){
-            //@TODO: do exception handling.
-            log.error("Recipe not found with id: "+recipeId);
+            throw new NotFoundException("Recipe with id not found: "+recipeId);
         }
 
         Recipe recipe = recipeOptional.get();
@@ -100,8 +100,8 @@ public class IngredientServiceImpl implements IngredientService {
                 .findFirst();
 
         if (!ingredientCommandOptional.isPresent())
-            log.error("Ingredient with id " + id +" couldn't be found within ingredients of recipe with id "+ recipeId);
-
+            throw new NotFoundException("Ingredient with id " + id +" couldn't " +
+                    "be found within ingredients of recipe with id "+ recipeId);
 
         return ingredientCommandOptional.get();
     }
@@ -112,10 +112,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
         if(!recipeOptional.isPresent()){
-
-            //todo toss error if not found!
-            log.error("Recipe not found for id: " + command.getRecipeId());
-            return new IngredientCommand();
+            throw new NotFoundException("Recipe with id not found: "+command.getRecipeId());
         } else {
             Recipe recipe = recipeOptional.get();
 
