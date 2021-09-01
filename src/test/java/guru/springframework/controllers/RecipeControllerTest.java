@@ -40,7 +40,7 @@ public class RecipeControllerTest {
     MockMvc mockMvc;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         recipeController = new RecipeController(recipeService);
@@ -48,7 +48,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testGetRecipe() throws Exception{
+    public void testGetRecipe() throws Exception {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
@@ -60,7 +60,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testGetNewRecipeForm() throws Exception{
+    public void testGetNewRecipeForm() throws Exception {
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeform"))
@@ -68,7 +68,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testPostNewRecipeForm() throws Exception{
+    public void testPostNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
         command.setId(2L);
 
@@ -85,7 +85,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testGetUpdateView() throws Exception{
+    public void testGetUpdateView() throws Exception {
         RecipeCommand command = new RecipeCommand();
         command.setId(2L);
 
@@ -107,20 +107,18 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void getUpdateRecipeImage() throws Exception{
+    public void getUpdateRecipeImage() throws Exception {
         mockMvc.perform(get("/recipe/1/imageupload"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/imageupload"));
     }
 
     @Test
-    public void testGetRecipeNotFound() throws Exception{
-        Recipe recipe = new Recipe();
-        recipe.setId(1L);
-
+    public void testGetRecipeNotFound() throws Exception {
         when(recipeService.getById(anyLong())).thenThrow(NotFoundException.class);
 
-        mockMvc.perform(get("/recipe/1/show"))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/recipe/3/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
     }
 }
