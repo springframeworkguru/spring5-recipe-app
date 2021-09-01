@@ -1,7 +1,14 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.converters.category.CategoryToCategoryCommand;
+import guru.springframework.converters.ingredients.IngredientToIngredientCommand;
+import guru.springframework.converters.notes.NotesToNotesCommand;
+import guru.springframework.converters.recipe.RecipeToRecipeCommand;
+import guru.springframework.converters.unitofmeasure.UomToUomCommand;
 import guru.springframework.domains.Recipe;
+import guru.springframework.exceptions.NotFoundException;
+import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.services.recipe.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +19,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -98,5 +111,16 @@ public class RecipeControllerTest {
         mockMvc.perform(get("/recipe/1/imageupload"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/imageupload"));
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception{
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.getById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 }
