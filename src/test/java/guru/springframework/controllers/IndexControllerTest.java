@@ -51,8 +51,8 @@ class IndexControllerTest {
         assertEquals("index", indexPage);
 
         verify(recipeService, times(1)).findAll();
-        verify(model,times(1)).addAttribute(eq("recipes"),anySet());
-        //Set<Recipe> setInController = argumentCaptor.getValue();
-        //assertEquals(2, setInController.size());
+        verify(model,times(1)).addAttribute(eq("recipes"),argumentCaptor.capture());
+        Set<Recipe> setInController = argumentCaptor.getValue();
+        assertEquals(2, setInController.size());
     }
 }
