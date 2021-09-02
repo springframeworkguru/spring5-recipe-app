@@ -100,4 +100,12 @@ public class ImageControllerTest {
         assertEquals(bytes.length, responseBytes.length);
 
     }
+
+    @Test
+    public void handleNumberFormatException() throws Exception{
+        mockMvc.perform(get("/recipe/asdasd/recipeimage"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"))
+                .andExpect(model().attributeExists("exception"));
+    }
 }

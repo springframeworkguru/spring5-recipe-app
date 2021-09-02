@@ -3,13 +3,16 @@ package guru.springframework.controllers;
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.ingredient.IngredientService;
 import guru.springframework.services.recipe.RecipeService;
 import guru.springframework.services.unitofmeasure.UomService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -92,5 +95,13 @@ public class IngredientController {
         ingredientService.deleteIngredientFromRecipe(Long.valueOf(recipeId), Long.valueOf(id));
 
         return "redirect:/recipe/"+recipeId+"/ingredients";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound(Exception exception){
+        log.error("Handling not found error");
+
+        return new ModelAndView("404error", "exception", exception);
     }
 }

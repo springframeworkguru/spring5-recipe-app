@@ -6,6 +6,7 @@ import guru.springframework.converters.recipe.RecipeToRecipeCommand;
 import guru.springframework.domains.Recipe;
 import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.services.recipe.RecipeService;
 import guru.springframework.services.recipe.RecipeServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -118,5 +119,12 @@ public class RecipeServiceImplTest {
 
         assertEquals(1, fetchedRecipes.size());
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void testNumberFormatException() {
+        when(recipeRepository.findById(any())).thenThrow(new NumberFormatException());
+
+        Recipe recipe = recipeRepository.findById(1L).get();
     }
 }
