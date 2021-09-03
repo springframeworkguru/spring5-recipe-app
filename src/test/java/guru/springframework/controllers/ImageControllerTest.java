@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.controllers.exceptionhandler.ControllerExceptionHandler;
 import guru.springframework.services.image.ImageService;
 import guru.springframework.services.recipe.RecipeService;
 import org.junit.Before;
@@ -36,7 +37,9 @@ public class ImageControllerTest {
         MockitoAnnotations.initMocks(this);
 
         imageController = new ImageController(recipeService, imageService);
-        mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(imageController)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
     }
 
     @Test

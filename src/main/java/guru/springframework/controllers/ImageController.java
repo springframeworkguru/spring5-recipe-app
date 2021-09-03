@@ -60,12 +60,4 @@ public class ImageController {
             IOUtils.copy(is, response.getOutputStream());
         }
     }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleNumberFormatException(Exception exception){
-        log.error("Handling number format exception");
-
-        return new ModelAndView("400error", "exception", exception);
-    }
 }

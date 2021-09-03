@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.controllers.exceptionhandler.ControllerExceptionHandler;
 import guru.springframework.converters.category.CategoryToCategoryCommand;
 import guru.springframework.converters.ingredients.IngredientToIngredientCommand;
 import guru.springframework.converters.notes.NotesToNotesCommand;
@@ -44,7 +45,9 @@ public class RecipeControllerTest {
         MockitoAnnotations.initMocks(this);
 
         recipeController = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
     }
 
     @Test
@@ -78,6 +81,7 @@ public class RecipeControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
                 .param("description", "some string")
+                .param("directions", "some directions")
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/show/2"));
@@ -128,5 +132,21 @@ public class RecipeControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("400error"))
                 .andExpect(model().attributeExists("exception"));
+    }
+
+    @Test
+    public void testPostNewRecipeFormValidationFail() throws Exception{
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeService.saveRecipeCommand(any())).thenReturn(recipeCommand);
+
+        mockMvc.perform(post("/recipe")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "")
+        )
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("recipe"))
+                .andExpect(view().name("recipe/recipeform"));
     }
 }
