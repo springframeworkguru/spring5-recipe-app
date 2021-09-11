@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class UomCommandToUomTest {
     public static final String DESCRIPTION = "description";
-    public static final Long LONG_VALUE = 1L;
+    public static final String STRING_VALUE = "asd";
 
     UomCommandToUom toUom;
 
@@ -32,7 +32,7 @@ public class UomCommandToUomTest {
     public void convert() throws Exception{
         //given
         UnitOfMeasureCommand uomCommand = new UnitOfMeasureCommand();
-        uomCommand.setId(LONG_VALUE);
+        uomCommand.setId(STRING_VALUE);
         uomCommand.setDescription(DESCRIPTION);
 
         //when
@@ -40,7 +40,7 @@ public class UomCommandToUomTest {
 
         //then
         assertNotNull(unitOfMeasure);
-        assertEquals(LONG_VALUE, unitOfMeasure.getId());
+        assertEquals(STRING_VALUE, unitOfMeasure.getId());
         assertEquals(DESCRIPTION, unitOfMeasure.getDescription());
     }
 }

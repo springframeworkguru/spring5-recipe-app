@@ -9,7 +9,7 @@ import guru.springframework.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -36,7 +36,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public Recipe getById(Long id) {
+    public Recipe getById(String id) {
         log.debug("I'm in the service.");
 
         Optional<Recipe> recipe = recipeRepository.findById(id);
@@ -47,7 +47,6 @@ public class RecipeServiceImpl implements RecipeService{
         return recipe.get();
     }
 
-    @Transactional
     @Override
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
@@ -58,14 +57,13 @@ public class RecipeServiceImpl implements RecipeService{
         return recipeToRecipeCommand.convert(savedRecipe);
     }
 
-    @Transactional
     @Override
-    public RecipeCommand findCommandById(Long id){
+    public RecipeCommand findCommandById(String id){
         return recipeToRecipeCommand.convert(getById(id));
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         recipeRepository.deleteById(id);
     }
 

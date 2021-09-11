@@ -5,6 +5,7 @@ import guru.springframework.controllers.exceptionhandler.ControllerExceptionHand
 import guru.springframework.services.image.ImageService;
 import guru.springframework.services.recipe.RecipeService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -46,17 +47,17 @@ public class ImageControllerTest {
     public void getImageForm() throws Exception{
         //given
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(1L);
+        recipeCommand.setId("asd");
 
         //when
-        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
 
-        mockMvc.perform(get("/recipe/1/image"))
+        mockMvc.perform(get("/recipe/asd/image"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/imageupload"))
                 .andExpect(model().attributeExists("recipe"));
 
-        verify(recipeService, times(1)).findCommandById(anyLong());
+        verify(recipeService, times(1)).findCommandById(anyString());
     }
 
     @Test
@@ -71,14 +72,14 @@ public class ImageControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/recipe/1/show"));
 
-        verify(imageService, times(1)).saveImageFile(anyLong(), any());
+        verify(imageService, times(1)).saveImageFile(anyString(), any());
     }
 
     @Test
     public void renderImageFromDb() throws Exception{
         //given
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(1L);
+        recipeCommand.setId("asd");
 
         String s = "fake image test";
         Byte[] bytes = new Byte[s.getBytes().length];
@@ -90,7 +91,7 @@ public class ImageControllerTest {
 
         recipeCommand.setImage(bytes);
 
-        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
 
         //when
         MockHttpServletResponse response = mockMvc.perform(get("/recipe/1/recipeimage"))
@@ -105,6 +106,7 @@ public class ImageControllerTest {
     }
 
     @Test
+    @Ignore
     public void handleNumberFormatException() throws Exception{
         mockMvc.perform(get("/recipe/asdasd/recipeimage"))
                 .andExpect(status().isBadRequest())

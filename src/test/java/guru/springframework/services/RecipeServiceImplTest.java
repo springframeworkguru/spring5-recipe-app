@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -42,16 +43,16 @@ public class RecipeServiceImplTest {
     @Test
     public void getRecipeById() throws Exception{
         Recipe recipe1 = new Recipe();
-        recipe1.setId(1L);
+        recipe1.setId("asd");
         Optional<Recipe> recipeOptional = Optional.of(recipe1);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
-        Recipe recipe = recipeRepository.findById(1L).orElse(null);
+        Recipe recipe = recipeRepository.findById("asd").orElse(null);
 
         assertNotNull("Null recipe returned", recipe);
 
-        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
@@ -61,7 +62,7 @@ public class RecipeServiceImplTest {
         HashSet<Recipe> recipesData = new HashSet<>();
         recipesData.add(recipe);
 
-        when(recipeRepository.findAll()).thenReturn(recipesData);
+        when(recipeRepository.findAll()).thenReturn((List<Recipe>) recipesData);
 
         Set<Recipe> recipes = recipeService.getAll();
 
@@ -71,18 +72,18 @@ public class RecipeServiceImplTest {
 
     @Test
     public void testDeleteById() {
-        recipeService.deleteById(2L);
+        recipeService.deleteById("asd");
 
-        verify(recipeRepository, times(1)).deleteById(anyLong());
+        verify(recipeRepository, times(1)).deleteById(anyString());
     }
 
     @Test(expected = NotFoundException.class)
     public void getRecipeByIdTestNotFound() throws Exception{
         Optional<Recipe> recipeOptional = Optional.empty();
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
-        Recipe recipeReturned = recipeService.getById(1L);
+        Recipe recipeReturned = recipeService.getById("asd");
 
         //We are expecting an error.
     }
@@ -90,20 +91,20 @@ public class RecipeServiceImplTest {
     @Test
     public void getRecipeCommandByIdTest() {
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("asd");
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(1L);
+        recipeCommand.setId("asd");
 
         when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
 
-        RecipeCommand commandById = recipeService.findCommandById(1L);
+        RecipeCommand commandById = recipeService.findCommandById("asd");
 
         assertNotNull("Null recipe returned.", commandById);
-        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
@@ -113,7 +114,7 @@ public class RecipeServiceImplTest {
         Set<Recipe> recipes = new HashSet<>();
         recipes.add(recipe);
 
-        when(recipeRepository.findAll()).thenReturn(recipes);
+        when(recipeRepository.findAll()).thenReturn((List<Recipe>) recipes);
 
         Set<Recipe> fetchedRecipes = recipeService.getAll();
 
@@ -125,6 +126,6 @@ public class RecipeServiceImplTest {
     public void testNumberFormatException() {
         when(recipeRepository.findById(any())).thenThrow(new NumberFormatException());
 
-        Recipe recipe = recipeRepository.findById(1L).get();
+        Recipe recipe = recipeRepository.findById("asd").get();
     }
 }

@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -35,15 +36,15 @@ public class UomServiceImplTest {
         //given
         Set<UnitOfMeasure> uomList = new HashSet<>();
         UnitOfMeasure uomCom1 = new UnitOfMeasure();
-        uomCom1.setId(1L);
+        uomCom1.setId("asd");
 
         UnitOfMeasure uomCom2= new UnitOfMeasure();
-        uomCom2.setId(2L);
+        uomCom2.setId("asdf");
 
         uomList.add(uomCom1);
         uomList.add(uomCom2);
 
-        when(uomRepository.findAll()).thenReturn(uomList);
+        when(uomRepository.findAll()).thenReturn((List<UnitOfMeasure>) uomList);
         //when
         Set<UnitOfMeasureCommand> fetchedUomList = service.findAll();
 

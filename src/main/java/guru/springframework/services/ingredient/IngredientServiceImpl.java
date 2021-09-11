@@ -12,7 +12,6 @@ import guru.springframework.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -47,7 +46,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Ingredient getById(Long id) {
+    public Ingredient getById(String id) {
         Optional<Ingredient> ingredientOptional = ingredientRepository.findById(id);
 
         if (!ingredientOptional.isPresent())
@@ -57,7 +56,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void deleteIngredientFromRecipe(Long recipeId, Long id) {
+    public void deleteIngredientFromRecipe(String recipeId, String id) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
         if(recipeOptional.isPresent()){
             log.debug("Found recipe with id: "+recipeId);
@@ -70,7 +69,6 @@ public class IngredientServiceImpl implements IngredientService {
             if (ingredientOptional.isPresent()){
                 log.debug("Found ingredient with id: "+ id);
                 Ingredient ingredient = ingredientOptional.get();
-                ingredient.setRecipe(null);
                 recipe.getIngredients().remove(ingredient);
                 log.debug("Removed ingredient from recipe and ingredient's recipe has been set to null.");
 
@@ -84,7 +82,7 @@ public class IngredientServiceImpl implements IngredientService {
 
 
     @Override
-    public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long id) {
+    public IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String id) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if (!recipeOptional.isPresent()){
@@ -107,7 +105,6 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
@@ -132,7 +129,6 @@ public class IngredientServiceImpl implements IngredientService {
             } else {
                 //add new Ingredient
                 Ingredient ingredient = fromIngredientCommand.convert(command);
-                ingredient.setRecipe(recipe);
                 recipe.addIngredient(ingredient);
             }
 

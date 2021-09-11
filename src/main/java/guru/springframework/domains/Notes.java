@@ -1,25 +1,18 @@
 package guru.springframework.domains;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 
-@Data
-@EqualsAndHashCode(exclude = {"recipe"})
-@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Notes {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne
-    private Recipe recipe;
-
-    @Lob
+    private String id;
     private String recipeNotes;
-
-    public Notes() {
-    }
 
     protected boolean canEqual(final Object other) {
         return other instanceof Notes;
