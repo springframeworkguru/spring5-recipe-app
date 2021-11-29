@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>In dex Page</title>
+</head>
+<body>
+  <h2 th:text="'My Recipies!'">Index Page</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <td style="min-width:100px">Id</td>
+            <td style="min-width:250px">Description</td>
+            <td style="min-width:150px">Preparation Time</td>
+            <td style="min-width:150px">CookTime</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="recipe : ${recipes}">
+            <td th:text="${recipe.id}">ID</td>
+            <td th:text="${recipe.description}">Description</td>
+            <td th:text="${recipe.prepTime}">Preparation time</td>
+            <td th:text="${recipe.cookTime}">Cook Time</td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
