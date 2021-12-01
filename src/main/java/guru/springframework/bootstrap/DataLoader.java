@@ -4,14 +4,16 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
+@Slf4j
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final CategoryRepository categoryRepository;
@@ -25,9 +27,10 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     }
 
 
-
+    @Transactional
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        log.debug("Loading data on startup");
         recipeRepository.saveAll(getRecipes());
     }
 
@@ -47,10 +50,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         Recipe perfectGuacamole = new Recipe();
 
-        perfectGuacamole.getCategories().add(mexican);
+        perfectGuacamole.addCategory(mexican);
 
         Notes notesForGuacamole = new Notes();
-        notesForGuacamole.setRecipe(perfectGuacamole);
         notesForGuacamole.setRecipeNotes(getGuacamoleDescription());
         perfectGuacamole.setNotes(notesForGuacamole);
 
@@ -63,27 +65,29 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         perfectGuacamole.setDescription("How to Make the Best Guacamole");
         perfectGuacamole.setDirections(getGuacamoleDirections());
         Set<Ingredient> guacIngrediends = perfectGuacamole.getIngredients();
-        guacIngrediends.add(new Ingredient("ripe avocado", "2", each, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("fresh lemon or lime juice", "1", tablespoon, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("salt", "0.25", teaspoon, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("minced red onion or thinly sliced green onion", "3", tablespoon, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("serrano (or jalapeño) chilis, stems and seeds removed, minced", "2", each, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("cilantro (leaves and tender stems), finely chopped", "2", tablespoon, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("freshly ground black pepper", "1", pinch, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("ripe tomato, chopped (optional)", "1", each, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("Red radish or jicama slices for garnish (optional)", "1", each, perfectGuacamole));
-        guacIngrediends.add(new Ingredient("Tortilla chips, to serve", "3", each, perfectGuacamole));
+        perfectGuacamole.addIngredient(new Ingredient("ripe avocado", "2", each));
+        perfectGuacamole.addIngredient(new Ingredient("fresh lemon or lime juice", "1", tablespoon));
+        perfectGuacamole.addIngredient(new Ingredient("salt", "0.25", teaspoon));
+        perfectGuacamole.addIngredient(new Ingredient("minced red onion or thinly sliced green onion", "3", tablespoon));
+        perfectGuacamole.addIngredient(new Ingredient("serrano (or jalapeño) chilis, stems and seeds removed, minced", "2", each));
+        perfectGuacamole.addIngredient(new Ingredient("cilantro (leaves and tender stems), finely chopped", "2", tablespoon));
+        perfectGuacamole.addIngredient(new Ingredient("freshly ground black pepper", "1", pinch));
+        perfectGuacamole.addIngredient(new Ingredient("ripe tomato, chopped (optional)", "1", each));
+        perfectGuacamole.addIngredient(new Ingredient("Red radish or jicama slices for garnish (optional)", "1", each));
+        perfectGuacamole.addIngredient(new Ingredient("Tortilla chips, to serve", "3", each));
+
+        log.debug("saveing guac: " + perfectGuacamole);
 
         recipes.add(perfectGuacamole);
 
+
         Recipe chicken = new Recipe();
 
-        chicken.getCategories().add(american);
-        chicken.getCategories().add(mexican);
+        chicken.addCategory(american);
+        chicken.addCategory(mexican);
 
 
         Notes noteForChicken = new Notes();
-        noteForChicken.setRecipe(chicken);
         noteForChicken.setRecipeNotes(getChickenDescription());
         chicken.setNotes(noteForChicken);
 
@@ -95,17 +99,19 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         chicken.setPrepTime(20);
         chicken.setDirections(getChickenDirections());
 
-        Set<Ingredient> ingredients = chicken.getIngredients();
-        ingredients.add(new Ingredient("ancho chili powder", "2", tablespoon, chicken));
-        ingredients.add(new Ingredient("dried oregano", "1", teaspoon, chicken));
-        ingredients.add(new Ingredient("dried cumin", "1", teaspoon, chicken));
-        ingredients.add(new Ingredient("sugar", "1", teaspoon, chicken));
-        ingredients.add(new Ingredient("salt", "0.5", teaspoon, chicken));
-        ingredients.add(new Ingredient("clove garlic, finely chopped", "1", each, chicken));
-        ingredients.add(new Ingredient("finely grated orange zest", "1", tablespoon, chicken));
-        ingredients.add(new Ingredient("fresh-squeezed orange juice", "3", tablespoon, chicken));
-        ingredients.add(new Ingredient("olive oil", "2", tablespoon, chicken));
-        ingredients.add(new Ingredient("skinless, boneless chicken thighs", "5", each, chicken));
+
+        chicken.addIngredient(new Ingredient("ancho chili powder", "2", tablespoon));
+        chicken.addIngredient(new Ingredient("dried oregano", "1", teaspoon));
+        chicken.addIngredient(new Ingredient("dried cumin", "1", teaspoon));
+        chicken.addIngredient(new Ingredient("sugar", "1", teaspoon));
+        chicken.addIngredient(new Ingredient("salt", "0.5", teaspoon));
+        chicken.addIngredient(new Ingredient("clove garlic, finely chopped", "1", each));
+        chicken.addIngredient(new Ingredient("finely grated orange zest", "1", tablespoon));
+        chicken.addIngredient(new Ingredient("fresh-squeezed orange juice", "3", tablespoon));
+        chicken.addIngredient(new Ingredient("olive oil", "2", tablespoon));
+        chicken.addIngredient(new Ingredient("skinless, boneless chicken thighs", "5", each));
+
+        log.debug("saveing chicken: " + chicken);
 
         recipes.add(chicken);
 
