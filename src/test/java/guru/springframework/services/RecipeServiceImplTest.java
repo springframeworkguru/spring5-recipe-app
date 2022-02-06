@@ -1,5 +1,6 @@
 package guru.springframework.services;
 
+import guru.springframework.commands.RecipeCommand;
 import guru.springframework.converters.*;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
@@ -70,6 +71,42 @@ public class RecipeServiceImplTest {
         verify(repository).findById(anyLong());
         verify(repository, never()).findAll();
 
+    }
+
+    @Test
+    public void testGetRecipeCommandById() {
+        //given
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        //when
+        when(repository.findById(anyLong())).thenReturn(recipeOptional);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        //then
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull("Null recipe returned!", commandById);
+        assertEquals(recipe.getId(), commandById.getId());
+        verify(repository).findById(anyLong());
+        verify(repository, never()).findAll();
+    }
+
+    @Test
+    public void testDeleteById() {
+        //given
+        Long idValue = 2L;
+
+        //when
+        recipeService.deleteById(idValue);
+
+        //then
+        verify(repository).deleteById(anyLong());
     }
 
 }
