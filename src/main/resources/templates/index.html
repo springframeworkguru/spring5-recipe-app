@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Recipe Home</title>
+</head>
+<body>
+	<h2>My Recipes</h2>
+	<table border="1">
+		<tr>
+			<th>ID</th>
+			<th>Description</th>
+		</tr>
+		<tr th:each="recipe:${recipes}">
+			<td th:text="${recipe.id}"/>
+			<td th:text="${recipe.description}"/>
+		</tr>
+
+	</table>
+</body>
+</html>

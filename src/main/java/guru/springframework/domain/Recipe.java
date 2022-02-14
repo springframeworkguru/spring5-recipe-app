@@ -1,5 +1,6 @@
 package guru.springframework.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -21,22 +24,36 @@ public class Recipe {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Integer prepTime;
-	private Integer cooktime;
+	private Integer cookTime;
 	private Integer savings;
 	private String source;
 	private String url;
-	private String directions;
+	private String description;
 	@Lob
 	private byte image[] ;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Notes notes;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Category category;
+	@ManyToMany()
+	@JoinTable(name = "recipe_category",
+	joinColumns =@JoinColumn(name="recipe_id"),
+	inverseJoinColumns = @JoinColumn(name = "category_id")
+	)
+	private Set <Category> categories = new HashSet<>();
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
-	private Set <Ingredient> ingredients;
+	private Set <Ingredient> ingredients=new HashSet<>();
 	@Enumerated(value=EnumType.STRING)
 	private Difficulty difficulty ;
+	@Lob
+    private String directions;
 	
+	
+	
+	public String getDirections() {
+		return directions;
+	}
+	public void setDirections(String directions) {
+		this.directions = directions;
+	}
 	public Difficulty getDifficulty() {
 		return difficulty;
 	}
@@ -67,11 +84,12 @@ public class Recipe {
 	public void setPrepTime(Integer prepTime) {
 		this.prepTime = prepTime;
 	}
-	public Integer getCooktime() {
-		return cooktime;
+	
+	public Integer getCookTime() {
+		return cookTime;
 	}
-	public void setCooktime(Integer cooktime) {
-		this.cooktime = cooktime;
+	public void setCookTime(Integer cookTime) {
+		this.cookTime = cookTime;
 	}
 	public Integer getSavings() {
 		return savings;
@@ -91,11 +109,18 @@ public class Recipe {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getDirections() {
-		return directions;
+	
+	public String getDescription() {
+		return description;
 	}
-	public void setDirections(String directions) {
-		this.directions = directions;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Set<Category> getCategories() {
+		return categories;
+	}
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 	public byte[] getImage() {
 		return image;
@@ -103,11 +128,11 @@ public class Recipe {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-	public Category getCategory() {
-		return category;
+	public Set <Category> getCategory() {
+		return categories;
 	}
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategory(Set <Category> categories) {
+		this.categories = categories;
 	}
 	
 	
