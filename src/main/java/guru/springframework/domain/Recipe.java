@@ -1,6 +1,11 @@
 package guru.springframework.domain;
 
+import jdk.javadoc.internal.doclets.toolkit.util.IndexItem;
+import jdk.jfr.Category;
+import jdk.tools.jlink.plugin.Plugin;
+
 import javax.persistence.*;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -28,9 +33,12 @@ public class Recipe {
 
     @Lob
     private Byte[] image;
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
 
     public Long getId() {
         return id;
@@ -104,6 +112,14 @@ public class Recipe {
         this.image = image;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public Notes getNotes() {
         return notes;
     }
@@ -119,4 +135,6 @@ public class Recipe {
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+
 }
