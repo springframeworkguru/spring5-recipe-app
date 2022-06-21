@@ -1,11 +1,11 @@
 package guru.springframework.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Created by jt on 6/13/17.
+ */
 @Entity
 public class Category {
 
@@ -14,8 +14,8 @@ public class Category {
     private Long id;
     private String description;
 
+    @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
-
 
     public Long getId() {
         return id;
