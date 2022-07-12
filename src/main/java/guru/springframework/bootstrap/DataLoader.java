@@ -127,6 +127,9 @@ public class DataLoader implements CommandLineRunner {
         guacRecipe.setCookTime(0);
         guacRecipe.setDifficulty(Difficulty.EASY);
         guacRecipe.setDirections("Put the avocado, the other shit, and some lime juice in a bowl. Add cumin. Stir. Serve.");
+        guacRecipe.setSource("Your mom");
+        guacRecipe.setUrl("http://zombo.com");
+        guacRecipe.setServings(45);
 
         Notes guacNotes = new Notes();
         guacNotes.setRecipeNotes("This is a note for guacamole: its really easy");
@@ -153,6 +156,9 @@ public class DataLoader implements CommandLineRunner {
         chickenRecipe.setCookTime(30);
         chickenRecipe.setDifficulty(Difficulty.KIND_OF_HARD);
         chickenRecipe.setDirections("season the chicken, put it in the oven, bake it, and then eat it.");
+        chickenRecipe.setSource("ur mom lol");
+        chickenRecipe.setServings(3);
+        chickenRecipe.setUrl("www.geocities.com");
 
         Notes chickenNotes = new Notes();
         chickenNotes.setRecipeNotes("This is a note for chicken stuff: its kinda hard");
