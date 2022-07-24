@@ -22,9 +22,11 @@ public class CategoryTest extends TestCase {
         assertEquals(idValue, category.getId());
     }
 
+    @Test
     public void testGetDescription() {
     }
 
+    @Test
     public void testGetRecipes() {
     }
 }
