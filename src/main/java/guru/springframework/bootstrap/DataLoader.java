@@ -148,7 +148,7 @@ public class DataLoader implements CommandLineRunner {
         recipes.add(guacRecipe);
 
         Recipe chickenRecipe = new Recipe();
-        chickenRecipe.setDescription("Some Chicken Thing");
+        chickenRecipe.setDescription("Some Chicken Thing pushing to master");
         chickenRecipe.setPrepTime(20);
         chickenRecipe.setCookTime(30);
         chickenRecipe.setDifficulty(Difficulty.KIND_OF_HARD);
