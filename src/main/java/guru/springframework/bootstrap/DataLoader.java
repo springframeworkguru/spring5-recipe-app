@@ -144,6 +144,10 @@ public class DataLoader implements CommandLineRunner {
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
 
+        guacRecipe.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
+        guacRecipe.setServings(4);
+        guacRecipe.setSource("Simply Recipe");
+
         //add to return list
         recipes.add(guacRecipe);
 //        recipeRepository.save(guacRecipe);
@@ -202,6 +206,10 @@ public class DataLoader implements CommandLineRunner {
 
         tacosRecipe.getCategories().add(americanCategory);
         tacosRecipe.getCategories().add(mexicanCategory);
+
+        tacosRecipe.setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+        tacosRecipe.setServings(4);
+        tacosRecipe.setSource("Simply Recipe");
 
 //        recipeRepository.save(tacosRecipe);
         recipes.add(tacosRecipe);
