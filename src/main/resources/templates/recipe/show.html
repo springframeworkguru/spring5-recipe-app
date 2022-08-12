@@ -84,8 +84,14 @@
                 </div>
                 <div class="card card-primary border border-primary" style="margin: 20px 0;">
                     <div class="card-header bg-primary text-light">
-                        <h7 class="card-title" >Ingredients</h7>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h7 class="panel-title">Ingredients</h7>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+                            </div>
+                        </div>            </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col-md-12">
