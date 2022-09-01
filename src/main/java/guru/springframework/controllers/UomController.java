@@ -17,7 +17,7 @@ public class UomController {
     @RequestMapping({"/uom", "/uom.html"})
     public String getUomPage(Model model) {
 
-        model.addAttribute("uoms", unitOfMeasureService.getUnitOfMeasures());
+        model.addAttribute("uoms", unitOfMeasureService.listAllUoms());
         //model.addAttribute("basketball","some string");
         return "uom";
     }
