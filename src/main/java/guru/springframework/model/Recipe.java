@@ -15,8 +15,8 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    //todo add
-    //private Difficulty difficulty;
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")//specify cascade,b/c we want the recipe to own this.//cascadeALL means persist all types of operations.
     private Set<Ingredient> ingredients;//canalsobeList
     @Lob
