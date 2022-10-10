@@ -1,6 +1,7 @@
 package guru.springframework.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,14 +16,21 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)//defaultwas.ORDINAL(itgetsenumsbytheirorOrderNumber, not bytheir stringvalue)// lelaEnumValuebnchemrByStringMiyezewAffected ayhonem//but ordinal will be affected since the order will be messedwhenweaddnewEnumValue
     private Difficulty difficulty;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")//specify cascade,b/c we want the recipe to own this.//cascadeALL means persist all types of operations.
-    private Set<Ingredient> ingredients;//canalsobeList
+    private Set<Ingredient> ingredients = new HashSet<>();//canalsobeList
     @Lob
     private Byte[] image;
     @OneToOne(cascade = CascadeType.ALL)//specify cascade,b/c we want the recipe to own this.
     private Notes notes;
+
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -110,5 +118,21 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
