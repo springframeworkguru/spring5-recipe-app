@@ -15,6 +15,7 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+    @Lob
     private String directions;
     @Enumerated(EnumType.STRING)//defaultwas.ORDINAL(itgetsenumsbytheirorOrderNumber, not bytheir stringvalue)// lelaEnumValuebnchemrByStringMiyezewAffected ayhonem//but ordinal will be affected since the order will be messedwhenweaddnewEnumValue
     private Difficulty difficulty;

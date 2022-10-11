@@ -13,8 +13,18 @@ public class Ingredient {
     @OneToOne(fetch = FetchType.EAGER)//wedontcascadeb/cwedontwanttodeletemeasurementsjustbecausewearedeletingwhatwearemeasuring
     private UnitOfMeasure unitOfMeasure;//eagerIsTheDefault.thisisjusttoshow
    @ManyToOne
-   @JoinColumn(name = "Recipe_")//nocascadeb/c ifwedeleteingredientwedontwantittocascadeupanddeletethewholerecipeassociattedwithit.
+  // @JoinColumn(name = "recipe_id")//nocascadeb/c itsnottheprimaryentityb/nthetwo ifwedeleteingredientwedontwantittocascadeUPanddeletethewholerecipeassociattedwithit.
     private Recipe recipe;
+
+   public Ingredient(){
+   }
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.unitOfMeasure = unitOfMeasure;
+        this.recipe = recipe;
+    }
 
     public Long getId() {
         return id;
