@@ -1,6 +1,6 @@
 package guru.springframework.repositories;
 
-import guru.springframework.model.Recipe;
+import guru.springframework.domain.Recipe;
 import org.springframework.data.repository.CrudRepository;
 
 //@Repository//works without it // b/c CrudRepository  extends Repository
