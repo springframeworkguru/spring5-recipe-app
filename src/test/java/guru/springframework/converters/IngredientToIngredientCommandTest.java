@@ -4,12 +4,12 @@ import guru.springframework.commands.IngredientCommand;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
 import guru.springframework.domain.UnitOfMeasure;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by jt on 6/21/17.
@@ -19,13 +19,13 @@ public class IngredientToIngredientCommandTest {
     public static final Recipe RECIPE = new Recipe();
     public static final BigDecimal AMOUNT = new BigDecimal("1");
     public static final String DESCRIPTION = "Cheeseburger";
-    public static final Long UOM_ID = new Long(2L);
-    public static final Long ID_VALUE = new Long(1L);
+    public static final Long UOM_ID =  Long.valueOf(2L);
+    public static final Long ID_VALUE =  Long.valueOf(1L);
 
 
     IngredientToIngredientCommand converter;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         converter = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
     }
