@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 public class IndexController {
-
     private final RecipeService recipeService;
 
     public IndexController(RecipeService recipeService) {
