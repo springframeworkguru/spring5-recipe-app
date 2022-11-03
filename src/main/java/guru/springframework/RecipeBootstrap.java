@@ -122,7 +122,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                              "\n" +
                              "\n" +
                              "Read more: https://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
-    guacNotes.setRecipe(guacRecipe);
     guacRecipe.setNotes(guacNotes);
     guacRecipe.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUom));
     guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(".5"), teaSpoonUom));
