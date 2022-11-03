@@ -1,6 +1,6 @@
 package guru.springframework.domain;
 
-import javax.persistence.CascadeType;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,12 +15,18 @@ public class Ingredient {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
   private String description;
-  private Long amount;
+  private BigDecimal amount;
   @ManyToOne
   private Recipe recipe;
 
   @OneToOne(fetch = FetchType.EAGER)
   private UnitOfMeasure uom;
+
+  public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+    this.description = description;
+    this.amount = amount;
+    this.uom = uom;
+  }
 
   public Long getId() {
     return id;
@@ -45,11 +51,11 @@ public class Ingredient {
     this.description = description;
   }
 
-  public Long getAmount() {
+  public BigDecimal getAmount() {
     return amount;
   }
 
-  public void setAmount(Long amount) {
+  public void setAmount(BigDecimal amount) {
     this.amount = amount;
   }
 
