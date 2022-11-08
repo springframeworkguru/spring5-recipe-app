@@ -41,19 +41,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         chicken.setDirections(chickenDirections);
         loadChickenIngredients(chicken);
         loadChickenCategories(chicken);
-        chicken.setNotes(loadChickenNotes(chicken));
+        chicken.setNotes(new Notes(loadRecipeNotesChicken()));
         chicken.setDifficulty(Difficulty.EASY);
 
         recipeService.saveRecipe(chicken);
 
     }
 
-    private Notes loadChickenNotes(Recipe chicken) {
-        Notes notes = new Notes();
-        notes.setRecipeNotes(loadRecipeNotesChicken());
-        notes.setRecipe(chicken);
-        return notes;
-    }
 
     private void loadChickenCategories(Recipe chicken) {
         Optional<Category> optionalCategory = categoryRepository.findByDescription("Mexican");
@@ -65,10 +59,10 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     private void loadChickenIngredients(Recipe recipe) {
-        recipe.getIngredients().add(new Ingredient("Chili", BigDecimal.valueOf(2), recipe, getUoM("Tablespoon")));
-        recipe.getIngredients().add(new Ingredient("Oregano", BigDecimal.valueOf(1), recipe, getUoM("Teaspoon")));
-        recipe.getIngredients().add(new Ingredient("Cumin", BigDecimal.valueOf(1), recipe, getUoM("Teaspoon")));
-        recipe.getIngredients().add(new Ingredient("Sugar", BigDecimal.valueOf(1), recipe, getUoM("Teaspoon")));
+        recipe.addIngredient(new Ingredient("Chili", BigDecimal.valueOf(2), getUoM("Tablespoon")))
+                .addIngredient(new Ingredient("Oregano", BigDecimal.valueOf(1), getUoM("Teaspoon")))
+                .addIngredient(new Ingredient("Cumin", BigDecimal.valueOf(1), getUoM("Teaspoon")))
+                .addIngredient(new Ingredient("Sugar", BigDecimal.valueOf(1), getUoM("Teaspoon")));
     }
 
     private UnitOfMeasure getUoM(String uom) {
