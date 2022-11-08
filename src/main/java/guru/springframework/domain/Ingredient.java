@@ -14,6 +14,10 @@ public class Ingredient {
     @ManyToOne
     private Recipe recipe;
 
+    //Eager fetch type is default
+    @OneToOne
+    private UnitOfMeasure uof;
+
 
     public Long getId() {
         return id;
@@ -45,5 +49,13 @@ public class Ingredient {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public UnitOfMeasure getUof() {
+        return uof;
+    }
+
+    public void setUof(UnitOfMeasure uof) {
+        this.uof = uof;
     }
 }
