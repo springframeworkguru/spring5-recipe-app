@@ -3,19 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>My recipes</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <h2>My recipes</h2>
+<div class="container-fluid" style="margin-top: 20px">
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">My Recipes!</h2>
+            </div>
 
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Description</th>
-        </tr>
-         <tr th:each="recipe : ${recipes}">
-             <td th:text="${recipe.id}">ID</td>
-             <td th:text="${recipe.description}">my recipe</td>
-         </tr>
-    </table>
+            <div class="panel-body">
+                <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                    <table class="table table-hover">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tr th:remove="all">
+                            <td>1</td>
+                            <td>Tasty Goodness 1</td>
+                        </tr>
+                        <tr th:remove="all">
+                            <td>2</td>
+                            <td>Tasty Goodness 2</td>
+                        </tr>
+                        <tr th:each="recipe : ${recipes}">
+                            <td th:text="${recipe.id}">3</td>
+                            <td th:text="${recipe.description}">Tasty Goodness 3</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
 </body>
 </html>
