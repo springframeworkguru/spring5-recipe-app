@@ -4,6 +4,7 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import guru.springframework.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeService recipeService;
@@ -26,6 +28,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         loadData();
+        log.debug("Successfully load Recipe on bootstrap!");
     }
 
     private void loadData() {
@@ -53,6 +56,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         Optional<Category> optionalCategory = categoryRepository.findByDescription("Mexican");
         if (optionalCategory.isPresent()) {
             chicken.getCategories().add(optionalCategory.get());
+            log.debug("Successfully loaded chicken categories");
         } else {
             throw new RuntimeException("Category not exists in DB");
         }
@@ -63,6 +67,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
                 .addIngredient(new Ingredient("Oregano", BigDecimal.valueOf(1), getUoM("Teaspoon")))
                 .addIngredient(new Ingredient("Cumin", BigDecimal.valueOf(1), getUoM("Teaspoon")))
                 .addIngredient(new Ingredient("Sugar", BigDecimal.valueOf(1), getUoM("Teaspoon")));
+        log.debug("Successfully loaded chicken Ingredients");
     }
 
     private UnitOfMeasure getUoM(String uom) {
