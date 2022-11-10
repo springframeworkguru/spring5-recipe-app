@@ -8,21 +8,25 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class RecipeServiceJpaTest {
-    RecipeServiceJpa recipeServiceJpa;
+    RecipeServiceJpa service;
 
     @Mock
     RecipeRepository recipeRepository;
 
+    final Long id = 1L;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        recipeServiceJpa = new RecipeServiceJpa(recipeRepository);
+        service = new RecipeServiceJpa(recipeRepository);
     }
 
     @Test
@@ -32,9 +36,25 @@ public class RecipeServiceJpaTest {
         recipesData.add(recipeData);
 
         when(recipeRepository.findAll()).thenReturn(recipesData);
-        Set<Recipe> recipes = recipeServiceJpa.findAll();
+        Set<Recipe> recipes = service.findAll();
 
         assertEquals(1, recipes.size());
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void getRecipeByIdTest() {
+        Recipe mockRecipe = Recipe.builder()
+                .id(id)
+                .build();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(mockRecipe));
+
+        Recipe foundRecipe = service.findById(id);
+
+        assertNotNull("Null recipe returned", foundRecipe);
+        assertEquals(id, foundRecipe.getId());
+        verify(recipeRepository, never()).findAll();
+        verify(recipeRepository, times(1)).findById(anyLong());
     }
 }

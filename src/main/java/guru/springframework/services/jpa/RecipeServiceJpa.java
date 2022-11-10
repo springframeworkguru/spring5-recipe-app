@@ -30,4 +30,9 @@ public class RecipeServiceJpa implements RecipeService {
     public Recipe saveRecipe(Recipe recipe) {
         return recipeRepository.save(recipe);
     }
+
+    @Override
+    public Recipe findById(Long id) {
+        return recipeRepository.findById(id).orElse(null);
+    }
 }
