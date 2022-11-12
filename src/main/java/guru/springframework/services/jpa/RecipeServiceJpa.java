@@ -55,4 +55,9 @@ public class RecipeServiceJpa implements RecipeService {
     public RecipeDto getRecipeDtoById(Long id) {
         return recipeMapper.recipeToRecipeDto(findById(id));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        recipeRepository.deleteById(id);
+    }
 }
