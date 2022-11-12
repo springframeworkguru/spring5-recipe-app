@@ -1,6 +1,7 @@
 package guru.springframework.services.jpa;
 
 import guru.springframework.domain.Recipe;
+import guru.springframework.mappers.RecipeMapper;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,12 +22,15 @@ public class RecipeServiceJpaTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeMapper recipeMapper;
+
     final Long id = 1L;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        service = new RecipeServiceJpa(recipeRepository);
+        service = new RecipeServiceJpa(recipeRepository, recipeMapper);
     }
 
     @Test
