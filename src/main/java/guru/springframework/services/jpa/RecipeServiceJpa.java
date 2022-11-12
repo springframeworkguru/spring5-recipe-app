@@ -38,7 +38,7 @@ public class RecipeServiceJpa implements RecipeService {
 
     @Override
     @Transactional
-    public RecipeDto saveRecipeDtoImpl(RecipeDto recipeDto) {
+    public RecipeDto saveRecipeDto(RecipeDto recipeDto) {
         Recipe newRecipe = recipeMapper.recipeDtoToRecipe(recipeDto);
         Recipe savedRecipe = recipeRepository.save(newRecipe);
         return recipeMapper.recipeToRecipeDto(savedRecipe);

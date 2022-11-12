@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
-import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,7 +39,7 @@ public class RecipeServiceJpaIT {
 
         //when
         testRecipeDto.setDescription(NEW_DESCRIPTION);
-        RecipeDto savedRecipeDto =  service.saveRecipeDtoImpl(testRecipeDto);
+        RecipeDto savedRecipeDto =  service.saveRecipeDto(testRecipeDto);
 
         //then
         assertEquals(NEW_DESCRIPTION, savedRecipeDto.getDescription());
