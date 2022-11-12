@@ -49,4 +49,10 @@ public class RecipeServiceJpa implements RecipeService {
     public Recipe findById(Long id) {
         return recipeRepository.findById(id).orElse(null);
     }
+
+    @Override
+    @Transactional
+    public RecipeDto getRecipeDtoById(Long id) {
+        return recipeMapper.recipeToRecipeDto(findById(id));
+    }
 }
