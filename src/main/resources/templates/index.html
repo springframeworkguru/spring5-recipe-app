@@ -23,8 +23,16 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h2 class="panel-title">My Recipes!</h2>
+                <div class="row">
+                    <div class="col-md-11 ">
+                        <h1 class="panel-title">My recipes</h1>
+                    </div>
+                    <div class="col-md-1">
+                        <a class="btn btn-default" href="#" th:href="@{'/recipe/new'}" role="button">New</a>
+                    </div>
+                </div>
             </div>
+
 
             <div class="panel-body">
                 <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
