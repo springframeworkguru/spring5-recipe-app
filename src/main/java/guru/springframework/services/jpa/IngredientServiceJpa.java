@@ -3,21 +3,30 @@ package guru.springframework.services.jpa;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
 import guru.springframework.dtos.IngredientDto;
+import guru.springframework.dtos.UnitOfMeasureDto;
 import guru.springframework.mappers.IngredientMapper;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.repositories.UnitOfMeasureRepository;
 import guru.springframework.services.IngredientService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Objects;
 import java.util.Optional;
+
+@Slf4j
 @Service
 public class IngredientServiceJpa implements IngredientService {
     private final RecipeRepository recipeRepository;
     private final IngredientMapper ingredientMapper;
+    private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public IngredientServiceJpa(RecipeRepository recipeRepository, IngredientMapper ingredientMapper) {
+
+    public IngredientServiceJpa(RecipeRepository recipeRepository, IngredientMapper ingredientMapper, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientMapper = ingredientMapper;
+        this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
     @Override
@@ -38,5 +47,46 @@ public class IngredientServiceJpa implements IngredientService {
             throw new RuntimeException("Ingredient with id " + ingredientId + " not found in recipe with id " + recipeId);
         }
         return optionalIngredientDto.get();
+    }
+
+    @Override
+    @Transactional
+    public IngredientDto saveOrUpdateIngredient(IngredientDto newIngredientDto) {
+        Optional<Recipe> optionalRecipe = recipeRepository.findById(newIngredientDto.getRecipeId());
+        if (!optionalRecipe.isPresent()) {
+            log.error("Ingredients recipe with id " + newIngredientDto.getRecipeId() + " not found!");
+            return null;
+        } else {
+            Recipe recipe = optionalRecipe.get();
+            Optional<Ingredient> optionalIngredient = recipe.getIngredients()
+                    .stream()
+                    .filter(ingredient -> ingredient.getId().equals(newIngredientDto.getId()))
+                    .findFirst();
+
+            Ingredient newIngredient;
+            if (!optionalIngredient.isPresent()) {
+                // create new Ingredient object
+                newIngredient = ingredientMapper.ingredientDtoToIngredient(newIngredientDto);
+                recipe.addIngredient(newIngredient);
+            } else {
+                //update existing Ingredient object
+                newIngredient = optionalIngredient.get();
+                newIngredient.setDescription(newIngredientDto.getDescription());
+                newIngredient.setAmount(newIngredientDto.getAmount());
+
+                UnitOfMeasureDto newUnitOfMeasureDto = newIngredientDto.getUom();
+                if (Objects.nonNull(newUnitOfMeasureDto)){
+                    newIngredient.setUom(unitOfMeasureRepository.findById(newUnitOfMeasureDto.getId()).orElse(null));
+                } else {
+                    newIngredient.setUom(null);
+                }
+            }
+
+            recipeRepository.save(recipe);
+
+            //todo fix saving new recipe without id. This is common way of saving new ingredient from frontend.
+
+            return ingredientMapper.ingredientToIngredientDto(newIngredient);
+        }
     }
 }

@@ -1,14 +1,13 @@
 package guru.springframework.controllers;
 
+import guru.springframework.dtos.IngredientDto;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -47,5 +46,13 @@ public class IngredientController {
 
         model.addAttribute("uomList", unitOfMeasureService.getAllUom());
         return "recipe/ingredient/ingredientform";
+    }
+
+    @PostMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient")
+    public String saveOrUpdateIngredient(@PathVariable String recipeId, @ModelAttribute IngredientDto ingredientDto){
+        log.debug("Saving new or updating existing ingredient of recipe with id " + recipeId);
+        IngredientDto savedIngredientDto = ingredientService.saveOrUpdateIngredient(ingredientDto);
+        return "redirect:/recipe/" + savedIngredientDto.getRecipeId() + "/ingredients";
     }
 }

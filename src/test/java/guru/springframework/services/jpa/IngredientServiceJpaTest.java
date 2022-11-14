@@ -4,19 +4,18 @@ import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
 import guru.springframework.dtos.IngredientDto;
 import guru.springframework.mappers.IngredientMapper;
-import guru.springframework.mappers.IngredientMapperImpl;
 import guru.springframework.repositories.RecipeRepository;
+import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -25,21 +24,23 @@ public class IngredientServiceJpaTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    UnitOfMeasureRepository unitOfMeasureRepository;
+
     IngredientMapper ingredientMapper;
     IngredientServiceJpa service;
+
+    Recipe mockRecipe;
+    final Long recipeId = 1L;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         ingredientMapper = Mappers.getMapper(IngredientMapper.class);
-        service = new IngredientServiceJpa(recipeRepository, ingredientMapper);
-    }
+        service = new IngredientServiceJpa(recipeRepository, ingredientMapper, unitOfMeasureRepository);
 
-    @Test
-    public void getIngredientByIdOfRecipeWithId() {
-        //given
-        Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        mockRecipe =  new Recipe();
+        mockRecipe.setId(recipeId);
 
         Ingredient ingredient = new Ingredient();
         ingredient.setId(1L);
@@ -47,11 +48,15 @@ public class IngredientServiceJpaTest {
         ingredient2.setId(2L);
         Ingredient ingredient3 = new Ingredient();
         ingredient3.setId(3L);
-        recipe.addIngredient(ingredient);
-        recipe.addIngredient(ingredient2);
-        recipe.addIngredient(ingredient3);
+        mockRecipe.addIngredient(ingredient);
+        mockRecipe.addIngredient(ingredient2);
+        mockRecipe.addIngredient(ingredient3);
+    }
 
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+    @Test
+    public void getIngredientByIdOfRecipeWithId() {
+        //given
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(mockRecipe));
 
         //when
         IngredientDto ingredientDto = service.getIngredientByIdOfRecipeId(1L, 1L);
@@ -63,4 +68,45 @@ public class IngredientServiceJpaTest {
         verify(recipeRepository, never()).findAll();
         verify(recipeRepository, times(1)).findById(anyLong());
     }
+
+    @Test
+    public void addNewIngredient() {
+        //given
+        IngredientDto newIngredientDto = new IngredientDto();
+        newIngredientDto.setId(100L);
+        newIngredientDto.setRecipeId(recipeId);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(mockRecipe));
+        when(recipeRepository.save(any())).thenReturn(mockRecipe);
+
+        //when
+        IngredientDto savedIngredientDto = service.saveOrUpdateIngredient(newIngredientDto);
+
+        //then
+        assertNotNull(savedIngredientDto);
+        assertEquals(4, mockRecipe.getIngredients().size());
+        assertTrue(mockRecipe.getIngredients().stream().map(Ingredient::getId).anyMatch(id -> id.equals(100L)));
+    }
+    @Test
+    public void updateExistingIngredient() {
+        //given
+        Ingredient existingIngredient = mockRecipe.getIngredients().iterator().next();
+        IngredientDto updatedExistingIngredientDto = ingredientMapper.ingredientToIngredientDto(existingIngredient);
+        updatedExistingIngredientDto.setAmount(BigDecimal.valueOf(10000));
+        updatedExistingIngredientDto.setDescription("New description");
+
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(mockRecipe));
+        when(recipeRepository.save(any(Recipe.class))).thenReturn(mockRecipe);
+
+        //when
+        IngredientDto savedIngredientDto = service.saveOrUpdateIngredient(updatedExistingIngredientDto);
+
+        //then
+        assertNotNull(savedIngredientDto);
+        assertEquals(3, mockRecipe.getIngredients().size());
+        assertTrue(mockRecipe.getIngredients().stream().map(Ingredient::getId).anyMatch(id -> id.equals(existingIngredient.getId())));
+        assertEquals(updatedExistingIngredientDto.getDescription(), savedIngredientDto.getDescription());
+        assertEquals(updatedExistingIngredientDto.getAmount(), savedIngredientDto.getAmount());
+    }
+
 }

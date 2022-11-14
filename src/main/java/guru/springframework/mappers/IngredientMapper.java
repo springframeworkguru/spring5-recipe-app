@@ -4,6 +4,7 @@ import guru.springframework.domain.Ingredient;
 import guru.springframework.dtos.IngredientDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.Set;
