@@ -5,7 +5,6 @@ import guru.springframework.dtos.IngredientDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 
@@ -14,6 +13,8 @@ public interface IngredientMapper {
     Ingredient ingredientDtoToIngredient(IngredientDto ingredientDto);
     @Mapping(target = "recipeId", source = "recipe.id" )
     IngredientDto ingredientToIngredientDto(Ingredient ingredient);
+
+    IngredientDto copyDto(IngredientDto newIngredientDto);
 
     Set<Ingredient> ingredientDtosToIngredients(Set<IngredientDto> ingredientDtos);
     Set<IngredientDto> ingredientsToIngredientDtos(Set<Ingredient> ingredients);
