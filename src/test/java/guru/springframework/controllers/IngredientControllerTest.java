@@ -1,42 +1,45 @@
 package guru.springframework.controllers;
 
 import guru.springframework.dtos.RecipeDto;
+import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(MockitoExtension.class)
-class IngredientControllerTest {
+public class IngredientControllerTest {
 
     @Mock
     RecipeService recipeService;
 
-    @InjectMocks
+    @Mock
+    IngredientService ingredientService;
+
     IngredientController controller;
 
     MockMvc mockMvc;
 
     final Long recipeId = 2L;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        controller = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
     @Test
-    void listIngredients() throws Exception {
+    public void listIngredients() throws Exception {
         //given
         RecipeDto recipeDto = new RecipeDto();
         recipeDto.setId(recipeId);
@@ -50,5 +53,10 @@ class IngredientControllerTest {
 
         //then
         verify(recipeService, times(1)).getRecipeDtoById(anyLong());
+    }
+
+    @Test
+    public void showIngredientOfRecipe() {
+
     }
 }

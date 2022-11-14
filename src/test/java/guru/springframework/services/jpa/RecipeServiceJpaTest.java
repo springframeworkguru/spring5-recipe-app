@@ -1,5 +1,6 @@
 package guru.springframework.services.jpa;
 
+import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
 import guru.springframework.dtos.RecipeDto;
 import guru.springframework.mappers.RecipeMapper;
@@ -25,16 +26,24 @@ public class RecipeServiceJpaTest {
     @Mock
     RecipeMapper recipeMapper;
 
-    final Long id = 1L;
+    final Long recipeId = 1L;
+    final Long ingredietnId = 1L;
     Recipe mockRecipe;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         service = new RecipeServiceJpa(recipeRepository, recipeMapper);
+
+//        Ingredient ingredient = new Ingredient();
+//        ingredient.setId(ingredietnId);
+
         mockRecipe = Recipe.builder()
-                .id(id)
+                .id(recipeId)
                 .build();
+
+
+//        mockRecipe.addIngredient(ingredient);
     }
 
     @Test
@@ -53,20 +62,20 @@ public class RecipeServiceJpaTest {
     public void getRecipeByIdTest() {
         when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(mockRecipe));
 
-        Recipe foundRecipe = service.findById(id);
+        Recipe foundRecipe = service.findById(recipeId);
 
         assertNotNull("Null recipe returned", foundRecipe);
-        assertEquals(id, foundRecipe.getId());
+        assertEquals(recipeId, foundRecipe.getId());
         verify(recipeRepository, never()).findAll();
         verify(recipeRepository, times(1)).findById(anyLong());
     }
 
     @Test
     public void testDeleteById() {
-        service.deleteById(id);
+        service.deleteById(recipeId);
 
         verify(recipeRepository, times(1)).deleteById(anyLong());
-        assertNull(service.findById(id));
+        assertNull(service.findById(recipeId));
     }
 
     @Test
@@ -75,11 +84,11 @@ public class RecipeServiceJpaTest {
         when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(mockRecipe));
 
         RecipeDto mockRecipeDto  = new RecipeDto();
-        mockRecipeDto.setId(id);
+        mockRecipeDto.setId(recipeId);
         when(recipeMapper.recipeToRecipeDto(any())).thenReturn(mockRecipeDto);
 
         //when
-        RecipeDto returnedRecipeDto = service.getRecipeDtoById(id);
+        RecipeDto returnedRecipeDto = service.getRecipeDtoById(recipeId);
 
         //then
         assertNotNull(returnedRecipeDto);

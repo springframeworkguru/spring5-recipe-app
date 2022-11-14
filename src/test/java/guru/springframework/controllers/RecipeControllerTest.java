@@ -3,12 +3,11 @@ package guru.springframework.controllers;
 import guru.springframework.domain.Recipe;
 import guru.springframework.dtos.RecipeDto;
 import guru.springframework.services.RecipeService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -20,13 +19,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(MockitoExtension.class)
-class RecipeControllerTest {
+
+public class RecipeControllerTest {
 
     @Mock
     RecipeService recipeService;
 
-    @InjectMocks
     RecipeController controller;
 
     MockMvc mockMvc;
@@ -34,15 +32,17 @@ class RecipeControllerTest {
     final Long id = 1L;
     RecipeDto recipeDto;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        controller = new RecipeController(recipeService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         recipeDto = new RecipeDto();
         recipeDto.setId(id);
     }
 
     @Test
-    void showById() throws Exception {
+    public void showById() throws Exception {
         Recipe mockRecipe = Recipe.builder()
                 .id(id)
                 .build();
@@ -55,7 +55,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void getNewRecipeForm() throws Exception {
+    public void getNewRecipeForm() throws Exception {
         //when
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
@@ -64,7 +64,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void postNewRecipeForm() throws Exception {
+    public void postNewRecipeForm() throws Exception {
         //given
         when(recipeService.saveRecipeDto(any())).thenReturn(recipeDto);
 
@@ -81,7 +81,7 @@ class RecipeControllerTest {
     }
 
     @Test
-    void getUpdateForm() throws Exception {
+    public void getUpdateForm() throws Exception {
         //given
         when(recipeService.getRecipeDtoById(anyLong())).thenReturn(recipeDto);
 
@@ -96,7 +96,7 @@ class RecipeControllerTest {
 
 
     @Test
-    void deleteRecipeById() throws Exception {
+    public void deleteRecipeById() throws Exception {
         mockMvc.perform(get("/recipe/" + id + "/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
