@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.dtos.IngredientDto;
+import guru.springframework.dtos.UnitOfMeasureDto;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -43,6 +44,20 @@ public class IngredientController {
     public String showIngredientUpdateForm(@PathVariable String recipeId, @PathVariable String ingredientId, Model model){
         log.debug("Showing ingredient update form of id " + ingredientId + " of recipe id " + recipeId);
         model.addAttribute("ingredient", ingredientService.getIngredientByIdOfRecipeId(Long.valueOf(recipeId), Long.valueOf(ingredientId)));
+
+        model.addAttribute("uomList", unitOfMeasureService.getAllUom());
+        return "recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/new")
+    public String getNewIngredientForm(@PathVariable String recipeId, Model model){
+        log.debug("Showing new ingredient form of recipe with id " + recipeId);
+        //todo check if recipeId is correct
+        IngredientDto ingredientDto = new IngredientDto();
+        ingredientDto.setRecipeId(Long.valueOf(recipeId));
+        ingredientDto.setUom(new UnitOfMeasureDto());
+        model.addAttribute("ingredient", ingredientDto);
 
         model.addAttribute("uomList", unitOfMeasureService.getAllUom());
         return "recipe/ingredient/ingredientform";

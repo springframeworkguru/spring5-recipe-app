@@ -65,8 +65,13 @@ public class IngredientServiceJpa implements IngredientService {
 
             Ingredient newIngredient;
             if (!optionalIngredient.isPresent()) {
+                //don't want to set id from outside. Database will assign id value for new Ingredient.
+                if (Objects.nonNull(newIngredientDto.getId())) {
+                    newIngredientDto.setId(null);
+                }
                 // create new Ingredient object
                 newIngredient = ingredientMapper.ingredientDtoToIngredient(newIngredientDto);
+                //here is newIngredient without id
                 recipe.addIngredient(newIngredient);
             } else {
                 //update existing Ingredient object
@@ -75,7 +80,7 @@ public class IngredientServiceJpa implements IngredientService {
                 newIngredient.setAmount(newIngredientDto.getAmount());
 
                 UnitOfMeasureDto newUnitOfMeasureDto = newIngredientDto.getUom();
-                if (Objects.nonNull(newUnitOfMeasureDto)){
+                if (Objects.nonNull(newUnitOfMeasureDto)) {
                     newIngredient.setUom(unitOfMeasureRepository.findById(newUnitOfMeasureDto.getId()).orElse(null));
                 } else {
                     newIngredient.setUom(null);
@@ -84,7 +89,8 @@ public class IngredientServiceJpa implements IngredientService {
 
             recipeRepository.save(recipe);
 
-            //todo fix saving new recipe without id. This is common way of saving new ingredient from frontend.
+            //todo fix returning newingredient WITH ID.
+            // Current returned newIngredient is without id when dont updating existing ingredient
 
             return ingredientMapper.ingredientToIngredientDto(newIngredient);
         }
