@@ -59,7 +59,7 @@ public class ImageControllerTest {
 
     @Test
     public void storeRecipeImage() throws Exception {
-        MockMultipartFile mockMultipartFile = new MockMultipartFile("imageFile",
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("imagefile",
                 "testing.txt",
                 "text/plain", "I am learning".getBytes());
 
