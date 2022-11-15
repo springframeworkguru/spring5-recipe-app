@@ -28,6 +28,7 @@ public class IngredientServiceJpaTest {
     @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
 
+
     IngredientMapper ingredientMapper;
     IngredientServiceJpa service;
 

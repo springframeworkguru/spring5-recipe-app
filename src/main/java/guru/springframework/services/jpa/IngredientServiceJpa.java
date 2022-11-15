@@ -32,67 +32,86 @@ public class IngredientServiceJpa implements IngredientService {
     @Override
     @Transactional
     public IngredientDto getIngredientByIdOfRecipeId(Long recipeId, Long ingredientId) {
-        Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
-        if (!optionalRecipe.isPresent()) {
-            throw new RuntimeException("Recipe with id " + recipeId + " not found");
-        }
-        Recipe recipe = optionalRecipe.get();
-
-        Optional<IngredientDto> optionalIngredientDto = recipe.getIngredients()
-                .stream()
-                .filter(ingredient -> ingredient.getId().equals(ingredientId))
-                .map(ingredientMapper::ingredientToIngredientDto)
-                .findFirst();
-        if (!optionalIngredientDto.isPresent()) {
-            throw new RuntimeException("Ingredient with id " + ingredientId + " not found in recipe with id " + recipeId);
-        }
-        return optionalIngredientDto.get();
+        return ingredientMapper.ingredientToIngredientDto(findIngredient(recipeId, ingredientId));
     }
 
     @Override
     @Transactional
     public IngredientDto saveOrUpdateIngredient(IngredientDto newIngredientDto) {
-        Optional<Recipe> optionalRecipe = recipeRepository.findById(newIngredientDto.getRecipeId());
-        if (!optionalRecipe.isPresent()) {
-            log.error("Ingredients recipe with id " + newIngredientDto.getRecipeId() + " not found!");
-            return null;
-        } else {
-            Recipe recipe = optionalRecipe.get();
-            Optional<Ingredient> optionalIngredient = recipe.getIngredients()
-                    .stream()
-                    .filter(ingredient -> ingredient.getId().equals(newIngredientDto.getId()))
-                    .findFirst();
+        Recipe recipe = findRecipeById(newIngredientDto.getRecipeId());
 
-            Ingredient newIngredient;
-            if (!optionalIngredient.isPresent()) {
-                //don't want to set id from outside. Database will assign id value for new Ingredient.
-                if (Objects.nonNull(newIngredientDto.getId())) {
-                    newIngredientDto.setId(null);
-                }
-                // create new Ingredient object
-                newIngredient = ingredientMapper.ingredientDtoToIngredient(newIngredientDto);
-                //here is newIngredient without id
-                recipe.addIngredient(newIngredient);
-            } else {
-                //update existing Ingredient object
-                newIngredient = optionalIngredient.get();
-                newIngredient.setDescription(newIngredientDto.getDescription());
-                newIngredient.setAmount(newIngredientDto.getAmount());
+        Optional<Ingredient> optionalIngredient = recipe.getIngredients()
+                .stream()
+                .filter(ingredient -> ingredient.getId().equals(newIngredientDto.getId()))
+                .findFirst();
 
-                UnitOfMeasureDto newUnitOfMeasureDto = newIngredientDto.getUom();
-                if (Objects.nonNull(newUnitOfMeasureDto)) {
-                    newIngredient.setUom(unitOfMeasureRepository.findById(newUnitOfMeasureDto.getId()).orElse(null));
-                } else {
-                    newIngredient.setUom(null);
-                }
+        Ingredient newIngredient;
+        if (!optionalIngredient.isPresent()) {
+            //don't want to set id from outside. Database will assign id value for new Ingredient.
+            if (Objects.nonNull(newIngredientDto.getId())) {
+                newIngredientDto.setId(null);
             }
+            // create new Ingredient object
+            newIngredient = ingredientMapper.ingredientDtoToIngredient(newIngredientDto);
+            //here is newIngredient without id
+            recipe.addIngredient(newIngredient);
+        } else {
+            //update existing Ingredient object
+            newIngredient = optionalIngredient.get();
+            newIngredient.setDescription(newIngredientDto.getDescription());
+            newIngredient.setAmount(newIngredientDto.getAmount());
 
-            recipeRepository.save(recipe);
+            UnitOfMeasureDto newUnitOfMeasureDto = newIngredientDto.getUom();
+            if (Objects.nonNull(newUnitOfMeasureDto)) {
+                newIngredient.setUom(unitOfMeasureRepository.findById(newUnitOfMeasureDto.getId()).orElse(null));
+            } else {
+                newIngredient.setUom(null);
+            }
+        }
 
-            //todo fix returning newingredient WITH ID.
-            // Current returned newIngredient is without id when dont updating existing ingredient
+        recipeRepository.save(recipe);
 
-            return ingredientMapper.ingredientToIngredientDto(newIngredient);
+        //todo fix returning newingredient WITH ID.
+        // Current returned newIngredient is without id when dont updating existing ingredient
+
+        return ingredientMapper.ingredientToIngredientDto(newIngredient);
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteIngredientWithIdOfRecipeWithId(Long recipeId, Long ingredientId) {
+        Recipe recipe = findRecipeById(recipeId);
+        recipe.getIngredients().removeIf(ingredient -> {
+            if (Objects.equals(ingredient.getId(), ingredientId)){
+                ingredient.setRecipe(null);
+                return true;
+            }
+            return false;
+        });
+        recipeRepository.save(recipe);
+    }
+
+    private Ingredient findIngredient(Long recipeId, Long ingredientId) {
+        Recipe recipe = findRecipeById(recipeId);
+
+        Optional<Ingredient> optionalIngredient = recipe.getIngredients()
+                .stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                .findFirst();
+        if (!optionalIngredient.isPresent()) {
+            throw new RuntimeException("Ingredient with id " + ingredientId + " not found in recipe with id " + recipeId);
+        }
+        return optionalIngredient.get();
+
+    }
+
+    private Recipe findRecipeById(Long recipeId) {
+        Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
+        if (!optionalRecipe.isPresent()) {
+            throw new RuntimeException("Recipe with id " + recipeId + " not found");
+        } else {
+            return optionalRecipe.get();
         }
     }
 }
