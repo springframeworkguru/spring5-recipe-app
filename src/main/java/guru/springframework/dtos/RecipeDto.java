@@ -22,4 +22,5 @@ public class RecipeDto {
     private Set<CategoryDto> categories = new HashSet<>();
     private Difficulty difficulty;
     private NotesDto notes;
+    private Byte[] image;
 }
