@@ -65,7 +65,7 @@ public class IngredientController {
         return "redirect:/recipe/" + savedIngredientDto.getRecipeId() + "/ingredients";
     }
 
-    @DeleteMapping("/recipe/{recipeId}/ingredient/{ingredientId}/delete")
+    @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/delete")
     public String saveOrUpdateIngredient(@PathVariable String recipeId, @PathVariable String ingredientId) {
         log.debug("Deleting ingredient with id " + ingredientId + " of recipe with id " + recipeId);
         ingredientService.deleteIngredientWithIdOfRecipeWithId(Long.valueOf(recipeId), Long.valueOf(ingredientId));
