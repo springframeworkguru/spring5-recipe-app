@@ -78,7 +78,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         //get optionals
         UnitOfMeasure eachUom = eachUomOptional.get();
         UnitOfMeasure tableSpoonUom = tableSpoonUomOptional.get();
-        UnitOfMeasure teapoonUom = tableSpoonUomOptional.get();
+        UnitOfMeasure teapoonUom = teaSpoonUomOptional.get();
         UnitOfMeasure dashUom = dashUomOptional.get();
         UnitOfMeasure pintUom = pintUomOptional.get();
         UnitOfMeasure cupsUom = cupsUomOptional.get();
