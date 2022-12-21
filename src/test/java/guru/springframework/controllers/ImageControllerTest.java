@@ -52,7 +52,6 @@ public class ImageControllerTest {
                 .andExpect(model().attributeExists("recipe"));
 
         verify(recipeService, times(1)).findCommandById(anyLong());
-
     }
 
     @Test

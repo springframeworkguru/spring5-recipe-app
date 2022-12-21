@@ -38,7 +38,8 @@ class RecipeControllerTest {
     }
 
     @Test
-    void testGetRecipe() throws Exception{
+    public void testGetRecipe() throws Exception {
+
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
@@ -69,10 +70,12 @@ class RecipeControllerTest {
 
         mockMvc.perform(post("/recipe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                .param("id", "")
-//                .param("description", "some string")
+                .param("id", "")
+                .param("description", "some string")
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/show"));
     }
+
+
 }
