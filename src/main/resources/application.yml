@@ -1,0 +1,33 @@
+#server:
+#  port: 8080
+#  servlet:
+#    context-path:
+#
+#spring:
+#  application:
+#    name: SFG-Recipe-App
+#    h2:
+#      console:
+#        enable: true
+#
+#  sql:
+#    init:
+#      mode: always
+#      platform: mysql
+#  datasource:
+#    password: weplus
+#    url: jdbc:mysql://localhost:3306/sfg-recipe?createDatabaseIfNotExist=true&autoReconnect=true
+#    username: weplus
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: none
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQLDialect
+#      jakarta:
+#        persistence:
+#          sharedCache:
+#            mode: UNSPECIFIED
+#    show-sql: true
+#    open-in-view: true
