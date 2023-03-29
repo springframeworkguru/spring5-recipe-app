@@ -12,6 +12,7 @@ import java.util.Set;
  * Created by jt on 6/1/17.
  */
 @Controller
+
 public class IndexController {
 
     final private RecipeService recipeService;

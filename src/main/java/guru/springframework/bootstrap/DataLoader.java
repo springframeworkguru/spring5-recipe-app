@@ -4,8 +4,7 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.ApplicationContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     final private UnitOfMeasureRepository unitOfMeasureRepository;
@@ -39,10 +39,12 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         // Init unitOfMeuares
         Optional<UnitOfMeasure> Teaspoon = unitOfMeasureRepository.findAllByDescription("Teaspoon");
         if (!Teaspoon.isPresent()) {
+            log.error("Teaspoon uOm is not present");
             throw new RuntimeException("Teaspoon uOm is not present");
         }
         Optional<UnitOfMeasure> Tablespoon = unitOfMeasureRepository.findAllByDescription("Tablespoon");
         if (!Tablespoon.isPresent()) {
+            log.error("Tablespoon uOm is not present");
             throw new RuntimeException("Tablespoon uOm is not present");
         }
         Optional<UnitOfMeasure> Cup = unitOfMeasureRepository.findAllByDescription("Cup");
