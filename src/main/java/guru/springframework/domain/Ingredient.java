@@ -11,6 +11,13 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.unitOfMeasure = unitOfMeasure;
+        this.recipe = recipe;
+    }
+
     @OneToOne
     private UnitOfMeasure unitOfMeasure;
 
@@ -48,4 +55,6 @@ public class Ingredient {
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
+
+
 }

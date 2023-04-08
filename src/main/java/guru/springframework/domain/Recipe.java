@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,11 +12,12 @@ public class Recipe {
     private Long id;
 
     private String description;
-    private String prepTime;
-    private String cookTime;
-    private String servings;
+    private int prepTime;
+    private int cookTime;
+    private int servings;
     private String source;
     private String url;
+    @Lob
     private String directions;
     @Lob
     private Byte[] image;
@@ -30,10 +32,10 @@ public class Recipe {
     private Difficulty difficulty;
 
     @ManyToMany
-    @JoinTable( name = "recipe_category",
-        joinColumns = @JoinColumn(name = "recipe_id"),
-        inverseJoinColumns = @JoinColumn( name = "category_id"))
-    private Set<Category> categories;
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public String getDescription() {
         return description;
@@ -43,27 +45,27 @@ public class Recipe {
         this.description = description;
     }
 
-    public String getPrepTime() {
+    public int getPrepTime() {
         return prepTime;
     }
 
-    public void setPrepTime(String prepTime) {
+    public void setPrepTime(int prepTime) {
         this.prepTime = prepTime;
     }
 
-    public String getCookTime() {
+    public int getCookTime() {
         return cookTime;
     }
 
-    public void setCookTime(String cookTime) {
+    public void setCookTime(int cookTime) {
         this.cookTime = cookTime;
     }
 
-    public String getServings() {
+    public int getServings() {
         return servings;
     }
 
-    public void setServings(String servings) {
+    public void setServings(int servings) {
         this.servings = servings;
     }
 
@@ -137,5 +139,12 @@ public class Recipe {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        if (this.ingredients == null) {
+            this.ingredients = new HashSet<>();
+        }
+        this.ingredients.add(ingredient);
     }
 }
