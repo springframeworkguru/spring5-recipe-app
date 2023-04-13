@@ -7,3 +7,6 @@ INSERT INTO unit_of_measure (description) Values ('Tablespoon');
 INSERT INTO unit_of_measure (description) Values ('Cup');
 INSERT INTO unit_of_measure (description) Values ('Pinch');
 INSERT INTO unit_of_measure (description) Values ('Ounce');
+INSERT INTO unit_of_measure (description) Values ('Each');
+INSERT INTO unit_of_measure (description) Values ('Dash');
+INSERT INTO unit_of_measure (description) Values ('Pint');
