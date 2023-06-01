@@ -1,6 +1,6 @@
 package guru.springframework.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.util.Set;
