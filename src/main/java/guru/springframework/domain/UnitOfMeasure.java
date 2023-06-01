@@ -1,6 +1,6 @@
 package guru.springframework.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class UnitOfMeasure {

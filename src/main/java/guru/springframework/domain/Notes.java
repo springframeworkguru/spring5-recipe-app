@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 
 /**
  * Created by jt on 6/13/17.
