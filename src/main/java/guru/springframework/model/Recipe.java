@@ -3,6 +3,7 @@ package guru.springframework.model;
 import net.bytebuddy.description.modifier.Ownership;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -21,6 +22,8 @@ public class Recipe {
     private Byte[] image;
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
 
     public Long getId() {
         return id;
