@@ -1,7 +1,5 @@
 package guru.springframework.model;
 
-import net.bytebuddy.description.modifier.Ownership;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -29,7 +27,8 @@ public class Recipe {
     joinColumns = @JoinColumn(name = "recipe_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
-
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 
     public Long getId() {
         return id;
