@@ -1,46 +1,24 @@
 package guru.springframework.controller;
 
-import guru.springframework.model.Category;
-import guru.springframework.model.Recipe;
-import guru.springframework.model.UnitOfMeasure;
-import guru.springframework.repositories.CategoryRepository;
-import guru.springframework.repositories.RecipeRepository;
-import guru.springframework.repositories.UnitOfMeasureRepository;
+import guru.springframework.service.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+@Slf4j
 @Controller
 public class IndexController {
-    private List<Recipe> recipeList = new ArrayList<>();
-    private final CategoryRepository categoryRepository;
-    private final UnitOfMeasureRepository unitOfMeasureRepository;
-    private final RecipeRepository recipeRepository;
+    private final RecipeService recipeService;
 
-    public IndexController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository, RecipeRepository recipeRepository) {
-        this.categoryRepository = categoryRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
-        this.recipeRepository = recipeRepository;
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
-    @RequestMapping({"/",""})
-    public String indexHandler(){
-        Optional<Category> american = categoryRepository.findByDescription("American");
-        Optional<UnitOfMeasure> teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon");
-        System.out.println(american.get().getId());
-        System.out.println(teaspoon.get().getId());
+
+    @RequestMapping({"/","","/index"})
+    public String indexHandler(Model model){
+        log.debug("I am in controller");
+        model.addAttribute("recipes",recipeService.getRecipes());
         return "index";
     }
-    @RequestMapping("/guacamole")
-    public String recipeHandler(Model model){
-        recipeRepository.findAll().iterator().forEachRemaining(recipe -> {
-            recipeList.add(recipe);
-        });
-        model.addAttribute("recipes",recipeList);
-        return "index";
 
-    }
 }

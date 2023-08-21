@@ -4,11 +4,13 @@ import guru.springframework.model.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 @Component
+@Slf4j
 public class DataLoader implements CommandLineRunner {
     private final UnitOfMeasureRepository unitOfMeasureRepository ;
     private final CategoryRepository categoryRepository;
@@ -22,6 +24,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.debug("I am in data loader class");
         Recipe guacamole = new Recipe();
 
         UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon").get();
