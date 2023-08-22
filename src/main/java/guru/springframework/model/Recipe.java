@@ -1,15 +1,11 @@
 package guru.springframework.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Data
 @Entity
 public class Recipe {
     @Id
