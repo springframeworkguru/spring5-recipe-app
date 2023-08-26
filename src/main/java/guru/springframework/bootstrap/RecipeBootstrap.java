@@ -7,6 +7,8 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -21,26 +23,24 @@ import java.util.Optional;
  * Created by jt on 6/13/17.
  */
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
-        this.categoryRepository = categoryRepository;
-        this.recipeRepository = recipeRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
-    }
-
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.debug("RecipeBootstrap: Entering onApplication Event");
         recipeRepository.saveAll(getRecipes());
+        log.debug("RecipeBootstrap: Exiting onApplicationEvent");
     }
 
     private List<Recipe> getRecipes() {
-
+        log.debug("RecipeBootstrap: Entering getRecipes.");
         List<Recipe> recipes = new ArrayList<>(2);
 
         //get UOMs
@@ -214,6 +214,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);
+        log.debug(this.getClass().getName() + " exiting getRecipes");
         return recipes;
     }
 }
