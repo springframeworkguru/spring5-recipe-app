@@ -4,10 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Recipe {
 
     @Id
@@ -40,9 +42,6 @@ public class Recipe {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    public Recipe() {
-    }
-
     public void addIngredient(Ingredient ingredient) {
         if (this.ingredients == null) {
             this.ingredients = new HashSet<>();
@@ -50,8 +49,16 @@ public class Recipe {
         this.ingredients.add(ingredient);
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof Recipe;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(id, recipe.id);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
