@@ -45,6 +45,7 @@ public class Recipe {
         if (this.ingredients == null) {
             this.ingredients = new HashSet<>();
         }
+        ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
     }
 
