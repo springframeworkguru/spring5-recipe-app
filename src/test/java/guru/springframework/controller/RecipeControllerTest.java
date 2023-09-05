@@ -36,4 +36,5 @@ public class RecipeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("recipe/show"));
     }
+
 }
