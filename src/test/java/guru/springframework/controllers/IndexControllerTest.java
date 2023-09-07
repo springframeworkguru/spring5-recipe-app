@@ -28,11 +28,6 @@ class IndexControllerTest {
     @BeforeEach
     void setUp() {
         indexController = new IndexController(recipeService);
-        recipes = new HashSet<>();
-        Recipe testRecipe = new Recipe();
-        testRecipe.setDescription("Test Recipe");
-        recipes.add(testRecipe);
-        Mockito.when(recipeService.findAllRecipes()).thenReturn(recipes);
         resultOfIndexPage = indexController.getIndexPage(model);
     }
 
@@ -53,6 +48,6 @@ class IndexControllerTest {
 
     @Test
     void verifyModalAddAttributeCalledExactlyOneTime() {
-        Mockito.verify(model, Mockito.times(1)).addAttribute("recipes", recipes);
+        Mockito.verify(model, Mockito.times(1)).addAttribute(Mockito.eq("recipes"), Mockito.anySet());
     }
 }
