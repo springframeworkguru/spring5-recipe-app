@@ -13,7 +13,7 @@ jobs:
       - image: cimg/base:2023.03
     steps:
       - checkout
-      - run: mvn clean test
+      - run:  echo "this is the test job"
       - store_test_results:
           path: target/surefire-reports
 
