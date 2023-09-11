@@ -4,10 +4,9 @@ import guru.springframework.commands.RecipeCommand;
 import guru.springframework.service.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+
 
 @Controller
 public class RecipeController {
@@ -35,8 +34,15 @@ public class RecipeController {
     }
     @RequestMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable Long id,Model model){
-        model.addAttribute("recipe",recipeService.findById(id));
+        model.addAttribute("recipe",recipeService.findCommandById(id));
         return "recipe/recipeform";
+
+    }
+    @GetMapping
+    @RequestMapping("recipe/{id}/delete")
+    public String deleteRecipe(@PathVariable Long id){
+        recipeService.deleteById(id);
+        return "redirect:/";
 
     }
 }
