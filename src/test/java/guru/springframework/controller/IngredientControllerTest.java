@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class IngredientControllerTest {
     private IngredientController ingredientController;
@@ -83,5 +83,19 @@ public class IngredientControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/recipe/1/ingredient"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/recipe/1/ingredient/1/show"));
+    }
+    @Test
+    public void testNewIngredient() throws Exception {
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        Set<UnitOfMeasureCommand> set = new HashSet<>();
+        when(unitOfMeasureService.findAll())
+                .thenReturn(set);
+        mockMvc.perform(MockMvcRequestBuilders.get("/recipe/1/ingredient/new"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("recipe/ingredient/ingredientform"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("ingredient"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("uomList"));
+        verify(recipeService,times(1)).findCommandById(anyLong());
+
     }
 }

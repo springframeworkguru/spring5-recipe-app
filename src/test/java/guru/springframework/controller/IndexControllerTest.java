@@ -58,4 +58,5 @@ public class IndexControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("index"));
     }
+
 }
