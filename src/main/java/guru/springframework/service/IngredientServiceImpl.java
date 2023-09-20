@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
 @Slf4j
 @Service
 public class IngredientServiceImpl implements IngredientService{
@@ -99,6 +100,25 @@ public class IngredientServiceImpl implements IngredientService{
 
             //to do check for fail
             return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+        }
+
+    }
+
+    @Override
+    public void deleteById(Long recipeId, Long ingredientId) {
+        Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
+        if (!optionalRecipe.isPresent()){
+            throw new RuntimeException("there recipe could not be found!!");
+
+        }else {
+            Recipe recipe = optionalRecipe.get();
+            Ingredient ingredient1 = recipe.getIngredients().stream()
+                    .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                    .findFirst().get();
+            recipe.getIngredients().remove(ingredient1);
+            ingredient1.setRecipe(null);
+            recipeRepository.save(recipe);
+
         }
 
     }

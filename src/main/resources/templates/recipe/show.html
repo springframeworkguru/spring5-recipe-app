@@ -17,7 +17,7 @@
           crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+<!--/*@thymesVar id="recipe" type="guru.springframework.model.Recipe"*/-->
 <div class="container-fluid" style="margin-top: 20px">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
@@ -25,6 +25,10 @@
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+          </div>
+          <div class="col-md-1">
+            <a class="btn btn-default" href="#"
+               th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
           </div>
           <div class="panel-body">
             <div class="row">
@@ -37,6 +41,11 @@
                   <li th:remove="all">cat two</li>
                   <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">cat three</li>
                 </ul>
+              </div>
+              <div class="col-md-6">
+                <img src="../../static/images/guacamole400x400WithX.jpg"
+                     th:src="@{'/recipe/'+${recipe.id}+'/recipeImage'}"
+                     width="200" height="200">
               </div>
             </div>
             <div class="row">
