@@ -16,14 +16,14 @@
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<div class="d-flex justify-content-center vh-100">
-    <div class="container-fluid" style="margin-top: 20px">
+
+    <div class="container-fluid mt-3" >
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card">
-                        <div class="card-header">
-                            <h1 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                        <div class="card-header bg-primary">
+                            <h1 class="card-title text-center text-white" th:text="${recipe.description}">Recipe Description Here!</h1>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -38,82 +38,82 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <h5>Prep Time:</h5>
+                                    <h5 class="card-title">Prep Time:</h5>
                                 </div>
                                 <div class="col-md-3">
-                                    <p th:text="${recipe.prepTime}"></p>
+                                    <p class="card-text" th:text="${recipe.prepTime}"></p>
                                 </div>
                                 <div class="col-md-3">
-                                    <h5>Difficulty:</h5>
+                                    <h5 class="card-title">Difficulty:</h5>
                                 </div>
                                 <div class="col-md-3">
-                                    <p th:text="${recipe.difficulty}"></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <h5>Cooktime:</h5>
-                                </div>
-                                <div class="col-md-3">
-                                    <p th:text="${recipe.cookTime}"></p>
-                                </div>
-                                <div class="col-md-3">
-                                    <h5>Servings:</h5>
-                                </div>
-                                <div class="col-md-3">
-                                    <p th:text="${recipe.servings}"></p>
+                                    <p class="card-text" th:text="${recipe.difficulty}"></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <h5>Source:</h5>
+                                    <h5 class="card-title">Cooktime:</h5>
                                 </div>
                                 <div class="col-md-3">
-                                    <p th:text="${recipe.source}"></p>
+                                    <p class="card-text" th:text="${recipe.cookTime}"></p>
                                 </div>
                                 <div class="col-md-3">
-                                    <h5>URL:</h5>
+                                    <h5 class="card-title">Servings:</h5>
                                 </div>
                                 <div class="col-md-3">
-                                    <p th:text="${recipe.url}"></p>
+                                    <p class="card-text" th:text="${recipe.servings}"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5 class="card-title">Source:</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="card-text" th:text="${recipe.source}"></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5 class="card-title">URL:</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card-link" th:href="${recipe.url}" th:text="${recipe.url}"></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h1 class="panel-title" >Ingredients</h1>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h1 class="card-title text-center text-white" >Ingredients</h1>
                         </div>
-                        <div class="panel-body">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <ul th:each="ingredient : ${recipe.ingredients}">
-                                        <li th:text="${ingredient.description}"></li>
+                                    <ul class="list-group list-group-flush" th:each="ingredient : ${recipe.ingredients}">
+                                        <li class="list-group-item" th:text="${ingredient.description}"></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h1 class="panel-title" >Directions</h1>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h1 class="card-title text-center text-white" >Directions</h1>
                         </div>
-                        <div class="panel-body">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p th:text="${recipe.directions}"></p>
+                                    <p class="card-text" th:text="${recipe.directions}"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h1 class="panel-title" >Notes</h1>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h1 class="card-title text-center text-white" >Notes</h1>
                         </div>
-                        <div class="panel-body">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p th:text="${recipe.notes.getRecipeNotes()}"></p>
+                                    <p class="card-text" th:text="${recipe.notes.getRecipeNotes()}"></p>
                                 </div>
                             </div>
                         </div>
@@ -122,6 +122,5 @@
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
