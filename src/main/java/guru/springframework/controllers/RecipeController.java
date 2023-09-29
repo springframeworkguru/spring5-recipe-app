@@ -1,7 +1,6 @@
 package guru.springframework.controllers;
 
 import guru.springframework.command.RecipeCommand;
-import guru.springframework.domain.Difficulty;
 import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeService;
 import lombok.AllArgsConstructor;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RecipeController {
     RecipeService recipeService;
 
-    @RequestMapping({"show/{id}"})
+    @RequestMapping({"{id}/show"})
     public String getRecipeById(@PathVariable String id, Model model){
         Recipe recipe = recipeService.findById(Long.parseLong(id));
         model.addAttribute("recipe", recipe);
@@ -37,7 +36,20 @@ public class RecipeController {
     @PostMapping
     public String saveOrUpdateRecipe(@ModelAttribute RecipeCommand recipeCommand){
         RecipeCommand savedRecipe = recipeService.saveRecipeCommand(recipeCommand);
-        return "redirect:/recipe/show/"+ savedRecipe.getId() ;
+        return "redirect:/recipe/" +savedRecipe.getId() +"/show" ;
+    }
+
+    @RequestMapping("/{id}/update")
+    public String updateRecipe(@PathVariable String id, Model model){
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
+        model.addAttribute("recipe", recipeCommand );
+        return "/recipe/recipeform" ;
+    }
+
+    @RequestMapping("/{id}/delete")
+    public String deleteRecipe(@PathVariable String id, Model model){
+        recipeService.deleteById(Long.valueOf(id));
+        return "redirect:/";
     }
 
 }

@@ -38,18 +38,18 @@
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="checkbox" id = "category1" value="Category 1"> Category 1
+                    <input class="mx-3" type="checkbox" id = "category1" value="Category 1">Category 1
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="checkbox" id = "category2" value="Category 2"> Category 2
+                    <input class="mx-3" type="checkbox" id = "category2" value="Category 2">Category 2
                   </label>
                 </div>
                 <div th:each="category: ${recipe.categories}" class="col-md-9 form-group">
                   <div class="radio">
                     <label>
-                      <input type="checkbox" value="" th:text="${category.description}"/>
+                      <input class="mx-3" type="checkbox" value="" th:text="${category.description}"/>
                     </label>
                   </div>
                 </div>
@@ -104,7 +104,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <ul class="list-group list-group-flush" th:each="ingredient : ${recipe.ingredients}">
-                    <li th:text="${(ingredient.getAmount() +' ' + ingredient.uom.getDescription() +
+                    <li class="list-group-item border-bottom" th:text="${(ingredient.getAmount() +' ' + ingredient.unitOfMeasure.getDescription() +
                                         ' - ' + ingredient.getDescription())}">
                     </li>
                   </ul>
@@ -136,6 +136,7 @@
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
         </div>
       </form>
     </div>
