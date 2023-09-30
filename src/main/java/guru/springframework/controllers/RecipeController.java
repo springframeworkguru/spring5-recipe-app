@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/recipe")
+@RequestMapping("")
 public class RecipeController {
     RecipeService recipeService;
 
-    @RequestMapping({"{id}/show"})
+    @RequestMapping({"/recipe/{id}/show"})
     @GetMapping
     public String getRecipeById(@PathVariable String id, Model model){
         Recipe recipe = recipeService.findById(Long.parseLong(id));
@@ -24,21 +24,21 @@ public class RecipeController {
         return "recipe/show";
     }
 
-    @RequestMapping("/new")
+    @RequestMapping("/recipe/new")
     @GetMapping
     public String newRecipe(Model model){
         model.addAttribute("recipe", new RecipeCommand());
         return "recipe/recipeform";
     }
 
-    @RequestMapping("/save")
+    @RequestMapping("/recipe/save")
     @PostMapping
     public String saveOrUpdateRecipe(@ModelAttribute RecipeCommand recipeCommand){
         RecipeCommand savedRecipe = recipeService.saveRecipeCommand(recipeCommand);
         return "redirect:/recipe/" +savedRecipe.getId() +"/show" ;
     }
 
-    @RequestMapping("/{id}/update")
+    @RequestMapping("/recipe/{id}/update")
     @PostMapping
     public String updateRecipe(@PathVariable String id, Model model){
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
@@ -46,7 +46,7 @@ public class RecipeController {
         return "/recipe/recipeform" ;
     }
 
-    @RequestMapping("/{id}/delete")
+    @RequestMapping("/recipe/{id}/delete")
     @GetMapping
     public String deleteRecipe(@PathVariable String id, Model model){
         log.debug("delete id:" + id);

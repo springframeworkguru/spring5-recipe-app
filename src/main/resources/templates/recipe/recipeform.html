@@ -99,12 +99,17 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-1">
-                  <a class="btn btn-default" href="#" role="button">Edit</a>
+                  <a class="btn btn-default" href="#" role="button">View</a>
                 </div>
               <div class="row">
                 <div class="col-md-12">
-                  <ul class="list-group list-group-flush" th:each="ingredient : ${recipe.ingredients}">
-                    <li class="list-group-item border-bottom" th:text="${(ingredient.getAmount() +' ' + ingredient.unitOfMeasure.getDescription() +
+                  <ul class="list-group list-group-flush">
+                    <li th:remove="all">1 Cup of milk</li>
+                    <li th:remove="all">1 Teaspoon of chocolate</li>
+                    <li class="list-group-item border-bottom"
+                        th:each="ingredient : ${recipe.ingredients}"
+                        th:text="${(ingredient.getAmount() +' '
+                                + ingredient.unitOfMeasure.getDescription() +
                                         ' - ' + ingredient.getDescription())}">
                     </li>
                   </ul>

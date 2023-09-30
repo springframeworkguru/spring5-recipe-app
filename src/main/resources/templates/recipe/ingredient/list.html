@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingredients List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+</head>
+<body>
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header bg-primary">
+            <h1 class="card-title text-center text-white">
+              Ingredients
+            </h1>
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead class="table-dark">
+                          <tr>
+                              <th>ID</th>
+                              <th>Description</th>
+                              <th>View</th>
+                              <th>Update</th>
+                              <th>Delete</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:remove="all">
+                          <td>123</td>
+                          <td>Tasty Goodnees 1</td>
+                          <td><a href="#">View</a></td>
+                          <td><a href="#">Update</a></td>
+                          <td><a href="#">Delete</a></td>
+                        </tr>
+                        <tr th:remove="all">
+                          <td>12333</td>
+                          <td>Tasty Goodnees 2</td>
+                          <td><a href="#">View</a></td>
+                          <td><a href="#">Update</a></td>
+                          <td><a href="#">Delete</a></td>
+                        </tr>
+                        <tr th:each = "ingredient : ${recipe.getIngredients()}">
+                            <td th:text="${ingredient.getId()}"></td>
+                            <td th:text="${ingredient.getAmount() + ' ' +
+                                ingredient.getUnitOfMeasure().getDescription() + ' - ' + ingredient.getDescription()}">
+                            </td>
+                            <td>
+                                <a href="#" th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient' +
+                                ${ingredient.getId()} + '/show' }">View</a>
+                            </td>
+                            <td>
+                                <a href="#" th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient' +
+                                ${ingredient.getId()} + '/update' }">Update</a>
+                            </td>
+                            <td>
+                                <a href="#" th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient' +
+                                ${ingredient.getId()} + '/delete'}">Delete</a>
+                            </td>
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

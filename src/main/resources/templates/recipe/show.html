@@ -82,7 +82,16 @@
                     </div>
                     <div class="card">
                         <div class="card-header bg-primary">
-                            <h1 class="card-title text-center text-white" >Ingredients</h1>
+                            <div class="row d-flex">
+                                <div class="col-md-10">
+                                    <h1 class="card-title text-center text-white" >Ingredients</h1>
+                                </div>
+                                <div class="col-md-2 my-auto d-flex justify-content-end me-0 pe-0">
+                                    <a class="btn btn-secondary" role="button" href="#"
+                                       th:href="'/recipe/' + ${recipe.getId()} + '/ingredients'">View
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">

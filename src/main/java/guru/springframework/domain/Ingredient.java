@@ -1,17 +1,22 @@
 package guru.springframework.domain;
 
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode( exclude = {"recipe"})
 @Entity
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient>{
     @Id
     @GeneratedValue
     private Long id;
@@ -29,4 +34,11 @@ public class Ingredient {
         this.recipe = recipe;
     }
 
+    @Override
+    public int compareTo(Ingredient o) {
+        if( this.getId() < o.getId() )
+            return -1;
+        else
+            return 1;
+    }
 }
