@@ -41,6 +41,7 @@ class RecipeServiceImplTest {
     @Test
     void recipeGetSizeTest(){
         Recipe recipe = new Recipe();
+        recipe.setId(ID);
         HashSet<Recipe> recipes = new HashSet<>();
         recipes.add(recipe);
         Mockito.when(recipeRepository.findAll()).thenReturn(recipes);
