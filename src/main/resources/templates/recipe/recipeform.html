@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Show Recipe</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+        crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+<!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+<div class="container-fluid" style="margin-top: 20px">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-md-offset-3">
+      <form  th:object="${recipe}" th:action="@{/recipe/}"  method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="panel-group">
+          <div class="card card-primary border border-primary" style="margin: 20px 0">
+            <div class="card-header bg-primary text-light">
+              <h1 class="card-title">Edit Recipe Information</h1>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 form-group">
+                  <label>Recipe Description:</label>
+                  <input type="text" class="form-control" th:field="*{description}"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-group">
+                  <label>Categories:</label>
+                </div>
+                <div class="col-md-9 form-group">
+                  <div class="radio">
+                    <label>
+                      <input type="checkbox" value=""/>
+                      Cat 1
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="checkbox" value=""/>
+                      Cat 2
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-group">
+                  <label>Prep Time:</label>
+                  <input type="text" class="form-control" th:field="*{prepTime}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label>Cooktime:</label>
+                  <input type="text" class="form-control" th:field="*{cookTime}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label>Difficulty:</label>
+                  <select class="form-control">
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 form-group">
+                  <label>Servings:</label>
+                  <input type="text" class="form-control" th:field="*{servings}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label>Source:</label>
+                  <input type="text" class="form-control" th:field="*{source}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label>URL:</label>
+                  <input type="text" class="form-control" th:field="*{url}"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-primary border border-primary" style="margin: 20px 0;">
+            <div class="card-header bg-primary text-light">
+              <div class="row justify-content-center">
+                <div class="col-md-11 ">
+                  <h1 class="card-title">Ingredients</h1>
+                </div>
+                <div class="col-md-1">
+                  <a class="btn btn-default" href="#" role="button">Edit</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-md-12">
+                  <ul>
+                    <li th:remove="all">1 Cup of milk</li>
+                    <li th:remove="all">1 Teaspoon of chocolate</li>
+                    <li th:each="ingredient : ${recipe.ingredients}"
+                        th:text="${(ingredient.getAmount() +
+                                        ' ' + ingredient.uom.getDescription() +
+                                        ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-primary border border-primary" style="margin: 20px 0;">
+            <div class="card-header bg-primary text-light">
+              <h1 class="card-title">Directions</h1>
+            </div>
+            <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-md-12 form-group">
+                  <textarea class="form-control" rows="3" th:field="*{directions}"></textarea></div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-primary border border-primary" style="margin: 20px 0;">
+            <div class="card-header bg-primary text-light">
+              <h1 class="card-title">Notes</h1>
+            </div>
+            <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-md-12 form-group">
+                  <textarea class="form-control" rows="3" th:field="*{notes.recipeNotes}"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<style>
+  h7{
+    font-weight: bold;
+  }
+</style>
