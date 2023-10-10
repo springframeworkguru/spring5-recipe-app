@@ -3,6 +3,7 @@ package guru.springframework.service;
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 @Slf4j
 @Service
@@ -34,7 +36,11 @@ public class RecipeServiceImpl implements RecipeService{
     }
     @Override
     public Recipe findById(Long id){
-        return recipeRepository.findById(id).orElse(null);
+        Optional<Recipe> recipeRepositoryById = recipeRepository.findById(id);
+        if (!recipeRepositoryById.isPresent()){
+            throw new NotFoundException("Recipe Not Found!");
+        }
+        return recipeRepositoryById.get();
     }
 
     @Override

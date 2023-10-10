@@ -2,6 +2,7 @@ package guru.springframework.service;
 
 import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -45,5 +47,12 @@ public class RecipeServiceImplTest {
         Long idToDelete= Long.valueOf(1);
         recipeService.deleteById(idToDelete);
         verify(recipeRepository,times(1)).deleteById(anyLong());
+    }
+    @Test(expected = NotFoundException.class)
+    public void testNotFound(){
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong()))
+                .thenReturn(recipeOptional);
+        recipeService.findById(1l);
     }
 }
