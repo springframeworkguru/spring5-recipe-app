@@ -70,13 +70,14 @@ public class RecipeControllerTest {
 
     }
     @Test
-    public void testNotFound() throws Exception {
+    public void testRecipeNotFound() throws Exception {
 
         when(recipeService.findById(anyLong()))
                 .thenThrow(NotFoundException.class);
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         mockMvc.perform(MockMvcRequestBuilders.get("/recipe/show/1"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.view().name("404error"));
 
     }
 }
