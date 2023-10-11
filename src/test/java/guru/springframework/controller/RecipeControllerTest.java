@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -54,11 +55,25 @@ public class RecipeControllerTest {
         recipeCommand.setId(1L);
         when(recipeService.saveRecipeCommand(any())).thenReturn(recipeCommand);
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        mockMvc.perform(MockMvcRequestBuilders.post("/recipe"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/recipe")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("description","a description")
+                        .param("direction","some direction"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/recipe/show/1"))
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/recipe/show/1"));
 
+    }
+    @Test
+    public void testNewRecipeFormFail() throws Exception {
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1l);
+        when(recipeService.saveRecipeCommand(any()))
+                .thenReturn(recipeCommand);
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc.perform(MockMvcRequestBuilders.post("/recipe"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("recipe/recipeform"));
     }
     @Test
     public void testDeleteRecipe() throws Exception {
@@ -89,4 +104,5 @@ public class RecipeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.view().name("400error"));
     }
+
 }

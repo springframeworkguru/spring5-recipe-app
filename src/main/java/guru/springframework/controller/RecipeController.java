@@ -2,15 +2,20 @@ package guru.springframework.controller;
 
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.service.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 
 @Controller
+@Slf4j
 public class RecipeController {
     private final RecipeService recipeService;
 
@@ -30,7 +35,14 @@ public class RecipeController {
 
     }
     @PostMapping("recipe")
-    public String updateOrSave(@ModelAttribute RecipeCommand recipeCommand){
+    public String updateOrSave(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand
+            , BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.debug(objectError.toString());
+            });
+            return "recipe/recipeform";
+        }
         RecipeCommand saveRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
         return "redirect:/recipe/show/"+saveRecipeCommand.getId();
     }
