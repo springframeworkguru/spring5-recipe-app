@@ -82,7 +82,9 @@ public class RecipeControllerTest {
     }
     @Test
     public void testInvalidNumberException() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
         mockMvc.perform(MockMvcRequestBuilders.get("/recipe/show/adf"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.view().name("400error"));
