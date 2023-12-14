@@ -50,7 +50,8 @@ public class RecipeControllerTest {
         recipe.setId(1L);
         when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
         mockMvc.perform(MockMvcRequestBuilders.get("/recipe/1/show"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.view().name("404error"));
     }
     @Test
     public void testGetNewRecipeForm() throws Exception {
